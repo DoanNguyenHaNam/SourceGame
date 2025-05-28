@@ -152,6 +152,23 @@ else:
             z.append(a[p+len('\n      <Item Var="Com" Type="Assets.Scripts.GameLogic.SkinElement">'):p2])
             p=a.find('\n      <Item Var="Com" Type="Assets.Scripts.GameLogic.SkinElement">\n         ',p2)
         return z
+    def add_filter_attribute(xml_bytes, IN):
+        # Bước 1: Nếu có SkinAvatarFilterType thì thay giá trị
+        new_bytes, count = re.subn(
+            rb'(<Track[^>]*?)\sSkinAvatarFilterType="[^"]*"',
+            rb'\1 SkinAvatarFilterType="' + IN + rb'"',
+            xml_bytes
+        )
+
+        # Bước 2: Nếu không có thì thêm mới
+        if count == 0:
+            new_bytes = re.sub(
+                rb'(<Track[^>]*?)>',
+                rb'\1 SkinAvatarFilterType="' + IN + rb'">',
+                xml_bytes
+            )
+
+        return new_bytes
     def mod_infos_mac_dinh(a,skinid,List):
         if skinid=='13311':
             a=  a.replace(
@@ -195,15 +212,20 @@ else:
         )
         skin=skin[skin.find('<ArtPrefabLOD '):]
         skin=skin.replace('>\n      ','>\n')
+        skin+='<MSAA Var="Enum" Type="Assets.Scripts.GameLogic.EAntiAliasing">2</MSAA>'
+        #print(skin)
+        pz = a.find('</ActorName>')
         p=a.find('<ArtPrefabLOD ')
         p2=a.find('\n   <SkinPrefab ')
         de=a[p:p2]
         a=a.replace(de,skin,1)
+        #a=a.replace(a[pz:p],'</ActorName>')
         a=rut_gon_infos(a)
         pz=a.split('\n      <Item Var="Com" Type="Assets.Scripts.GameLogic.SkinElement">')
         for skin in split_code_infos_a(a):
             p=skin.find('_Show')
             if f'/{skinid}_' in skin[:p]:
+                skin=skin.replace('</ArtSkinPrefabLOD>','<MSAA Var="Enum" Type="Assets.Scripts.GameLogic.EAntiAliasing">2</MSAA></ArtSkinPrefabLOD>')
                 break
         for i in split_code_infos_a(a):
             a=a.replace(i,skin,1)
@@ -248,7 +270,7 @@ else:
         return a
     def compress_(input_blob,ZSTD_DICT=ZSTD_DICT):
         output_blob=input_blob
-        #return output_blob
+        return output_blob
         if b'\x22\x4a\x67\x00' not in input_blob and b"\x28\xb5\x2f\xfd" not in input_blob:
                 output_blob = bytearray(pyzstd.compress(input_blob, ZSTD_LEVEL, pyzstd.ZstdDict(ZSTD_DICT, True)))
                 output_blob[0:0] = len(input_blob).to_bytes(4, byteorder="little", signed=False)
@@ -361,8 +383,7 @@ else:
         #a=a.replace(b'<String name="resourceName"',b'<int name="frameRate" value="120" refParamName="" useRefParam="false" />\r\n        <String name="resourceName"')
         #a=a.replace(b'<String name="clipName"',b'<int name="frameRate" value="120" refParamName="" useRefParam="false" />\r\n        <String name="clipName"')
         de_ef = b'<bool name="bTrailProtect" value="true" useRefParam="false" />\r\n        <bool name="bUseTargetSkinEffect" value="true" useRefParam="false" />\r\n        <String name="resourceName"'
-        if 'e' not in file.lower():
-            a=a.replace(b'<String name="resourceName"',de_ef)
+        a=a.replace(b'<String name="resourceName"',de_ef)
         if ID[:3] == b'190':
             a=a.replace(b'Prefab_Skill_Effects/Hero_Skill_Effects/190_Zhugeliang/',b'Prefab_Skill_Effects/Hero_Skill_Effects/190_Zhugeliang/'+ID+b'/')
         return a
@@ -560,6 +581,8 @@ else:
                 p=skinA2.find('         <PreloadAnimatorEffects',p+50)
             if '<PreloadAnimatorEffects Var="Array" Type="System.String[]"/>\n         <LookAt ' in skinA2:skinA2=skinA2[:p2]+'      </Item>\n      '
             else:p2=skinA2.find('         <LookAt Var="Com');skinA2=skinA2[:p2]+'      </Item>\n      '
+            print(skinA2)
+            #skinA2=skinA2.replace('      </Item>\n','<MSAA Var="Enum" Type="Assets.Scripts.GameLogic.EAntiAliasing">2</MSAA></Item>\n')
             a=a.replace(skin,skinA2)
         return a
     def checkfour():
@@ -1107,12 +1130,12 @@ else:
                                             strin2=strin
                                             #return strin
                                             try:
-                                                guids = re.findall(rb'guid="(.*?)"', strin)
+                                                '''guids = re.findall(rb'guid="(.*?)"', strin)
                                                 for guid in guids:
                                                     strin=re.sub(rb'guid="\s*'+guid+rb'"',b'guid="TOIBINGU NEN DI REUP CUA DANG PMIN MOD"', strin, flags=re.IGNORECASE)
                                                 trackname = re.findall(rb'Track\s*trackName="(.*?)"', strin)
                                                 for trackname in trackname:
-                                                    strin=re.sub(rb'<Track\s*trackName="\s*'+trackname+rb'"',b'<Track trackName="youtube.com/@hongcogidauma"', strin, flags=re.IGNORECASE)
+                                                    strin=re.sub(rb'<Track\s*trackName="\s*'+trackname+rb'"',b'<Track trackName="youtube.com/@hongcogidauma"', strin, flags=re.IGNORECASE)'''
                                                 strin=re.sub(rb'>\s+<', b'><',strin)
                                                 return strin.replace(b' refParamName=""',b'').replace(b' isTemp="false"',b'').replace(b'execOnForceStopped="false" execOnActionCompleted="false" ',b'').replace(b' useRefParam="false"',b'').replace(b' value=""',b'')
                                             except:
@@ -1130,7 +1153,8 @@ else:
                                                 print('born')
                                                 print(file, du_kien_mod_born)
                                                 p=strin.find(ef,p2)
-                                    if b'Prefab_Skill_Effects'.lower() in strin.lower():
+                                    #fix lag all 
+                                    if b'Prefab_Skill_Effects'.lower() in strin.lower() and False:
                                         def split_code_back2(a):
                                             split_code=[]
                                             p=a.find(b'    <Track trackName=')
@@ -1143,14 +1167,14 @@ else:
                                             mod_all = b'''    <Track trackName="PMIN" eventType="GetHolidayResourcePathTick" guid="Mod By: Lyna TV" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">
       <Event eventName="GetHolidayResourcePathTick" time="0.000" isDuration="false" guid="Mod By: Pmin Mod">
         <String name="holidayResourcePathPrefix" value="EFFECT
-        <String name="outPathParamName" value="CHECK_CODE" useRefParam="false" />
-        <String name="outSoundEventParamName" useRefParam="false" />
+        <String name="outPathParamName" value="CHECK_CODE" refParamName="" useRefParam="false" />
+        <String name="outSoundEventParamName" refParamName="" useRefParam="false" />
       </Event>
     </Track>
 '''
                                             code_goc=code
                                             p=re.search(rb'prefab_skill_effects.*?>',code,re.IGNORECASE)
-                                            if p and decompress.encode('utf-8').lower() in code.lower() and b'BattleUI' not in code and b'enabled="true"' in code and (b'ChangeActorMeshDuration' in code or b'ChangeActorMeshTick' in code or b'TriggerParticle' in code or b'TriggerParticleTick' in code):
+                                            if p and decompress.encode('utf-8').lower() in code.lower() and b'BattleUI' not in code and b'enabled="true"' in code:# and (b'TriggerParticle' in code or b'TriggerParticleTick' in code): #b'ChangeActorMeshDuration' in code or b'ChangeActorMeshTick' in code or 
                                                 ef = p.group()
                                                 match = re.search(rb'([^/"]+)"', ef, re.IGNORECASE)
                                                 match2 = re.search(rb'eventType="([^"]+)"', code, re.IGNORECASE)
@@ -1165,7 +1189,7 @@ else:
                                                     code_sua_getholi=b''
                                                 if match2.group(1) not in code_sua_getholi:
                                                     with open(f'a.xml','wb') as f2:
-                                                        f2.write(match2.group(1)+b'\r\b'+code_sua_getholi)
+                                                        f2.write(match2.group(1)+b': '+file.encode('utf-8') +b': '+ decompress.encode('utf-8')+b'\r\b'+code_sua_getholi)
                                                 check_ef=b'" refParamName="'+nhan_dang+b'" useRefParam="true" />'
                                                 code=code.replace(ef,check_ef)
                                                 con = re.search(rb'<Condition.*?<Event\s*eventName',code_goc,re.IGNORECASE | re.DOTALL)
@@ -1173,7 +1197,13 @@ else:
                                                     condition = con.group()
                                                 else:
                                                     condition=b'<Event eventName'
-                                                
+                                                check_skinor = re.search(rb'SkinAvatarFilterType="([^"]+)"', code_goc)
+                                                if check_skinor:
+                                                    mod_all= add_filter_attribute(mod_all, check_skinor.group(1))
+                                                    p1=code_goc.find(b'</Event>')
+                                                    p2=code_goc.find(b'\r\n    </Track>')
+                                                    if p1!=-1 and p2!=-1:
+                                                        mod_all=mod_all.replace(b'</Event>',code_goc[p1:p2])
                                                 mod_for_skin = mod_all.replace(b'<Event eventName',condition).replace(b'EFFECT',ef).replace(b'CHECK_CODE',nhan_dang)
                                                 strin=strin.replace(code_goc, code)
                                                 strin=strin.replace(b'  </Action>',mod_for_skin + b'  </Action>')
@@ -1229,7 +1259,7 @@ else:
                                     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                         f1.write(strin)
                 #--------------Mod Born--------------------
-                if hieu_ung == b'\x8f' and not DeAllSkin and may_yeu_mod and False:
+                if hieu_ung == b'\x8f' and not DeAllSkin and may_yeu_mod:
                     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','rb') as f1:
                         strin=f1.read()
                         check=b'    <Track trackName="BORN_ID_SKIN" eventType="CheckHeroIdTick" guid="Mod_by_PminMod_Fix_Lag_ID_SKIN" enabled="true" r="0.000" g="0.000" b="0.000" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" guid="Mod_Vip">\r\n      <TemplateObject name="targetId" id="0" objectName="self"/>\r\n        <int name="heroId" value="ID_SKIN"/>\r\n      </Event>\r\n    </Track>\r\n'
@@ -1890,29 +1920,16 @@ else:
                                         name = name.replace(b'\r\n      <Event eventName="',b'\r\n      '+condition_mod+b'\r\n      <Event eventName="')
                                         ef=b'prefab_skill_effects/hero_skill_effects/'+hero_name+b'/'+skinid
                                         #xoa để đè all
+                                        z=strin.find(b'    <Track trackName="Zalo_0357514770')
+                                        if z==-1:
+                                            z=len(strin)
                                         dem = 0
-                                        for code in split_code_back2(strin):
+                                        for code in split_code_back2(strin[:z]):
                                             code_goc=code
                                             check=b'</Event>\r\n      <SkinOrAvatarList id="ID_SKIN01" />\r\n      <SkinOrAvatarList id="ID_SKIN02" />\r\n      <SkinOrAvatarList id="ID_SKIN03" />\r\n      <SkinOrAvatarList id="ID_SKIN04" />\r\n      <SkinOrAvatarList id="ID_SKIN05" />\r\n      <SkinOrAvatarList id="ID_SKIN06" />\r\n      <SkinOrAvatarList id="ID_SKIN07" />\r\n      <SkinOrAvatarList id="ID_SKIN08" />\r\n      <SkinOrAvatarList id="ID_SKIN09" />\r\n      <SkinOrAvatarList id="ID_SKIN10" />\r\n      <SkinOrAvatarList id="ID_SKIN11" />\r\n      <SkinOrAvatarList id="ID_SKIN12" />\r\n      <SkinOrAvatarList id="ID_SKIN13" />\r\n      <SkinOrAvatarList id="ID_SKIN14" />\r\n      <SkinOrAvatarList id="ID_SKIN15" />\r\n      <SkinOrAvatarList id="ID_SKIN16" />\r\n      <SkinOrAvatarList id="ID_SKIN17" />\r\n      <SkinOrAvatarList id="ID_SKIN18" />\r\n      <SkinOrAvatarList id="ID_SKIN19" />\r\n      <SkinOrAvatarList id="ID_SKIN20" />\r\n      <SkinOrAvatarList id="ID_SKIN21" />\r\n      <SkinOrAvatarList id="ID_SKIN22" />\r\n      <SkinOrAvatarList id="ID_SKIN23" />\r\n      <SkinOrAvatarList id="ID_SKIN24" />\r\n      <SkinOrAvatarList id="ID_SKIN00" />'
+                                            check2=b'<SkinOrAvatarList id="'+skinid+b'" />\r\n      <SkinOrAvatarList id="ID_SKIN01" />\r\n      <SkinOrAvatarList id="ID_SKIN02" />\r\n      <SkinOrAvatarList id="ID_SKIN03" />\r\n      <SkinOrAvatarList id="ID_SKIN04" />\r\n      <SkinOrAvatarList id="ID_SKIN05" />\r\n      <SkinOrAvatarList id="ID_SKIN06" />\r\n      <SkinOrAvatarList id="ID_SKIN07" />\r\n      <SkinOrAvatarList id="ID_SKIN08" />\r\n      <SkinOrAvatarList id="ID_SKIN09" />\r\n      <SkinOrAvatarList id="ID_SKIN10" />\r\n      <SkinOrAvatarList id="ID_SKIN11" />\r\n      <SkinOrAvatarList id="ID_SKIN12" />\r\n      <SkinOrAvatarList id="ID_SKIN13" />\r\n      <SkinOrAvatarList id="ID_SKIN14" />\r\n      <SkinOrAvatarList id="ID_SKIN15" />\r\n      <SkinOrAvatarList id="ID_SKIN16" />\r\n      <SkinOrAvatarList id="ID_SKIN17" />\r\n      <SkinOrAvatarList id="ID_SKIN18" />\r\n      <SkinOrAvatarList id="ID_SKIN19" />\r\n      <SkinOrAvatarList id="ID_SKIN20" />\r\n      <SkinOrAvatarList id="ID_SKIN21" />\r\n      <SkinOrAvatarList id="ID_SKIN22" />\r\n      <SkinOrAvatarList id="ID_SKIN23" />\r\n      <SkinOrAvatarList id="ID_SKIN24" />\r\n      <SkinOrAvatarList id="ID_SKIN00" />'
                                             if b'GetHolidayResourcePathTick' in code:
-                                                def add_filter_attribute(xml_bytes=code, IN=b'11'):
-                                                    # Bước 1: Nếu có SkinAvatarFilterType thì thay giá trị
-                                                    new_bytes, count = re.subn(
-                                                        rb'(<Track[^>]*?)\sSkinAvatarFilterType="[^"]*"',
-                                                        rb'\1 SkinAvatarFilterType="' + IN + rb'"',
-                                                        xml_bytes
-                                                    )
-
-                                                    # Bước 2: Nếu không có thì thêm mới
-                                                    if count == 0:
-                                                        new_bytes = re.sub(
-                                                            rb'(<Track[^>]*?)>',
-                                                            rb'\1 SkinAvatarFilterType="' + IN + rb'">',
-                                                            xml_bytes
-                                                        )
-
-                                                    return new_bytes
-                                                code=add_filter_attribute()
+                                                code=add_filter_attribute(code,b'11')
                                                 code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
                                                 strin=strin.replace(code_goc, code)
                                                 dem+=1
@@ -1920,8 +1937,10 @@ else:
                                                 code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
                                                 strin=strin.replace(code_goc, code)
                                                 dem+=1
-                                            if dem==4:
-                                                break
+                                            if b'Animation' in code and b'<SkinOrAvatarList id="'+skinid in code:
+                                                code=code.replace(b'<SkinOrAvatarList id="'+skinid+b'" />',check2.replace(b'ID_SKIN',skinid[:3]))
+                                                strin=strin.replace(code_goc, code)
+                                                dem+=1
                                         #
                                         '''if stoptrack_code==b'' and False:
                                             p_sua_track1=strin.find(b'    <Track trackName="GetResource[huijidi]"')
@@ -2560,7 +2579,7 @@ else:
             <v1 Var="String" Type="System.UInt32">132111</v1>
             <v2 Var="String" Type="System.Int32">1</v2>
          </Item>''',xml_code)
-                        if skinid==b'52414':
+                        if skinid==b'52414' and False:
                             xml_code='''<Item Var="Com" Type="AssetRefAnalyser.Pair`2[System.UInt32,System.Int32]">
             <v1 Var="String" Type="System.UInt32">524043</v1>
             <v2 Var="String" Type="System.Int32">1</v2>
@@ -2586,9 +2605,48 @@ else:
             <v2 Var="String" Type="System.Int32">1</v2>
          </Item>''',xml_code)
                             if skinid==b'11620':
-                                xmlstr = process_xml(xmlstr,skinid.decode())
                                 xmlstr=xmlstr.replace('11620_3','11620_5')
+                        #xmlstr = process_xml(xmlstr,skinid.decode())
+                        if 'skinSubset' in xmlstr:
+                            root = ET.fromstring(xmlstr)
+                            base_subset = root.find('baseSubset')
+                            skin_subset = root.find('skinSubset')
+                            def get_or_create_group(parent, tag_name):
+                                group = parent.find(tag_name)
+                                if group is None:
+                                    group = ET.SubElement(parent, tag_name, {'Var':'Cus', 'Type':'System.Collections.Generic.List1[AssetRefAnalyser.Pair2[System.String,System.Int32]]'})
+                                return group
+                            for item in skin_subset.findall('./Item'):
+                                id_ = item.find('./v1').text
+                                print(f"🆔 ID: {id_}")
+                            # Lặp từng nhóm trong skinSubset (bên trong v2)
+                            for item in skin_subset.findall('Item'):
+                                v2 = item.find('v2')
+                                id_ = item.find('./v1').text
+                                if id_ != skinid.decode():
+                                    continue
+                                if v2 is None:
+                                    continue
+                                for group in v2:
+                                    group_tag = group.tag
+                                    # Tìm hoặc tạo nhóm tương ứng trong baseSubset
+                                    base_group = base_subset.find(group_tag)
+                                    if base_group is None:
+                                        # Tạo nhóm mới với cùng thuộc tính Var và Type như nhóm trong skinSubset
+                                        base_group = ET.SubElement(base_subset, group_tag, group.attrib)
+
+                                    # Lấy tất cả Item trong nhóm ở skinSubset
+                                    items_to_move = list(group.findall('Item'))
+
+                                    # Thêm các Item này vào nhóm tương ứng trong baseSubset
+                                    for it in items_to_move:
+                                        group.remove(it)  # Xóa khỏi skinSubset trước
+                                        base_group.append(it) 
+                            xmlstr=ET.tostring(root, encoding='unicode')
+                            #print(xmlstr)
                         xmlstr=fix_ef(mod_ef_sound2(xmlstr.encode('utf-8'),decompress,skinid),skinid).decode()
+                        with open('test.xml', "w" , encoding="utf-8") as f:
+                            f.write(xmlstr)
                         with open(filexml, "w" , encoding="utf-8") as f:
                             f.write(xmlstr)
                         tree=ET.parse(filexml)
