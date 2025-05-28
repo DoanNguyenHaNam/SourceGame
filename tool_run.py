@@ -212,7 +212,7 @@ else:
         )
         skin=skin[skin.find('<ArtPrefabLOD '):]
         skin=skin.replace('>\n      ','>\n')
-        skin+='<MSAA Var="Enum" Type="Assets.Scripts.GameLogic.EAntiAliasing">2</MSAA>'
+        #skin+='<MSAA Var="Enum" Type="Assets.Scripts.GameLogic.EAntiAliasing">2</MSAA>'
         #print(skin)
         pz = a.find('</ActorName>')
         p=a.find('<ArtPrefabLOD ')
