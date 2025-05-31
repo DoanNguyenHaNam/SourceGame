@@ -1130,7 +1130,7 @@ else:
                                                 print('born')
                                                 print(file, du_kien_mod_born)
                                                 p=strin.find(ef,p2)
-                                    if b'Prefab_Skill_Effects'.lower() in strin.lower():
+                                    if b'Prefab_Skill_Effects'.lower() in strin.lower() and False:
                                         def split_code_back2(a):
                                             split_code=[]
                                             p=a.find(b'    <Track trackName=')
@@ -1229,7 +1229,7 @@ else:
                                     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                         f1.write(strin)
                 #--------------Mod Born--------------------
-                if hieu_ung == b'\x8f' and not DeAllSkin and may_yeu_mod and False:
+                if hieu_ung == b'\x8f' and not DeAllSkin and may_yeu_mod:
                     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','rb') as f1:
                         strin=f1.read()
                         check=b'    <Track trackName="BORN_ID_SKIN" eventType="CheckHeroIdTick" guid="Mod_by_PminMod_Fix_Lag_ID_SKIN" enabled="true" r="0.000" g="0.000" b="0.000" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" guid="Mod_Vip">\r\n      <TemplateObject name="targetId" id="0" objectName="self"/>\r\n        <int name="heroId" value="ID_SKIN"/>\r\n      </Event>\r\n    </Track>\r\n'
@@ -1891,7 +1891,7 @@ else:
                                         ef=b'prefab_skill_effects/hero_skill_effects/'+hero_name+b'/'+skinid
                                         #xoa để đè all
                                         dem = 0
-                                        for code in split_code_back2(strin):
+                                        for code in split_code_back(strin):
                                             code_goc=code
                                             check=b'</Event>\r\n      <SkinOrAvatarList id="ID_SKIN01" />\r\n      <SkinOrAvatarList id="ID_SKIN02" />\r\n      <SkinOrAvatarList id="ID_SKIN03" />\r\n      <SkinOrAvatarList id="ID_SKIN04" />\r\n      <SkinOrAvatarList id="ID_SKIN05" />\r\n      <SkinOrAvatarList id="ID_SKIN06" />\r\n      <SkinOrAvatarList id="ID_SKIN07" />\r\n      <SkinOrAvatarList id="ID_SKIN08" />\r\n      <SkinOrAvatarList id="ID_SKIN09" />\r\n      <SkinOrAvatarList id="ID_SKIN10" />\r\n      <SkinOrAvatarList id="ID_SKIN11" />\r\n      <SkinOrAvatarList id="ID_SKIN12" />\r\n      <SkinOrAvatarList id="ID_SKIN13" />\r\n      <SkinOrAvatarList id="ID_SKIN14" />\r\n      <SkinOrAvatarList id="ID_SKIN15" />\r\n      <SkinOrAvatarList id="ID_SKIN16" />\r\n      <SkinOrAvatarList id="ID_SKIN17" />\r\n      <SkinOrAvatarList id="ID_SKIN18" />\r\n      <SkinOrAvatarList id="ID_SKIN19" />\r\n      <SkinOrAvatarList id="ID_SKIN20" />\r\n      <SkinOrAvatarList id="ID_SKIN21" />\r\n      <SkinOrAvatarList id="ID_SKIN22" />\r\n      <SkinOrAvatarList id="ID_SKIN23" />\r\n      <SkinOrAvatarList id="ID_SKIN24" />\r\n      <SkinOrAvatarList id="ID_SKIN00" />'
                                             if b'GetHolidayResourcePathTick' in code:
