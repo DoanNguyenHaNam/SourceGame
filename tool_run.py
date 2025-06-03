@@ -183,6 +183,7 @@ else:
                     'Prefab_Characters/Prefab_Hero/116_JingKe/Awaken/11621_JingKe_04_Show'
                 )
             a=a.replace('AW1','AW5')
+        a=a.replace('         </ArtSkinLobbyShowLOD>','         </ArtSkinLobbyShowLOD>\n         <MSAA Var="Enum" Type="Assets.Scripts.GameLogic.EAntiAliasing">2</MSAA>')
         skinid=skinid[:3]+str(int(skinid[3:])+1)
         for skin in split_code_infos_a(a):
             p=skin.find('_Show')
@@ -308,7 +309,13 @@ else:
                 a=a.replace(b,b+ID+'/')
         if ID[:3] == b'190':
             a=a.replace('Prefab_Skill_Effects/Hero_Skill_Effects/190_Zhugeliang/','Prefab_Skill_Effects/Hero_Skill_Effects/190_Zhugeliang/'+ID+'/')
-        return a
+        def fix_ef(a,ID):
+            p=a.find('/'+ID+'/'+ID+'/')
+            while p!=-1:
+                a=a.replace('/'+ID+'/'+ID+'/','/'+ID+'/')
+                p=a.find('/'+ID+'/'+ID+'/')
+            return a
+        return fix_ef(a,ID)
     def mod_ef_sound(a,nh,ID,file,folder_mod):
         z=[]
         nh=bytes(nh,'utf-8')
@@ -1229,7 +1236,7 @@ else:
                                     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                         f1.write(strin)
                 #--------------Mod Born--------------------
-                if hieu_ung == b'\x8f' and not DeAllSkin and may_yeu_mod:
+                if hieu_ung == b'\x8f' and not DeAllSkin:
                     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','rb') as f1:
                         strin=f1.read()
                         check=b'    <Track trackName="BORN_ID_SKIN" eventType="CheckHeroIdTick" guid="Mod_by_PminMod_Fix_Lag_ID_SKIN" enabled="true" r="0.000" g="0.000" b="0.000" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" guid="Mod_Vip">\r\n      <TemplateObject name="targetId" id="0" objectName="self"/>\r\n        <int name="heroId" value="ID_SKIN"/>\r\n      </Event>\r\n    </Track>\r\n'
@@ -1504,7 +1511,8 @@ else:
                     f=open(filexml,'wb')
                     f.write(byt)
                     f.close()
-                except:
+                except Exception as bug:
+                    print('mod infos lỗi: ',bug)
                     thu=True;byt=''
                 try:
                     if b'</Item>' in byt:thu=True
@@ -1891,7 +1899,7 @@ else:
                                         ef=b'prefab_skill_effects/hero_skill_effects/'+hero_name+b'/'+skinid
                                         #xoa để đè all
                                         dem = 0
-                                        for code in split_code_back(strin):
+                                        for code in split_code_back(strin[:strin.find(b'<Track trackName="Zalo_0357514770')]):
                                             code_goc=code
                                             check=b'</Event>\r\n      <SkinOrAvatarList id="ID_SKIN01" />\r\n      <SkinOrAvatarList id="ID_SKIN02" />\r\n      <SkinOrAvatarList id="ID_SKIN03" />\r\n      <SkinOrAvatarList id="ID_SKIN04" />\r\n      <SkinOrAvatarList id="ID_SKIN05" />\r\n      <SkinOrAvatarList id="ID_SKIN06" />\r\n      <SkinOrAvatarList id="ID_SKIN07" />\r\n      <SkinOrAvatarList id="ID_SKIN08" />\r\n      <SkinOrAvatarList id="ID_SKIN09" />\r\n      <SkinOrAvatarList id="ID_SKIN10" />\r\n      <SkinOrAvatarList id="ID_SKIN11" />\r\n      <SkinOrAvatarList id="ID_SKIN12" />\r\n      <SkinOrAvatarList id="ID_SKIN13" />\r\n      <SkinOrAvatarList id="ID_SKIN14" />\r\n      <SkinOrAvatarList id="ID_SKIN15" />\r\n      <SkinOrAvatarList id="ID_SKIN16" />\r\n      <SkinOrAvatarList id="ID_SKIN17" />\r\n      <SkinOrAvatarList id="ID_SKIN18" />\r\n      <SkinOrAvatarList id="ID_SKIN19" />\r\n      <SkinOrAvatarList id="ID_SKIN20" />\r\n      <SkinOrAvatarList id="ID_SKIN21" />\r\n      <SkinOrAvatarList id="ID_SKIN22" />\r\n      <SkinOrAvatarList id="ID_SKIN23" />\r\n      <SkinOrAvatarList id="ID_SKIN24" />\r\n      <SkinOrAvatarList id="ID_SKIN00" />'
                                             if b'GetHolidayResourcePathTick' in code:
@@ -1920,8 +1928,9 @@ else:
                                                 code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
                                                 strin=strin.replace(code_goc, code)
                                                 dem+=1
-                                            if dem==4:
-                                                break
+                                            elif b'<SkinOrAvatarList id="' + skinid in code:
+                                                code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
+                                                strin=strin.replace(code_goc, code)
                                         #
                                         '''if stoptrack_code==b'' and False:
                                             p_sua_track1=strin.find(b'    <Track trackName="GetResource[huijidi]"')
@@ -2588,7 +2597,7 @@ else:
                             if skinid==b'11620':
                                 xmlstr = process_xml(xmlstr,skinid.decode())
                                 xmlstr=xmlstr.replace('11620_3','11620_5')
-                        xmlstr=fix_ef(mod_ef_sound2(xmlstr.encode('utf-8'),decompress,skinid),skinid).decode()
+                        #xmlstr=fix_ef(mod_ef_sound2(xmlstr.encode('utf-8'),decompress,skinid),skinid).decode()
                         with open(filexml, "w" , encoding="utf-8") as f:
                             f.write(xmlstr)
                         tree=ET.parse(filexml)
