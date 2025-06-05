@@ -196,10 +196,11 @@ else:
         )
         skin=skin[skin.find('<ArtPrefabLOD '):]
         skin=skin.replace('>\n      ','>\n')
-        p=a.find('<ArtPrefabLOD ')
+        p=a.find('</ActorName>\n   ')
         p2=a.find('\n   <SkinPrefab ')
-        de=a[p:p2]
+        de=a[p+len('</ActorName>\n   '):p2]
         a=a.replace(de,skin,1)
+        print(a)
         a=rut_gon_infos(a)
         pz=a.split('\n      <Item Var="Com" Type="Assets.Scripts.GameLogic.SkinElement">')
         for skin in split_code_infos_a(a):
