@@ -22,8 +22,8 @@ else:
     import os
     try:import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style;from termcolor import colored
     except:
-        try:os.system('python -m pip install pyzstd');os.system('python -m pip install termcolor');os.system('python -m pip install colorama');import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style
-        except:os.system('pip install pyzstd');os.system('pip install termcolor');os.system('pip install colorama');import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style
+        try:os.system('python -m pip install pyzstd');os.system('python -m pip install termcolor');os.system('python -m pip install colorama');os.system('python -m pip install bs4');import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style
+        except:os.system('pip install pyzstd');os.system('pip install termcolor');os.system('pip install colorama');os.system('pip install bs4');import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style
     from shutil import make_archive;from pyzstd import decompress,compress,ZstdDict;from os import listdir;import sys;import os;from termcolor import colored;import re;import getopt;import pyzstd;import sys;import glob;import colorama;from colorama import Fore;from colorama import Style;from colorama import Fore;from colorama import Style;import shutil;import zipfile;import shutil;from zipfile import* 
     import xml.etree.ElementTree as ET
     import sys
@@ -252,7 +252,7 @@ else:
         return a
     def compress_(input_blob,ZSTD_DICT=ZSTD_DICT):
         output_blob=input_blob
-        #return output_blob
+        return output_blob
         if b'\x22\x4a\x67\x00' not in input_blob and b"\x28\xb5\x2f\xfd" not in input_blob:
                 output_blob = bytearray(pyzstd.compress(input_blob, ZSTD_LEVEL, pyzstd.ZstdDict(ZSTD_DICT, True)))
                 output_blob[0:0] = len(input_blob).to_bytes(4, byteorder="little", signed=False)
@@ -1115,7 +1115,7 @@ else:
                                         #xoa dong thua thai
                                         def xoa_thua_thai(strin):
                                             strin2=strin
-                                            #return strin
+                                            return strin
                                             try:
                                                 guids = re.findall(rb'guid="(.*?)"', strin)
                                                 for guid in guids:
@@ -1140,7 +1140,7 @@ else:
                                                 print('born')
                                                 print(file, du_kien_mod_born)
                                                 p=strin.find(ef,p2)
-                                    if b'Prefab_Skill_Effects'.lower() in strin.lower() and False:
+                                    if b'Prefab_Skill_Effects'.lower() in strin.lower():
                                         def split_code_back2(a):
                                             split_code=[]
                                             p=a.find(b'    <Track trackName=')
@@ -1149,6 +1149,36 @@ else:
                                                 split_code.append(code)
                                                 p=a.find(b'    <Track trackName=',p+10)
                                             return split_code
+                                        
+                                        def extract_guid_after_id(xml_bytes: bytes) -> bytes:
+                                            xml_text = xml_bytes.decode('utf-8')
+
+                                            pattern = re.compile(r'id="([^"]+)"(?:\s+guid="([^"]+)")?')
+
+                                            results = []
+
+                                            for match in pattern.finditer(xml_text):
+                                                id_val = match.group(1)
+                                                guid_val = match.group(2)
+
+                                                id_str = f'id="{id_val}"'
+
+                                                if guid_val:
+                                                    snippet = xml_text[match.start():match.end()]
+                                                    after_id = snippet[len(id_str):].lstrip()
+
+                                                    if after_id.startswith(f'guid="{guid_val}"'):
+                                                        results.append(f'{id_str} guid="{guid_val}"')
+                                                        results.append(f'guid="{guid_val}"')
+                                                        split_code = split_code_back2(xml_bytes)
+                                                        for i in range(len(split_code)):
+                                                            p=re.search(rb'guid="'+guid_val.encode('utf-8')+rb'" enabled="',split_code[i])
+                                                            if p and id_str != f'id="{i}"':
+                                                                xml_bytes=xml_bytes.replace(f'{id_str} guid="{guid_val}"'.encode('utf-8'),f'id="{i}" guid="{guid_val}"'.encode('utf-8'))
+                                                        print(results)
+
+                                            return xml_bytes
+                                        #print(file, extract_guid_after_id(strin).decode('utf-8'),end="\n\n")
                                         for code in split_code_back2(strin):
                                             mod_all = b'''    <Track trackName="PMIN" eventType="GetHolidayResourcePathTick" guid="Mod By: Lyna TV" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">
       <Event eventName="GetHolidayResourcePathTick" time="0.000" isDuration="false" guid="Mod By: Pmin Mod">
@@ -1185,10 +1215,9 @@ else:
                                                     condition=b'<Event eventName'
                                                 
                                                 mod_for_skin = mod_all.replace(b'<Event eventName',condition).replace(b'EFFECT',ef).replace(b'CHECK_CODE',nhan_dang)
-                                                strin=strin.replace(code_goc, code)
-                                                strin=strin.replace(b'  </Action>',mod_for_skin + b'  </Action>')
+                                                strin=strin.replace(code_goc, mod_for_skin+code)
                                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
-                                            f1.write(compress_(xoa_thua_thai(strin)))
+                                            f1.write(compress_(xoa_thua_thai(extract_guid_after_id(strin))))
                                     if may_yeu_mod and not HD_e and False:
                                         for ef in [b'Prefab_Skill_Effects',b'Prefab_Skill_Effects'.lower()]:
                                             p=strin.find(ef)
@@ -1244,7 +1273,7 @@ else:
                         strin=f1.read()
                         check=b'    <Track trackName="BORN_ID_SKIN" eventType="CheckHeroIdTick" guid="Mod_by_PminMod_Fix_Lag_ID_SKIN" enabled="true" r="0.000" g="0.000" b="0.000" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" guid="Mod_Vip">\r\n      <TemplateObject name="targetId" id="0" objectName="self"/>\r\n        <int name="heroId" value="ID_SKIN"/>\r\n      </Event>\r\n    </Track>\r\n'
                         strin=strin.replace(b'  </Action>\r\n</Project>',check.replace(b'ID_SKIN',skinid[:3])+b'  </Action>\r\n</Project>',1)
-                        ef=b'    <Track trackName="PminMod" eventType="TriggerParticleTick" guid="I LOVE YOU" enabled="true" r="0.000" g="0.000" b="0.000" stopAfterLastEvent="true" SkinAvatarFilterType="9">\r\n      <Condition id="1" guid="Mod_by_PminMod_Fix_Lag_ID_SKIN" status="true" />\r\n      <Event eventName="TriggerParticleTick" time="0.000" length="0.001" guid="866871db-f8fd-4577-8cb7-e0ee803ade3f">\r\n        <TemplateObject name="targetId" id="1" objectName="target"/>\r\n        <String name="resourceName" value="EFFECT"/>\r\n      </Event>\r\n      <SkinOrAvatarList id="ID_SKIN01" />\r\n      <SkinOrAvatarList id="ID_SKIN02" />\r\n      <SkinOrAvatarList id="ID_SKIN03" />\r\n      <SkinOrAvatarList id="ID_SKIN04" />\r\n      <SkinOrAvatarList id="ID_SKIN05" />\r\n      <SkinOrAvatarList id="ID_SKIN06" />\r\n      <SkinOrAvatarList id="ID_SKIN07" />\r\n      <SkinOrAvatarList id="ID_SKIN08" />\r\n      <SkinOrAvatarList id="ID_SKIN09" />\r\n      <SkinOrAvatarList id="ID_SKIN10" />\r\n      <SkinOrAvatarList id="ID_SKIN11" />\r\n      <SkinOrAvatarList id="ID_SKIN12" />\r\n      <SkinOrAvatarList id="ID_SKIN13" />\r\n      <SkinOrAvatarList id="ID_SKIN14" />\r\n      <SkinOrAvatarList id="ID_SKIN15" />\r\n      <SkinOrAvatarList id="ID_SKIN16" />\r\n      <SkinOrAvatarList id="ID_SKIN17" />\r\n      <SkinOrAvatarList id="ID_SKIN18" />\r\n      <SkinOrAvatarList id="ID_SKIN19" />\r\n      <SkinOrAvatarList id="ID_SKIN20" />\r\n      <SkinOrAvatarList id="ID_SKIN21" />\r\n      <SkinOrAvatarList id="ID_SKIN22" />\r\n      <SkinOrAvatarList id="ID_SKIN23" />\r\n      <SkinOrAvatarList id="ID_SKIN24" />\r\n      <SkinOrAvatarList id="ID_SKIN00" />\r\n\r\n    </Track>\r\n'
+                        ef=b'    <Track trackName="PminMod" eventType="TriggerParticleTick" guid="I LOVE YOU" enabled="true" r="0.000" g="0.000" b="0.000" stopAfterLastEvent="true" SkinAvatarFilterType="9">\r\n      <Condition id="1" guid="Mod_by_PminMod_Fix_Lag_ID_SKIN" status="true" />\r\n      <Event eventName="TriggerParticleTick" time="0.000" length="0.001" guid="866871db-f8fd-4577-8cb7-e0ee803ade3f">\r\n        <TemplateObject name="targetId" id="1" objectName="target"/>\r\n        <String name="resourceName" value="EFFECT"/>\r\n      </Event>\r\n    </Track>\r\n'
                         for du_kien_mod_born in list_du_kien_mod_born:
                             strin=strin.replace(b'  </Action>\r\n</Project>',ef.replace(b'ID_SKIN',skinid[:3]).replace(b'EFFECT', du_kien_mod_born)+b'  </Action>\r\n</Project>')
                     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','wb') as f1:
@@ -2447,6 +2476,59 @@ else:
                             elem.tail = i
 
                 # Hàm xử lý XML
+                def move_particles_to_base_subset(xml_string: str, target_skin_id: str) -> str:
+                    """
+                    Di chuyển tất cả <Item> trong <particlesInFirstLayer> và <hurtParticlesInFirstLayer>
+                    từ skinSubset có skin ID trùng sang đúng thẻ tương ứng trong baseSubset.
+
+                    Args:
+                        xml_string (str): Nội dung XML đầu vào dưới dạng chuỗi.
+                        target_skin_id (str): ID skin cần kiểm tra.
+
+                    Returns:
+                        str: Chuỗi XML đã được xử lý.
+                    """
+                    from bs4 import BeautifulSoup
+
+                    soup = BeautifulSoup(xml_string, "xml")
+
+                    base_subset = soup.find("baseSubset")
+                    skin_subset = soup.find("skinSubset")
+                    if not base_subset or not skin_subset:
+                        return xml_string
+
+                    # Tạo hoặc lấy đúng thẻ trong baseSubset
+                    def get_or_create_block(tag_name):
+                        tag = base_subset.find(tag_name)
+                        if not tag:
+                            tag = soup.new_tag(tag_name)
+                            tag.attrs = {
+                                "Var": "Cus",
+                                "Type": "System.Collections.Generic.List`1[AssetRefAnalyser.Pair`2[System.String,System.Int32]]"
+                            }
+                            base_subset.append(tag)
+                        return tag
+
+                    for item in skin_subset.find_all("Item", recursive=False):
+                        v1_tag = item.find("v1")
+                        if v1_tag and v1_tag.text.strip() == target_skin_id:
+                            v2_tag = item.find("v2")
+                            if not v2_tag:
+                                continue
+
+                            for tag_name in ["particlesInFirstLayer", "hurtParticlesInFirstLayer"]:
+                                block = v2_tag.find(tag_name)
+                                if block:
+                                    items = block.find_all("Item", recursive=False)
+                                    target_block = get_or_create_block(tag_name)
+                                    for subitem in items:
+                                        target_block.append(subitem)
+                                    block.decompose()
+
+                            break  # chỉ xử lý item đầu tiên khớp
+
+                    return str(soup)
+
                 def process_xml(data, v1_id=None):
 
                     data = data.strip()
@@ -2600,7 +2682,8 @@ else:
                             if skinid==b'11620':
                                 xmlstr = process_xml(xmlstr,skinid.decode())
                                 xmlstr=xmlstr.replace('11620_3','11620_5')
-                        #xmlstr=fix_ef(mod_ef_sound2(xmlstr.encode('utf-8'),decompress,skinid),skinid).decode()
+                        xmlstr=move_particles_to_base_subset(xmlstr, skinid.decode())
+                        xmlstr=fix_ef(mod_ef_sound2(xmlstr.encode('utf-8'),decompress,skinid),skinid).decode()
                         with open(filexml, "w" , encoding="utf-8") as f:
                             f.write(xmlstr)
                         tree=ET.parse(filexml)
