@@ -199,7 +199,7 @@ else:
         skin=skin[skin.find('<ArtPrefabLOD '):]
         skin=skin.replace('>\n      ','>\n')
         p2=a.find('\n   <SkinPrefab ')
-        if skinid in ['54805']:
+        if skinid in ['5486']:
             p=a.find('</ActorName>\n   ')
             de=a[p+len('</ActorName>\n   '):p2]
         else:
