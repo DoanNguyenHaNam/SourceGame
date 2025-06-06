@@ -198,9 +198,13 @@ else:
         )
         skin=skin[skin.find('<ArtPrefabLOD '):]
         skin=skin.replace('>\n      ','>\n')
-        p=a.find('</ActorName>\n   ')
         p2=a.find('\n   <SkinPrefab ')
-        de=a[p+len('</ActorName>\n   '):p2]
+        if skinid in ['54805']:
+            p=a.find('</ActorName>\n   ')
+            de=a[p+len('</ActorName>\n   '):p2]
+        else:
+            p=a.find('<ArtPrefabLOD ')
+            de=a[p:p2]
         a=a.replace(de,skin,1)
         print(a)
         a=rut_gon_infos(a)
@@ -252,7 +256,7 @@ else:
         return a
     def compress_(input_blob,ZSTD_DICT=ZSTD_DICT):
         output_blob=input_blob
-        return output_blob
+        #return output_blob
         if b'\x22\x4a\x67\x00' not in input_blob and b"\x28\xb5\x2f\xfd" not in input_blob:
                 output_blob = bytearray(pyzstd.compress(input_blob, ZSTD_LEVEL, pyzstd.ZstdDict(ZSTD_DICT, True)))
                 output_blob[0:0] = len(input_blob).to_bytes(4, byteorder="little", signed=False)
@@ -1268,7 +1272,7 @@ else:
                                     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                         f1.write(strin)
                 #--------------Mod Born--------------------
-                if hieu_ung == b'\x8f' and not DeAllSkin:
+                if hieu_ung == b'\x8f' and not DeAllSkin and False:
                     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','rb') as f1:
                         strin=f1.read()
                         check=b'    <Track trackName="BORN_ID_SKIN" eventType="CheckHeroIdTick" guid="Mod_by_PminMod_Fix_Lag_ID_SKIN" enabled="true" r="0.000" g="0.000" b="0.000" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" guid="Mod_Vip">\r\n      <TemplateObject name="targetId" id="0" objectName="self"/>\r\n        <int name="heroId" value="ID_SKIN"/>\r\n      </Event>\r\n    </Track>\r\n'
@@ -2478,26 +2482,24 @@ else:
                 # Hàm xử lý XML
                 def move_particles_to_base_subset(xml_string: str, target_skin_id: str) -> str:
                     """
-                    Di chuyển tất cả <Item> trong <particlesInFirstLayer> và <hurtParticlesInFirstLayer>
-                    từ skinSubset có skin ID trùng sang đúng thẻ tương ứng trong baseSubset.
+                    Di chuyển <Item> trong <particlesInFirstLayer> và <hurtParticlesInFirstLayer>
+                    từ skinSubset có ID khớp sang đúng thẻ trong baseSubset. Nếu trùng v1 (không phân biệt hoa thường), cộng v2.
 
                     Args:
-                        xml_string (str): Nội dung XML đầu vào dưới dạng chuỗi.
-                        target_skin_id (str): ID skin cần kiểm tra.
+                        xml_string (str): Nội dung XML.
+                        target_skin_id (str): ID skin cần xử lý.
 
                     Returns:
-                        str: Chuỗi XML đã được xử lý.
+                        str: XML sau xử lý.
                     """
                     from bs4 import BeautifulSoup
 
                     soup = BeautifulSoup(xml_string, "xml")
-
                     base_subset = soup.find("baseSubset")
                     skin_subset = soup.find("skinSubset")
                     if not base_subset or not skin_subset:
                         return xml_string
 
-                    # Tạo hoặc lấy đúng thẻ trong baseSubset
                     def get_or_create_block(tag_name):
                         tag = base_subset.find(tag_name)
                         if not tag:
@@ -2521,13 +2523,29 @@ else:
                                 if block:
                                     items = block.find_all("Item", recursive=False)
                                     target_block = get_or_create_block(tag_name)
-                                    for subitem in items:
-                                        target_block.append(subitem)
-                                    block.decompose()
 
-                            break  # chỉ xử lý item đầu tiên khớp
+                                    existing_map = {}
+                                    for existing_item in target_block.find_all("Item", recursive=False):
+                                        key = existing_item.find("v1").text.strip().lower()
+                                        existing_map[key] = existing_item
+
+                                    for subitem in items:
+                                        sub_v1 = subitem.find("v1").text.strip()
+                                        sub_v2 = int(subitem.find("v2").text.strip())
+                                        key = sub_v1.lower()
+
+                                        if key in existing_map:
+                                            old_v2_tag = existing_map[key].find("v2")
+                                            old_v2 = int(old_v2_tag.text.strip())
+                                            old_v2_tag.string = str(old_v2 + sub_v2)
+                                        else:
+                                            target_block.append(subitem)
+
+                                    block.decompose()
+                            break
 
                     return str(soup)
+
 
                 def process_xml(data, v1_id=None):
 
