@@ -256,7 +256,7 @@ else:
         return a
     def compress_(input_blob,ZSTD_DICT=ZSTD_DICT):
         output_blob=input_blob
-        #return output_blob
+        return output_blob
         if b'\x22\x4a\x67\x00' not in input_blob and b"\x28\xb5\x2f\xfd" not in input_blob:
                 output_blob = bytearray(pyzstd.compress(input_blob, ZSTD_LEVEL, pyzstd.ZstdDict(ZSTD_DICT, True)))
                 output_blob[0:0] = len(input_blob).to_bytes(4, byteorder="little", signed=False)
@@ -1155,31 +1155,32 @@ else:
                                             return split_code
                                         
                                         def extract_guid_after_id(xml_bytes: bytes) -> bytes:
-                                            xml_text = xml_bytes.decode('utf-8')
+                                            if b'<Project>' in xml_bytes:
+                                                xml_text = xml_bytes.decode('utf-8')
 
-                                            pattern = re.compile(r'id="([^"]+)"(?:\s+guid="([^"]+)")?')
+                                                pattern = re.compile(r'id="([^"]+)"(?:\s+guid="([^"]+)")?')
 
-                                            results = []
+                                                results = []
 
-                                            for match in pattern.finditer(xml_text):
-                                                id_val = match.group(1)
-                                                guid_val = match.group(2)
+                                                for match in pattern.finditer(xml_text):
+                                                    id_val = match.group(1)
+                                                    guid_val = match.group(2)
 
-                                                id_str = f'id="{id_val}"'
+                                                    id_str = f'id="{id_val}"'
 
-                                                if guid_val:
-                                                    snippet = xml_text[match.start():match.end()]
-                                                    after_id = snippet[len(id_str):].lstrip()
+                                                    if guid_val:
+                                                        snippet = xml_text[match.start():match.end()]
+                                                        after_id = snippet[len(id_str):].lstrip()
 
-                                                    if after_id.startswith(f'guid="{guid_val}"'):
-                                                        results.append(f'{id_str} guid="{guid_val}"')
-                                                        results.append(f'guid="{guid_val}"')
-                                                        split_code = split_code_back2(xml_bytes)
-                                                        for i in range(len(split_code)):
-                                                            p=re.search(rb'guid="'+guid_val.encode('utf-8')+rb'" enabled="',split_code[i])
-                                                            if p and id_str != f'id="{i}"':
-                                                                xml_bytes=xml_bytes.replace(f'{id_str} guid="{guid_val}"'.encode('utf-8'),f'id="{i}" guid="{guid_val}"'.encode('utf-8'))
-                                                        print(results)
+                                                        if after_id.startswith(f'guid="{guid_val}"'):
+                                                            results.append(f'{id_str} guid="{guid_val}"')
+                                                            results.append(f'guid="{guid_val}"')
+                                                            split_code = split_code_back2(xml_bytes)
+                                                            for i in range(len(split_code)):
+                                                                p=re.search(rb'guid="'+guid_val.encode('utf-8')+rb'" enabled="',split_code[i])
+                                                                if p and id_str != f'id="{i}"':
+                                                                    xml_bytes=xml_bytes.replace(f'{id_str} guid="{guid_val}"'.encode('utf-8'),f'id="{i}" guid="{guid_val}"'.encode('utf-8'))
+                                                            print(results)
 
                                             return xml_bytes
                                         #print(file, extract_guid_after_id(strin).decode('utf-8'),end="\n\n")
@@ -1938,47 +1939,21 @@ else:
                                         for code in split_code_back(strin[:strin.find(b'<Track trackName="Zalo_0357514770')]):
                                             code_goc=code
                                             check=b'</Event>\r\n      <SkinOrAvatarList id="ID_SKIN01" />\r\n      <SkinOrAvatarList id="ID_SKIN02" />\r\n      <SkinOrAvatarList id="ID_SKIN03" />\r\n      <SkinOrAvatarList id="ID_SKIN04" />\r\n      <SkinOrAvatarList id="ID_SKIN05" />\r\n      <SkinOrAvatarList id="ID_SKIN06" />\r\n      <SkinOrAvatarList id="ID_SKIN07" />\r\n      <SkinOrAvatarList id="ID_SKIN08" />\r\n      <SkinOrAvatarList id="ID_SKIN09" />\r\n      <SkinOrAvatarList id="ID_SKIN10" />\r\n      <SkinOrAvatarList id="ID_SKIN11" />\r\n      <SkinOrAvatarList id="ID_SKIN12" />\r\n      <SkinOrAvatarList id="ID_SKIN13" />\r\n      <SkinOrAvatarList id="ID_SKIN14" />\r\n      <SkinOrAvatarList id="ID_SKIN15" />\r\n      <SkinOrAvatarList id="ID_SKIN16" />\r\n      <SkinOrAvatarList id="ID_SKIN17" />\r\n      <SkinOrAvatarList id="ID_SKIN18" />\r\n      <SkinOrAvatarList id="ID_SKIN19" />\r\n      <SkinOrAvatarList id="ID_SKIN20" />\r\n      <SkinOrAvatarList id="ID_SKIN21" />\r\n      <SkinOrAvatarList id="ID_SKIN22" />\r\n      <SkinOrAvatarList id="ID_SKIN23" />\r\n      <SkinOrAvatarList id="ID_SKIN24" />\r\n      <SkinOrAvatarList id="ID_SKIN00" />'
-                                            if b'GetHolidayResourcePathTick' in code:
-                                                def add_filter_attribute(xml_bytes=code, IN=b'11'):
-                                                    # Bước 1: Nếu có SkinAvatarFilterType thì thay giá trị
-                                                    new_bytes, count = re.subn(
-                                                        rb'(<Track[^>]*?)\sSkinAvatarFilterType="[^"]*"',
-                                                        rb'\1 SkinAvatarFilterType="' + IN + rb'"',
-                                                        xml_bytes
-                                                    )
-
-                                                    # Bước 2: Nếu không có thì thêm mới
-                                                    if count == 0:
-                                                        new_bytes = re.sub(
-                                                            rb'(<Track[^>]*?)>',
-                                                            rb'\1 SkinAvatarFilterType="' + IN + rb'">',
-                                                            xml_bytes
-                                                        )
-
-                                                    return new_bytes
-                                                code=add_filter_attribute()
-                                                code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
-                                                strin=strin.replace(code_goc, code)
-                                                dem+=1
-                                            elif (b'resourceName' in code and b'SkinAvatarFilterType="11"' in code):
-                                                code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
-                                                strin=strin.replace(code_goc, code)
-                                                dem+=1
-                                            elif b'<SkinOrAvatarList id="' + skinid in code:
+                                            if b'<SkinOrAvatarList id="' + skinid in code:
                                                 code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
                                                 strin=strin.replace(code_goc, code)
                                         #
-                                        '''if stoptrack_code==b'' and False:
+                                        if stoptrack_code==b'' and False:
                                             p_sua_track1=strin.find(b'    <Track trackName="GetResource[huijidi]"')
                                             p_sua_track2=strin.find(b'    <Track trackName="GetResource[huicheng]"')
                                             stoptrack_code=stoptrack_code+b'\r\n          <TrackObject id="'+str(strin[:p_sua_track1].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />'+b'\r\n          <TrackObject id="'+str(strin[:p_sua_track2].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />'
                                             p_sua_track_3=strin.find(b'    <Track trackName="TriggerParticle')
                                             while p_sua_track_3!=-1:
                                                 stoptrack_code=stoptrack_code+b'\r\n          <TrackObject id="'+str(strin[:p_sua_track_3].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />'
-                                                p_sua_track_3=strin.find(b'    <Track trackName="TriggerParticle',p_sua_track_3+10)'''
+                                                p_sua_track_3=strin.find(b'    <Track trackName="TriggerParticle',p_sua_track_3+10)
                                         #str(strin[:p_sua_track1].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />\r\n          <TrackObject id="'+str(strin[:p_sua_track2].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />\r\n        </Array>\r\n        <bool name="alsoStopNotStartedTrack" value="true" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>'
-                                        #back=back_id+b'    <Track trackName="Zalo_0357514770" eventType="TriggerParticleTick" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticleTick" time="7.000" isDuration="false" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="-1" objectName="None" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huijidi_01" useRefParam="false" />\r\n        <float name="lifeTime" value="5.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bUseHeroLocalForward" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="Zalo_0357514770" eventType="TriggerParticle" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticle" time="0.000" length="7.000" isDuration="true" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huicheng_tongyong_01" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="-0.300" z="0.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bEnableOptCull" value="false" useRefParam="false" />\r\n        <bool name="bTrailProtect" value="true" useRefParam="false" />\r\n        <String name="syncAnimationName" useRefParam="false" />\r\n        <bool name="bApplySpecialEffect" value="true" useRefParam="false" />\r\n        <bool name="bOnlySetAlpha" value="true" useRefParam="false" />\r\n        <String name="customTagName" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="Zalo_0357514770" eventType="StopTracks" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="StopTracks" time="0.000" isDuration="false" guid="Zalo_0357514770">\r\n        <Array name="trackIds" useRefParam="false" type="TrackObject">'+stoptrack_code+b'\r\n        </Array>\r\n        <bool name="alsoStopNotStartedTrack" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'
-                                        back=back_id + b'    <Track trackName="Zalo_0357514770" eventType="TriggerParticleTick" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticleTick" time="7.000" isDuration="false" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="-1" objectName="None" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huijidi_01" useRefParam="false" />\r\n        <float name="lifeTime" value="5.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bUseHeroLocalForward" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="Zalo_0357514770" eventType="TriggerParticle" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticle" time="0.000" length="7.000" isDuration="true" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huicheng_tongyong_01" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="-0.300" z="0.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bEnableOptCull" value="false" useRefParam="false" />\r\n        <bool name="bTrailProtect" value="true" useRefParam="false" />\r\n        <String name="syncAnimationName" useRefParam="false" />\r\n        <bool name="bApplySpecialEffect" value="true" useRefParam="false" />\r\n        <bool name="bOnlySetAlpha" value="true" useRefParam="false" />\r\n        <String name="customTagName" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'
+                                        back=back_id+b'    <Track trackName="Zalo_0357514770" eventType="TriggerParticleTick" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticleTick" time="7.000" isDuration="false" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="-1" objectName="None" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huijidi_01" useRefParam="false" />\r\n        <float name="lifeTime" value="5.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bUseHeroLocalForward" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="Zalo_0357514770" eventType="TriggerParticle" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticle" time="0.000" length="7.000" isDuration="true" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huicheng_tongyong_01" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="-0.300" z="0.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bEnableOptCull" value="false" useRefParam="false" />\r\n        <bool name="bTrailProtect" value="true" useRefParam="false" />\r\n        <String name="syncAnimationName" useRefParam="false" />\r\n        <bool name="bApplySpecialEffect" value="true" useRefParam="false" />\r\n        <bool name="bOnlySetAlpha" value="true" useRefParam="false" />\r\n        <String name="customTagName" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="Zalo_0357514770" eventType="StopTracks" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="StopTracks" time="0.000" isDuration="false" guid="Zalo_0357514770">\r\n        <Array name="trackIds" useRefParam="false" type="TrackObject">'+stoptrack_code+b'\r\n        </Array>\r\n        <bool name="alsoStopNotStartedTrack" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'
+                                        #back=back_id + b'    <Track trackName="Zalo_0357514770" eventType="TriggerParticleTick" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticleTick" time="7.000" isDuration="false" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="-1" objectName="None" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huijidi_01" useRefParam="false" />\r\n        <float name="lifeTime" value="5.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bUseHeroLocalForward" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="Zalo_0357514770" eventType="TriggerParticle" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticle" time="0.000" length="7.000" isDuration="true" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huicheng_tongyong_01" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="-0.300" z="0.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bEnableOptCull" value="false" useRefParam="false" />\r\n        <bool name="bTrailProtect" value="true" useRefParam="false" />\r\n        <String name="syncAnimationName" useRefParam="false" />\r\n        <bool name="bApplySpecialEffect" value="true" useRefParam="false" />\r\n        <bool name="bOnlySetAlpha" value="true" useRefParam="false" />\r\n        <String name="customTagName" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'
                                         back=back.replace(b'Pmin_Dep_Trai',condition_mod).replace(b'Pmin_Pro_Vip',ef)
                                         back_need_2=back_need_
                                         if skinid in [b'50604',b'15004',b'51504',b'13311',b'11620']:
@@ -2413,7 +2388,7 @@ else:
                         #shutil.rmtree(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Gear')
                 #----------------------------------Mod Haste--------------------------------------------#
                 try:
-                    if find_back>2 and may_yeu_mod:
+                    if find_back>2 and may_yeu_mod and check_bien_ve_ef:
                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1.xml','rb') as f:
                             strin = f.read()
                             ef = b'   <Track trackName="CheckHeroIdTick'+bytes(str(has),'utf-8')+b'" eventType="CheckHeroIdTick" guid="Mod_by_YOUTUBE'+hero_name[3:]+b'" enabled="true" useRefParam="false" r="0.667" g="1.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" isDuration="false">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" useRefParam="false"/>\r\n        <int name="heroId" value="'+skinid[:3]+b'" useRefParam="false"/>\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="TriggerParticle0" eventType="TriggerParticle" guid="IDSKIN_Mod_by_YOUTUBE" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="pmin" guid="Mod_by_YOUTUBE'+hero_name[3:]+b'" status="true" />\r\n      <Event eventName="TriggerParticle" time="0.000" length="5.000" isDuration="true" guid="3f4a326c-6b74-4d7e-b9ac-f36378e06052">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" objectName="target" id="1" isTemp="false" useRefParam="false" />\r\n        <uint name="RefLiteBulletID" value="0" useRefParam="false" />\r\n        <bool name="bChooseResourceNameByCamp" value="false" useRefParam="false" />\r\n        <String name="parentResourceName" useRefParam="false" />\r\n        <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/'+hero_name+b'/'+skinid+b'/jiasu_tongyong_01" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.700" z="-0.600" useRefParam="false" />\r\n      </Event>\r\n    </Track>' 
