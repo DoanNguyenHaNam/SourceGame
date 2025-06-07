@@ -216,6 +216,19 @@ else:
         for i in split_code_infos_a(a):
             a=a.replace(i,skin,1)
         return a
+    def xoa_thua_thai(strin):
+        strin2=strin
+        try:
+            guids = re.findall(rb'guid="(.*?)"', strin)
+            for guid in guids:
+                strin=re.sub(rb'guid="\s*'+guid+rb'"',b'guid="TOIBINGU NEN DI REUP CUA DANG PMIN MOD"', strin, flags=re.IGNORECASE)
+            trackname = re.findall(rb'Track\s*trackName="(.*?)"', strin)
+            for trackname in trackname:
+                strin=re.sub(rb'<Track\s*trackName="\s*'+trackname+rb'"',b'<Track trackName="youtube.com/@hongcogidauma"', strin, flags=re.IGNORECASE)
+            strin=re.sub(rb'>\s+<', b'><',strin)
+            return strin.replace(b' refParamName=""',b'').replace(b' isTemp="false"',b'').replace(b'execOnForceStopped="false" execOnActionCompleted="false" ',b'').replace(b' useRefParam="false"',b'').replace(b' value=""',b'')
+        except:
+            return strin2
     def skillmark(a,skinid):
         t=b'prefab_skill_effects/hero_skill_effects/'
         d=383
@@ -256,7 +269,7 @@ else:
         return a
     def compress_(input_blob,ZSTD_DICT=ZSTD_DICT):
         output_blob=input_blob
-        return output_blob
+        #return output_blob
         if b'\x22\x4a\x67\x00' not in input_blob and b"\x28\xb5\x2f\xfd" not in input_blob:
                 output_blob = bytearray(pyzstd.compress(input_blob, ZSTD_LEVEL, pyzstd.ZstdDict(ZSTD_DICT, True)))
                 output_blob[0:0] = len(input_blob).to_bytes(4, byteorder="little", signed=False)
@@ -1117,20 +1130,7 @@ else:
                                                     strin, flags=re.IGNORECASE)
 
                                         #xoa dong thua thai
-                                        def xoa_thua_thai(strin):
-                                            strin2=strin
-                                            return strin
-                                            try:
-                                                guids = re.findall(rb'guid="(.*?)"', strin)
-                                                for guid in guids:
-                                                    strin=re.sub(rb'guid="\s*'+guid+rb'"',b'guid="TOIBINGU NEN DI REUP CUA DANG PMIN MOD"', strin, flags=re.IGNORECASE)
-                                                trackname = re.findall(rb'Track\s*trackName="(.*?)"', strin)
-                                                for trackname in trackname:
-                                                    strin=re.sub(rb'<Track\s*trackName="\s*'+trackname+rb'"',b'<Track trackName="youtube.com/@hongcogidauma"', strin, flags=re.IGNORECASE)
-                                                strin=re.sub(rb'>\s+<', b'><',strin)
-                                                return strin.replace(b' refParamName=""',b'').replace(b' isTemp="false"',b'').replace(b'execOnForceStopped="false" execOnActionCompleted="false" ',b'').replace(b' useRefParam="false"',b'').replace(b' value=""',b'')
-                                            except:
-                                                return strin2
+                                        
                                         #   
                                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                             f1.write(compress_(xoa_thua_thai(strin)))
@@ -1768,6 +1768,7 @@ else:
                     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Databin/Client/Actor/heroSkin.bytes','wb') as f:f.write(a)
             #-----------------------------------------------Mod Back------------------------------------------------------------#
                 print('mod back')
+                list_fix_lag_ef_back = []
                 def split_code_back(a):
                     if True:
                         split_code=[]
@@ -1777,7 +1778,8 @@ else:
                             split_code.append(code)
                             p=a.find(b'    <Track trackName=',p+10)
                     return split_code
-                if (check_bien_ve_ef or skinid in [b'15004',b'13311',b'16707',b'11620']) and may_yeu_mod:
+                id_back = [b'10506', b'10506', b'10611', b'10611', b'10620', b'10620', b'10603', b'10603', b'10603', b'10714', b'10714', b'10705', b'10705', b'10809', b'10809', b'10801', b'10801', b'10801', b'10915', b'10915', b'10915', b'10915', b'10915', b'10915', b'10915', b'10915', b'11110', b'11110', b'11113', b'11113', b'11113', b'11115', b'11115', b'11119', b'11119', b'11120', b'11120', b'11105', b'11105', b'11107', b'11107', b'11107', b'11107', b'11212', b'11212', b'11202', b'11202', b'11202', b'11205', b'11205', b'11205', b'11611', b'11611', b'11611', b'11611', b'11611', b'11611', b'11611', b'11611', b'11611', b'11611', b'11614', b'11614', b'11614', b'11614', b'11614', b'11616', b'11616', b'11619', b'11619', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11604', b'11604', b'11607', b'11607', b'11607', b'11607', b'11607', b'11607', b'11808', b'11808', b'12008', b'12008', b'12304', b'12304', b'12606', b'12606', b'12608', b'12608', b'12812', b'12812', b'12801', b'12806', b'12806', b'12912', b'12912', b'12907', b'12907', b'13011', b'13011', b'13015', b'13015', b'13015', b'13015', b'13015', b'13005', b'13005', b'13005', b'13111', b'13112', b'13112', b'13112', b'13116', b'13116', b'13118', b'13118', b'13104', b'13104', b'13210', b'13210', b'13212', b'13212', b'13204', b'13204', b'13204', b'13311', b'13311', b'13313', b'13313', b'13609', b'13609', b'13612', b'13612', b'13613', b'13613', b'13705', b'13705', b'13706', b'13706', b'13706', b'13706', b'14109', b'14109', b'14109', b'14109', b'14109', b'14110', b'14110', b'14111', b'14111', b'14117', b'14117', b'14118', b'14118', b'14104', b'14104', b'14213', b'14213', b'14213', b'14213', b'14213', b'14213', b'14213', b'14213', b'14213', b'14213', b'14213', b'14213', b'14213', b'14213', b'14213', b'14206', b'14206', b'14206', b'15009', b'15009', b'15009', b'15009', b'15012', b'15012', b'15013', b'15013', b'15015', b'15015', b'15015', b'15015', b'15004', b'15004', b'15007', b'15007', b'15007', b'15211', b'15211', b'15212', b'15212', b'15216', b'15216', b'15216', b'15202', b'15204', b'15204', b'15301', b'15301', b'15409', b'15409', b'15412', b'15412', b'15413', b'15413', b'15611', b'15611', b'15710', b'15710', b'15704', b'15704', b'15705', b'15705', b'15705', b'15705', b'16311', b'16311', b'16304', b'16304', b'16307', b'16307', b'16607', b'16607', b'16710', b'16711', b'16711', b'16711', b'16712', b'16712', b'16703', b'16703', b'16707', b'16707', b'16909', b'16909', b'17106', b'17106', b'17106', b'17106', b'17309', b'17309', b'18408', b'18408', b'18702', b'18702', b'19009', b'19009', b'19009', b'19009', b'19009', b'19009', b'19009', b'19009', b'19009', b'19012', b'19012', b'19013', b'19013', b'19015', b'19015', b'19002', b'19002', b'19007', b'19007', b'19007', b'19007', b'19109', b'19109', b'19509', b'19508', b'19508', b'19609', b'19609', b'19603', b'19603', b'19603', b'19603', b'19605', b'19605', b'19605', b'19605', b'20601', b'20601', b'50111', b'50111', b'50111', b'50112', b'50112', b'50117', b'50117', b'50119', b'50119', b'50105', b'50105', b'50105', b'50108', b'50108', b'50108', b'50604', b'50604', b'50604', b'50802', b'50802', b'51009', b'51009', b'51013', b'51013', b'51015', b'51015', b'51015', b'51015', b'51003', b'51003', b'51004', b'51004', b'51208', b'51305', b'51305', b'51306', b'51306', b'51504', b'51504', b'51802', b'51802', b'51802', b'51802', b'51802', b'51808', b'51808', b'52011', b'52011', b'52011', b'52011', b'52007', b'52007', b'52113', b'52113', b'52113', b'52108', b'52108', b'52204', b'52204', b'52414', b'52414', b'52414', b'52414', b'52404', b'52404', b'52407', b'52407', b'52710', b'52710', b'53107', b'53107', b'53309', b'53309', b'53304', b'53304', b'53308', b'53308', b'53308', b'53503', b'53503', b'53702', b'53702', b'53703', b'53703', b'54002', b'54002', b'54307', b'54307', b'54307', b'54307', b'54402', b'54402', b'54802', b'54802', b'54804', b'54804', b'54805', b'54805', b'56703', b'56703', b'56704', b'56704', b'59702', b'59702', b'59802', b'59802', b'59901', b'59901', b'13109']
+                if skinid in id_back and may_yeu_mod:# ((check_bien_ve_ef or skinid in [b'15004',b'13311',b'16707',b'11620']) or ) and may_yeu_mod:
                     try:
                         name = b''
                         List=[]
@@ -1821,7 +1823,12 @@ else:
 
                                     # Kiểm tra xem đoạn code[p:p2] có khớp bất kỳ mẫu nào không
                                     if any(re.search(pat, code[p:p2]) for pat in patterns):
-                                        List.append(code)
+                                        if b'enabled="true"' in code:
+                                            p=code.find(b'<Condition')
+                                            if p!=-1:
+                                                p2=code.find(b'<Event eventName')
+                                                code=code.replace(code[p:p2],b'')
+                                            List.append(code)
                                 #if skinid==b'15710':
                                 #    name=name.replace(b'</Event>\r\n    </Track>\r\n    <Track trackName="GetResource[huijidi]" eventType="GetHolidayResourcePathTick" guid="f5fef0dc-285d-4e1d-8753-561e6bb56feb" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="GetHolidayResourcePathTick" time="0.000" isDuration="false" guid="a876e630-35af-4e8b-8e4a-d5e712532467">\r\n        <String name="holidayResourcePathPrefix" value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huijidi" refParamName="" useRefParam="false" />\r\n        <String name="outPathParamName" value="strReturnCityFall" refParamName="" useRefParam="false" />\r\n        <String name="outSoundEventParamName" value="" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="GetResource[huicheng]" eventType="GetHolidayResourcePathTick" guid="5b2bdf83-4771-4196-adea-1fd186427d17" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="GetHolidayResourcePathTick" time="0.000" isDuration="false" guid="a458373b-da86-47b6-a6bb-fede8ea3ea44">\r\n        <int name="battleEffectCfgID" value="11000" refParamName="" useRefParam="false" />\r\n        <String name="holidayResourcePathPrefix" value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huicheng_tongyong" refParamName="" useRefParam="false" />\r\n        <String name="outPathParamName" value="strReturnCityEffectPath" refParamName="" useRefParam="false" />\r\n        <String name="outSoundEventParamName" value="" refParamName="" useRefParam="false" />\r\n      ',b'').replace(b'\r\n    <Track trackName="PlayAnimDuration0" eventType="PlayAnimDuration" guid="1b12d0e0-8e92-40e4-909a-72b21d52bcf5" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="PlayAnimDuration" time="0.000" length="7.000" isDuration="true" guid="ef567983-128d-4105-a2f5-ecc614a244dc">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <String name="clipName" value="Home" refParamName="" useRefParam="false" />\r\n        <int name="layer" value="3" refParamName="" useRefParam="false" />\r\n        <bool name="bLoop" value="true" refParamName="" useRefParam="false" />\r\n        <float name="crossFadeTime" value="0.100" refParamName="" useRefParam="false" />\r\n        <bool name="alwaysAnimate" value="true" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="PlayAnimDuration2" eventType="PlayAnimDuration" guid="c1f6bece-4d4f-4bb8-9f5b-ec448a721456" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="PlayAnimDuration" time="7.000" length="4.500" isDuration="true" guid="a4f9646e-2cf2-4952-9cde-8d892eead301">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <String name="clipName" value="Gohome1" refParamName="" useRefParam="false" />\r\n        <int name="layer" value="3" refParamName="" useRefParam="false" />\r\n        <bool name="alwaysAnimate" value="true" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="TriggerParticle0" eventType="TriggerParticle" guid="94206a84-71ae-4795-8ecd-728b8df2f93e" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="TriggerParticle" time="0.000" length="7.000" isDuration="true" guid="1037d202-d0de-4d35-b9d3-a4484a97c12e">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <String name="parentResourceName" value="prefab_skill_effects/tongyong_effects/tongyong_hurt/born_back_reborn/huicheng_tongyong_02" refParamName="" useRefParam="false" />\r\n        <String name="resourceName" value="" refParamName="strReturnCityEffectPath" useRefParam="true" />\r\n        <String name="bindPointName" value="Bone_Qiu" refParamName="" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" refParamName="" useRefParam="false" />\r\n        <bool name="bEnableOptCull" value="false" refParamName="" useRefParam="false" />\r\n        <bool name="bOnlyFollowPos" value="true" refParamName="" useRefParam="false" />\r\n        <bool name="bTrailProtect" value="true" refParamName="" useRefParam="false" />\r\n        <Enum name="ReplacementUsage" value="1" refParamName="" useRefParam="false" />\r\n        <String name="syncAnimationName" value="" refParamName="" useRefParam="false" />\r\n        <bool name="bApplySpecialEffect" value="true" refParamName="" useRefParam="false" />\r\n        <bool name="bOnlySetAlpha" value="true" refParamName="" useRefParam="false" />\r\n        <String name="customTagName" value="" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>',b'\r\n    <Track trackName="TriggerParticle0" eventType="TriggerParticle" guid="28dbc769-e471-407e-8108-9012ecf910d8" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="TriggerParticle" time="0.000" length="7.000" isDuration="true" guid="6057cb60-5062-42e9-a6cd-09c8e9e7eb05">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <String name="parentResourceName" value="prefab_skill_effects/tongyong_effects/tongyong_hurt/born_back_reborn/huicheng_tongyong_02" refParamName="" useRefParam="false" />\r\n        <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/157_BuZhiHuoWu/15710/huicheng_tongyong_02" useRefParam="true" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="-0.300" z="0.000" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>')
                         except:
@@ -1932,18 +1939,13 @@ else:
                                         goc_id = b'\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="HitTriggerTick0" eventType="HitTriggerTick" guid="3fcc5b3f-3a9c-495c-bddd-5e3b03e5c01b'
                                         condition_mod = b'<Condition id="Pmin" guid="Mod_by_YOUTUBE_'+hero_name[:3]+b'" status="true"/>'
                                         condition_mod_false = b'<Condition id="Pmin" guid="Mod_by_YOUTUBE_'+hero_name[:3]+b'" status="false"/>'
-                                        name = name.replace(b'\r\n      <Event eventName="',b'\r\n      '+condition_mod+b'\r\n      <Event eventName="')
+                                        name = name.replace(b'<Event eventName="',condition_mod+b'\r\n      <Event eventName="')
                                         ef=b'prefab_skill_effects/hero_skill_effects/'+hero_name+b'/'+skinid
-                                        #xoa để đè all
-                                        dem = 0
-                                        for code in split_code_back(strin[:strin.find(b'<Track trackName="Zalo_0357514770')]):
-                                            code_goc=code
-                                            check=b'</Event>\r\n      <SkinOrAvatarList id="ID_SKIN01" />\r\n      <SkinOrAvatarList id="ID_SKIN02" />\r\n      <SkinOrAvatarList id="ID_SKIN03" />\r\n      <SkinOrAvatarList id="ID_SKIN04" />\r\n      <SkinOrAvatarList id="ID_SKIN05" />\r\n      <SkinOrAvatarList id="ID_SKIN06" />\r\n      <SkinOrAvatarList id="ID_SKIN07" />\r\n      <SkinOrAvatarList id="ID_SKIN08" />\r\n      <SkinOrAvatarList id="ID_SKIN09" />\r\n      <SkinOrAvatarList id="ID_SKIN10" />\r\n      <SkinOrAvatarList id="ID_SKIN11" />\r\n      <SkinOrAvatarList id="ID_SKIN12" />\r\n      <SkinOrAvatarList id="ID_SKIN13" />\r\n      <SkinOrAvatarList id="ID_SKIN14" />\r\n      <SkinOrAvatarList id="ID_SKIN15" />\r\n      <SkinOrAvatarList id="ID_SKIN16" />\r\n      <SkinOrAvatarList id="ID_SKIN17" />\r\n      <SkinOrAvatarList id="ID_SKIN18" />\r\n      <SkinOrAvatarList id="ID_SKIN19" />\r\n      <SkinOrAvatarList id="ID_SKIN20" />\r\n      <SkinOrAvatarList id="ID_SKIN21" />\r\n      <SkinOrAvatarList id="ID_SKIN22" />\r\n      <SkinOrAvatarList id="ID_SKIN23" />\r\n      <SkinOrAvatarList id="ID_SKIN24" />\r\n      <SkinOrAvatarList id="ID_SKIN00" />'
-                                            if b'<SkinOrAvatarList id="' + skinid in code:
-                                                code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
-                                                strin=strin.replace(code_goc, code)
+                                        list_fix_lag_ef_back.append(ef.decode()+'/huijidi_01')
+                                        list_fix_lag_ef_back.append(ef.decode()+'/huicheng_tongyong_01')
+                                        list_fix_lag_ef_back.append(ef.decode()+'/jiasu_tongyong_01')
                                         #
-                                        if stoptrack_code==b'' and False:
+                                        if stoptrack_code==b'':
                                             p_sua_track1=strin.find(b'    <Track trackName="GetResource[huijidi]"')
                                             p_sua_track2=strin.find(b'    <Track trackName="GetResource[huicheng]"')
                                             stoptrack_code=stoptrack_code+b'\r\n          <TrackObject id="'+str(strin[:p_sua_track1].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />'+b'\r\n          <TrackObject id="'+str(strin[:p_sua_track2].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />'
@@ -1951,8 +1953,57 @@ else:
                                             while p_sua_track_3!=-1:
                                                 stoptrack_code=stoptrack_code+b'\r\n          <TrackObject id="'+str(strin[:p_sua_track_3].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />'
                                                 p_sua_track_3=strin.find(b'    <Track trackName="TriggerParticle',p_sua_track_3+10)
+                                        #xoa để đè all
+                                        dem = 0
+                                        split_code=split_code_back(strin[:strin.find(b'<Track trackName="Zalo_0357514770')])
+                                        stoptrack_code_big = stoptrack_code
+                                        ani_back = b''
+                                        for code in split_code_back(strin[:strin.find(b'<Track trackName="Zalo_0357514770')]):
+                                            code_goc=code
+                                            check=b'</Event>\r\n      <SkinOrAvatarList id="ID_SKIN01" />\r\n      <SkinOrAvatarList id="ID_SKIN02" />\r\n      <SkinOrAvatarList id="ID_SKIN03" />\r\n      <SkinOrAvatarList id="ID_SKIN04" />\r\n      <SkinOrAvatarList id="ID_SKIN05" />\r\n      <SkinOrAvatarList id="ID_SKIN06" />\r\n      <SkinOrAvatarList id="ID_SKIN07" />\r\n      <SkinOrAvatarList id="ID_SKIN08" />\r\n      <SkinOrAvatarList id="ID_SKIN09" />\r\n      <SkinOrAvatarList id="ID_SKIN10" />\r\n      <SkinOrAvatarList id="ID_SKIN11" />\r\n      <SkinOrAvatarList id="ID_SKIN12" />\r\n      <SkinOrAvatarList id="ID_SKIN13" />\r\n      <SkinOrAvatarList id="ID_SKIN14" />\r\n      <SkinOrAvatarList id="ID_SKIN15" />\r\n      <SkinOrAvatarList id="ID_SKIN16" />\r\n      <SkinOrAvatarList id="ID_SKIN17" />\r\n      <SkinOrAvatarList id="ID_SKIN18" />\r\n      <SkinOrAvatarList id="ID_SKIN19" />\r\n      <SkinOrAvatarList id="ID_SKIN20" />\r\n      <SkinOrAvatarList id="ID_SKIN21" />\r\n      <SkinOrAvatarList id="ID_SKIN22" />\r\n      <SkinOrAvatarList id="ID_SKIN23" />\r\n      <SkinOrAvatarList id="ID_SKIN24" />\r\n      <SkinOrAvatarList id="ID_SKIN00" />'
+                                            if b'GetHolidayResourcePathTick' in code:
+                                                def add_filter_attribute(xml_bytes=code, IN=b'11'):
+                                                    # Bước 1: Nếu có SkinAvatarFilterType thì thay giá trị
+                                                    new_bytes, count = re.subn(
+                                                        rb'(<Track[^>]*?)\sSkinAvatarFilterType="[^"]*"',
+                                                        rb'\1 SkinAvatarFilterType="' + IN + rb'"',
+                                                        xml_bytes
+                                                    )
+
+                                                    # Bước 2: Nếu không có thì thêm mới
+                                                    if count == 0:
+                                                        new_bytes = re.sub(
+                                                            rb'(<Track[^>]*?)>',
+                                                            rb'\1 SkinAvatarFilterType="' + IN + rb'">',
+                                                            xml_bytes
+                                                        )
+
+                                                    return new_bytes
+                                                code=add_filter_attribute()
+                                                code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
+                                                strin=strin.replace(code_goc, code)
+                                                dem+=1
+                                            elif (b'resourceName' in code and b'SkinAvatarFilterType="11"' in code):
+                                                code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
+                                                strin=strin.replace(code_goc, code)
+                                                dem+=1
+                                            elif b'<SkinOrAvatarList id="' + skinid in code:
+                                                code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]).replace(b'\r\n      <SkinOrAvatarList id="'+skinid+b'" />',b''))
+                                                strin=strin.replace(code_goc, code)
+                                        '''
+                                        for i in range(len(split_code)):
+                                            code_goc=code = split_code[i]
+                                            if b'<SkinOrAvatarList id="' + skinid in code:
+                                                if (b'clipName' in code or b'Animation' in code) and b'CheckAni' not in code:
+                                                    ch_st = b'\r\n          <TrackObject id="'+str(i).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />'
+                                                    if ch_st not in stoptrack_code_big:
+                                                        stoptrack_code_big+=ch_st
+                                                    if b'SkinAvatarFilterType="9"' in code:
+                                                        p1=code.find(b'</Event>')+len('</Event>')
+                                                        p2=code.find(b'\r\n    </Track>')
+                                                        ani_back+=code.replace(b'SkinAvatarFilterType="9"', b'').replace(code[p1:p2],b'').replace(b'<Event eventName',condition_mod+b'\r\n      <Event eventName')'''
                                         #str(strin[:p_sua_track1].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />\r\n          <TrackObject id="'+str(strin[:p_sua_track2].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />\r\n        </Array>\r\n        <bool name="alsoStopNotStartedTrack" value="true" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>'
-                                        back=back_id+b'    <Track trackName="Zalo_0357514770" eventType="TriggerParticleTick" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticleTick" time="7.000" isDuration="false" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="-1" objectName="None" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huijidi_01" useRefParam="false" />\r\n        <float name="lifeTime" value="5.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bUseHeroLocalForward" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="Zalo_0357514770" eventType="TriggerParticle" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticle" time="0.000" length="7.000" isDuration="true" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huicheng_tongyong_01" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="-0.300" z="0.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bEnableOptCull" value="false" useRefParam="false" />\r\n        <bool name="bTrailProtect" value="true" useRefParam="false" />\r\n        <String name="syncAnimationName" useRefParam="false" />\r\n        <bool name="bApplySpecialEffect" value="true" useRefParam="false" />\r\n        <bool name="bOnlySetAlpha" value="true" useRefParam="false" />\r\n        <String name="customTagName" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="Zalo_0357514770" eventType="StopTracks" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="StopTracks" time="0.000" isDuration="false" guid="Zalo_0357514770">\r\n        <Array name="trackIds" useRefParam="false" type="TrackObject">'+stoptrack_code+b'\r\n        </Array>\r\n        <bool name="alsoStopNotStartedTrack" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'
+                                        back=back_id+b'    <Track trackName="Zalo_0357514770" eventType="TriggerParticleTick" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticleTick" time="7.000" isDuration="false" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="-1" objectName="None" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huijidi_01" useRefParam="false" />\r\n        <float name="lifeTime" value="5.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bUseHeroLocalForward" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="Zalo_0357514770" eventType="TriggerParticle" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticle" time="0.000" length="7.000" isDuration="true" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huicheng_tongyong_01" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="-0.300" z="0.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bEnableOptCull" value="false" useRefParam="false" />\r\n        <bool name="bTrailProtect" value="true" useRefParam="false" />\r\n        <String name="syncAnimationName" useRefParam="false" />\r\n        <bool name="bApplySpecialEffect" value="true" useRefParam="false" />\r\n        <bool name="bOnlySetAlpha" value="true" useRefParam="false" />\r\n        <String name="customTagName" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'#    <Track trackName="Zalo_0357514770" eventType="StopTracks" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="StopTracks" time="0.000" isDuration="false" guid="Zalo_0357514770">\r\n        <Array name="trackIds" useRefParam="false" type="TrackObject">'+stoptrack_code_big+b'\r\n        </Array>\r\n        <bool name="alsoStopNotStartedTrack" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'#+ani_back
                                         #back=back_id + b'    <Track trackName="Zalo_0357514770" eventType="TriggerParticleTick" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticleTick" time="7.000" isDuration="false" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="-1" objectName="None" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huijidi_01" useRefParam="false" />\r\n        <float name="lifeTime" value="5.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bUseHeroLocalForward" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="Zalo_0357514770" eventType="TriggerParticle" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticle" time="0.000" length="7.000" isDuration="true" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huicheng_tongyong_01" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="-0.300" z="0.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bEnableOptCull" value="false" useRefParam="false" />\r\n        <bool name="bTrailProtect" value="true" useRefParam="false" />\r\n        <String name="syncAnimationName" useRefParam="false" />\r\n        <bool name="bApplySpecialEffect" value="true" useRefParam="false" />\r\n        <bool name="bOnlySetAlpha" value="true" useRefParam="false" />\r\n        <String name="customTagName" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'
                                         back=back.replace(b'Pmin_Dep_Trai',condition_mod).replace(b'Pmin_Pro_Vip',ef)
                                         back_need_2=back_need_
@@ -2388,7 +2439,8 @@ else:
                         #shutil.rmtree(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Gear')
                 #----------------------------------Mod Haste--------------------------------------------#
                 try:
-                    if find_back>2 and may_yeu_mod and check_bien_ve_ef:
+                    id_haste = [b'10611', b'10611', b'10611', b'10620', b'10620', b'10620', b'10620', b'11113', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11620', b'11607', b'11607', b'11607', b'11607', b'11607', b'11607', b'11607', b'11607', b'12304', b'12606', b'12706', b'13011', b'13011', b'13015', b'13015', b'13015', b'13015', b'13116', b'13116', b'13210', b'13210', b'13210', b'13210', b'13613', b'13613', b'13613', b'13613', b'13613', b'13613', b'14111', b'14111', b'14111', b'14111', b'14108', b'15009', b'15009', b'15012', b'15012', b'15012', b'15412', b'15710', b'16307', b'16307', b'18906', b'19007', b'19007', b'19007', b'19007', b'50112', b'50112', b'50112', b'50112', b'50108', b'50108', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'51015', b'52011', b'52011', b'52011', b'52414', b'52414', b'52414', b'52406', b'53703', b'54307', b'54307', b'54307', b'54307', b'54307', b'54402']
+                    if skinid in id_haste and may_yeu_mod:#find_back>2 and may_yeu_mod and check_bien_ve_ef:
                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1.xml','rb') as f:
                             strin = f.read()
                             ef = b'   <Track trackName="CheckHeroIdTick'+bytes(str(has),'utf-8')+b'" eventType="CheckHeroIdTick" guid="Mod_by_YOUTUBE'+hero_name[3:]+b'" enabled="true" useRefParam="false" r="0.667" g="1.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" isDuration="false">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" useRefParam="false"/>\r\n        <int name="heroId" value="'+skinid[:3]+b'" useRefParam="false"/>\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="TriggerParticle0" eventType="TriggerParticle" guid="IDSKIN_Mod_by_YOUTUBE" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="pmin" guid="Mod_by_YOUTUBE'+hero_name[3:]+b'" status="true" />\r\n      <Event eventName="TriggerParticle" time="0.000" length="5.000" isDuration="true" guid="3f4a326c-6b74-4d7e-b9ac-f36378e06052">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" objectName="target" id="1" isTemp="false" useRefParam="false" />\r\n        <uint name="RefLiteBulletID" value="0" useRefParam="false" />\r\n        <bool name="bChooseResourceNameByCamp" value="false" useRefParam="false" />\r\n        <String name="parentResourceName" useRefParam="false" />\r\n        <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/'+hero_name+b'/'+skinid+b'/jiasu_tongyong_01" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.700" z="-0.600" useRefParam="false" />\r\n      </Event>\r\n    </Track>' 
@@ -2455,24 +2507,26 @@ else:
                             elem.tail = i
 
                 # Hàm xử lý XML
-                def move_particles_to_base_subset(xml_string: str, target_skin_id: str) -> str:
+                def move_and_insert_particles(xml_string: str, target_skin_id: str, v1_list: list[str]) -> str:
                     """
-                    Di chuyển <Item> trong <particlesInFirstLayer> và <hurtParticlesInFirstLayer>
-                    từ skinSubset có ID khớp sang đúng thẻ trong baseSubset. Nếu trùng v1 (không phân biệt hoa thường), cộng v2.
+                    Kết hợp: chuyển particles từ skinSubset sang baseSubset nếu v1 khớp target_skin_id,
+                    đồng thời thêm mới từ v1_list vào baseSubset.particlesInFirstLayer (mỗi cái v2=1, tự cộng nếu trùng).
 
                     Args:
                         xml_string (str): Nội dung XML.
-                        target_skin_id (str): ID skin cần xử lý.
+                        target_skin_id (str): ID skin cần tìm trong skinSubset.
+                        v1_list (list[str]): Danh sách item muốn thêm tay vào particlesInFirstLayer.
 
                     Returns:
-                        str: XML sau xử lý.
+                        str: XML đã xử lý.
                     """
                     from bs4 import BeautifulSoup
+                    from collections import Counter
 
                     soup = BeautifulSoup(xml_string, "xml")
                     base_subset = soup.find("baseSubset")
                     skin_subset = soup.find("skinSubset")
-                    if not base_subset or not skin_subset:
+                    if not base_subset:
                         return xml_string
 
                     def get_or_create_block(tag_name):
@@ -2486,38 +2540,72 @@ else:
                             base_subset.append(tag)
                         return tag
 
-                    for item in skin_subset.find_all("Item", recursive=False):
-                        v1_tag = item.find("v1")
-                        if v1_tag and v1_tag.text.strip() == target_skin_id:
-                            v2_tag = item.find("v2")
-                            if not v2_tag:
-                                continue
+                    # ========== [PHẦN 1] DI CHUYỂN TỪ SKINSUBSET ==========
+                    if skin_subset:
+                        for item in skin_subset.find_all("Item", recursive=False):
+                            v1_tag = item.find("v1")
+                            if v1_tag and v1_tag.text.strip().lower() == target_skin_id.lower():
+                                v2_tag = item.find("v2")
+                                if not v2_tag:
+                                    continue
 
-                            for tag_name in ["particlesInFirstLayer", "hurtParticlesInFirstLayer"]:
-                                block = v2_tag.find(tag_name)
-                                if block:
-                                    items = block.find_all("Item", recursive=False)
-                                    target_block = get_or_create_block(tag_name)
+                                for tag_name in ["particlesInFirstLayer", "hurtParticlesInFirstLayer"]:
+                                    block = v2_tag.find(tag_name)
+                                    if block:
+                                        items = block.find_all("Item", recursive=False)
+                                        target_block = get_or_create_block(tag_name)
 
-                                    existing_map = {}
-                                    for existing_item in target_block.find_all("Item", recursive=False):
-                                        key = existing_item.find("v1").text.strip().lower()
-                                        existing_map[key] = existing_item
+                                        # map đã có
+                                        existing_map = {
+                                            i.find("v1").text.strip().lower(): i
+                                            for i in target_block.find_all("Item", recursive=False)
+                                            if i.find("v1") and i.find("v2")
+                                        }
 
-                                    for subitem in items:
-                                        sub_v1 = subitem.find("v1").text.strip()
-                                        sub_v2 = int(subitem.find("v2").text.strip())
-                                        key = sub_v1.lower()
+                                        for subitem in items:
+                                            sub_v1 = subitem.find("v1").text.strip()
+                                            sub_v2 = int(subitem.find("v2").text.strip())
+                                            key = sub_v1.lower()
 
-                                        if key in existing_map:
-                                            old_v2_tag = existing_map[key].find("v2")
-                                            old_v2 = int(old_v2_tag.text.strip())
-                                            old_v2_tag.string = str(old_v2 + sub_v2)
-                                        else:
-                                            target_block.append(subitem)
+                                            if key in existing_map:
+                                                old_v2_tag = existing_map[key].find("v2")
+                                                old_v2 = int(old_v2_tag.text.strip())
+                                                old_v2_tag.string = str(old_v2 + sub_v2)
+                                            else:
+                                                target_block.append(subitem)
 
-                                    block.decompose()
-                            break
+                                        block.decompose()
+                                break
+
+                    # ========== [PHẦN 2] THÊM TAY TỪ DANH SÁCH ==========
+                    if v1_list:
+                        tag_name = "particlesInFirstLayer"
+                        block = get_or_create_block(tag_name)
+                        counter = Counter(v.strip().lower() for v in v1_list)
+
+                        existing_map = {
+                            item.find("v1").text.strip().lower(): item
+                            for item in block.find_all("Item", recursive=False)
+                            if item.find("v1") and item.find("v2")
+                        }
+
+                        for key, count in counter.items():
+                            if key in existing_map:
+                                old_v2_tag = existing_map[key].find("v2")
+                                old_v2 = int(old_v2_tag.text.strip())
+                                old_v2_tag.string = str(old_v2 + count)
+                            else:
+                                new_item = soup.new_tag("Item", attrs={
+                                    "Type": "AssetRefAnalyser.Pair`2[System.String,System.Int32]",
+                                    "Var": "Com"
+                                })
+                                new_v1 = soup.new_tag("v1", attrs={"Type": "System.String", "Var": "String"})
+                                new_v1.string = key
+                                new_v2 = soup.new_tag("v2", attrs={"Type": "System.Int32", "Var": "String"})
+                                new_v2.string = str(count)
+                                new_item.append(new_v1)
+                                new_item.append(new_v2)
+                                block.append(new_item)
 
                     return str(soup)
 
@@ -2675,7 +2763,7 @@ else:
                             if skinid==b'11620':
                                 xmlstr = process_xml(xmlstr,skinid.decode())
                                 xmlstr=xmlstr.replace('11620_3','11620_5')
-                        xmlstr=move_particles_to_base_subset(xmlstr, skinid.decode())
+                        xmlstr=move_and_insert_particles(xmlstr, skinid.decode(), []) #list_fix_lag_ef_back)
                         xmlstr=fix_ef(mod_ef_sound2(xmlstr.encode('utf-8'),decompress,skinid),skinid).decode()
                         with open(filexml, "w" , encoding="utf-8") as f:
                             f.write(xmlstr)
@@ -2705,6 +2793,7 @@ else:
     #    strin=strin.replace(b'prefab_skill_effects/hero_skill_effects/520_Veres/52007/',b'prefab_skill_effects/component_effects/52007/'+skinid_veres+b'/')
     strin=strin.replace(b'prefab_skill_effects/hero_skill_effects/527_Sephera/52709/huicheng_tongyong_01',b'Prefab_Skill_Effects/Inner_Game_Effect/returncity/returncity_151_Lan')
     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Back.xml','wb') as f1:
+        strin=xoa_thua_thai(strin)
         f1.write(compress_(strin,ZSTD_DICT))
     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1.xml','rb') as f1:strin=f1.read()
     if raz_15710_back and False:
@@ -2724,6 +2813,7 @@ else:
     strin=fix_condition(strin)
     strin=strin.replace(b'14111/jiasu_tongyong_01" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.700" z="-0.600',b'14111/14111_luoer_Sprint" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.000" z="0.000').replace(b'15009/jiasu_tongyong_01" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.700" z="-0.600',b'15009/t2_spint" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.000" z="0.000')
     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1.xml','wb') as f1:
+        strin=xoa_thua_thai(strin)
         f1.write(compress_(strin,ZSTD_DICT))
     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1_leave.xml','rb') as f1:strin=f1.read()
     if False:
@@ -2743,10 +2833,12 @@ else:
     #    strin=strin.replace(b'<int name="skinId" value="13116" refParamName="" useRefParam="false" />',b'<int name="skinId" value="13116" refParamName="" useRefParam="false" />\r\n        <bool name="useNegateValue" value="true" refParamName="" useRefParam="false" />')
     strin=fix_condition(strin)
     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1_leave.xml','wb') as f1:
+        strin=xoa_thua_thai(strin)
         f1.write(compress_(strin,ZSTD_DICT))
     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','rb') as f1:strin=f1.read()
     strin=fix_condition(strin)
     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','wb') as f1:
+        strin=xoa_thua_thai(strin)
         f1.write(compress_(strin,ZSTD_DICT))
     with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes'.format(folder_mod), 'w', zipfile.ZIP_STORED) as zipf:
         zipdir2('tmp/', zipf)
@@ -2798,28 +2890,28 @@ else:
         with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill/P2E1.xml','rb') as f:
             a=f.read()
             a=decompress_(a,ZSTD_DICT)
-            p=a.find(b'    <Track trackName="')
+            p=a.find(b'<Track trackName="')
             a=a[:p]+cam_xa
             with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill/P2E1.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
         with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/back.xml','rb') as f:
             a=f.read()
             a=decompress_(a,ZSTD_DICT)
-            a=a.replace(b'  </Action>',hittringer_dirak)
+            a=a.replace(b'</Action>',hittringer_dirak)
             with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/back.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
         with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/born.xml','rb') as f:
             a=f.read()
             a=decompress_(a,ZSTD_DICT)
-            a=a.replace(b'  </Action>',hittringer_dirak)
+            a=a.replace(b'</Action>',hittringer_dirak)
             with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/born.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
         with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Heal5v5.xml','rb') as f:
             a=f.read()
             a=decompress_(a,ZSTD_DICT)
-            a=a.replace(b'  </Action>',hittringer_dirak)
+            a=a.replace(b'</Action>',hittringer_dirak)
             with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Heal5v5.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
         with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Heal3v3.xml','rb') as f:
             a=f.read()
             a=decompress_(a,ZSTD_DICT)
-            a=a.replace(b'  </Action>',hittringer_dirak)
+            a=a.replace(b'</Action>',hittringer_dirak)
             with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Heal3v3.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
         DIR = f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill'
         DIR2 = f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill'
