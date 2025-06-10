@@ -217,16 +217,20 @@ else:
             a=a.replace(i,skin,1)
         return a
     def xoa_thua_thai(strin):
+        return strin
         strin2=strin
         try:
-            guids = re.findall(rb'guid="(.*?)"', strin)
-            for guid in guids:
-                strin=re.sub(rb'guid="\s*'+guid+rb'"',b'guid="TOIBINGU NEN DI REUP CUA DANG PMIN MOD"', strin, flags=re.IGNORECASE)
-            trackname = re.findall(rb'Track\s*trackName="(.*?)"', strin)
-            for trackname in trackname:
-                strin=re.sub(rb'<Track\s*trackName="\s*'+trackname+rb'"',b'<Track trackName="youtube.com/@hongcogidauma"', strin, flags=re.IGNORECASE)
-            strin=re.sub(rb'>\s+<', b'><',strin)
-            return strin.replace(b' refParamName=""',b'').replace(b' isTemp="false"',b'').replace(b'execOnForceStopped="false" execOnActionCompleted="false" ',b'').replace(b' useRefParam="false"',b'').replace(b' value=""',b'')
+            if b'trackName' in strin2:
+                guids = re.findall(rb'guid="(.*?)"', strin)
+                for guid in guids:
+                    strin=re.sub(rb'guid="\s*'+guid+rb'"',b'guid="TOIBINGU NEN DI REUP CUA DANG PMIN MOD"', strin, flags=re.IGNORECASE)
+                trackname = re.findall(rb'Track\s*trackName="(.*?)"', strin)
+                for trackname in trackname:
+                    strin=re.sub(rb'<Track\s*trackName="\s*'+trackname+rb'"',b'<Track trackName="youtube.com/@hongcogidauma"', strin, flags=re.IGNORECASE)
+                strin=re.sub(rb'>\s+<', b'><',strin)
+                return strin #.replace(b' refParamName=""',b'').replace(b' isTemp="false"',b'').replace(b'execOnForceStopped="false" execOnActionCompleted="false" ',b'').replace(b' useRefParam="false"',b'').replace(b' value=""',b'')
+            else:
+                return strin2
         except:
             return strin2
     def skillmark(a,skinid):
