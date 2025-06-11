@@ -185,7 +185,7 @@ else:
                     'Prefab_Characters/Prefab_Hero/116_JingKe/Awaken/11621_JingKe_04_Show'
                 )
             a=a.replace('AW1','AW5')
-        a=a.replace('         </ArtSkinLobbyShowLOD>','         </ArtSkinLobbyShowLOD>\n         <MSAA Var="Enum" Type="Assets.Scripts.GameLogic.EAntiAliasing">2</MSAA>')
+        #a=a.replace('         </ArtSkinLobbyShowLOD>','         </ArtSkinLobbyShowLOD>\n         <MSAA Var="Enum" Type="Assets.Scripts.GameLogic.EAntiAliasing">2</MSAA>')
         skinid=skinid[:3]+str(int(skinid[3:])+1)
         for skin in split_code_infos_a(a):
             p=skin.find('_Show')
