@@ -188,6 +188,9 @@ else:
         #a=a.replace('         </ArtSkinLobbyShowLOD>','         </ArtSkinLobbyShowLOD>\n         <MSAA Var="Enum" Type="Assets.Scripts.GameLogic.EAntiAliasing">2</MSAA>')
         skinid=skinid[:3]+str(int(skinid[3:])+1)
         for skin in split_code_infos_a(a):
+            if 'Assets.Scripts.GameLogic.EAntiAliasing' not in skin:
+                a=a.replace(skin,skin.replace('         </ArtSkinLobbyShowLOD>','         </ArtSkinLobbyShowLOD>\n         <MSAA Var="Enum" Type="Assets.Scripts.GameLogic.EAntiAliasing">2</MSAA>'))
+        for skin in split_code_infos_a(a):
             p=skin.find('_Show')
             if f'/{skinid}_' in skin[:p]:
                 break
@@ -206,7 +209,6 @@ else:
             p=a.find('<ArtPrefabLOD ')
             de=a[p:p2]
         a=a.replace(de,skin,1)
-        print(a)
         a=rut_gon_infos(a)
         pz=a.split('\n      <Item Var="Com" Type="Assets.Scripts.GameLogic.SkinElement">')
         for skin in split_code_infos_a(a):
