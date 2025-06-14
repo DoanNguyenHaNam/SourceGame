@@ -1987,14 +1987,20 @@ else:
                                                     return new_bytes
                                                 code=add_filter_attribute()
                                                 code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
-                                                strin=strin.replace(code_goc, code)
+                                                strin=strin.replace(code_goc, b'')
+                                                #strin=strin.replace(code_goc, code)
                                                 dem+=1
                                             elif (b'resourceName' in code and b'SkinAvatarFilterType="11"' in code):
+                                                code=code.replace(b'value="" refParamName="strReturnCityEffectPath" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huicheng_tongyong" refParamName="" useRefParam="false" />')
+                                                code=code.replace(b'value="" refParamName="strReturnCityFall" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huijidi" refParamName="" useRefParam="false" />')
                                                 code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
                                                 strin=strin.replace(code_goc, code)
                                                 dem+=1
                                             elif b'<SkinOrAvatarList id="' + skinid in code:
-                                                code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]).replace(b'\r\n      <SkinOrAvatarList id="'+skinid+b'" />',b''))
+                                                code=code.replace(b'value="" refParamName="strReturnCityEffectPath" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huicheng_tongyong" refParamName="" useRefParam="false" />')
+                                                code=code.replace(b'value="" refParamName="strReturnCityFall" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huijidi" refParamName="" useRefParam="false" />')
+                                                if skinid not in [b'15412']:
+                                                    code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]).replace(b'\r\n      <SkinOrAvatarList id="'+skinid+b'" />',b''))
                                                 strin=strin.replace(code_goc, code)
                                         '''
                                         for i in range(len(split_code)):
