@@ -219,12 +219,12 @@ else:
             a=a.replace(i,skin,1)
         return a
     def xoa_thua_thai(strin):
-        strin=strin.replace(b'>\r\n          <',b'')
-        strin=strin.replace(b'>\r\n        <',b'')
-        strin=strin.replace(b'>\r\n      <',b'')
-        strin=strin.replace(b'>\r\n    <',b'')
-        strin=strin.replace(b'>\r\n  <',b'')
-        strin=strin.replace(b'>\r\n<',b'')
+        strin=strin.replace(b'>\r\n          <',b'><')
+        strin=strin.replace(b'>\r\n        <',b'><')
+        strin=strin.replace(b'>\r\n      <',b'><')
+        strin=strin.replace(b'>\r\n    <',b'><')
+        strin=strin.replace(b'>\r\n  <',b'><')
+        strin=strin.replace(b'>\r\n<',b'><')
         return strin
         strin2=strin
         try:
