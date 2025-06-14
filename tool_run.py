@@ -1987,18 +1987,18 @@ else:
                                                     return new_bytes
                                                 code=add_filter_attribute()
                                                 code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
-                                                strin=strin.replace(code_goc, b'')
-                                                #strin=strin.replace(code_goc, code)
+                                                #strin=strin.replace(code_goc, b'')
+                                                strin=strin.replace(code_goc, code)
                                                 dem+=1
                                             elif (b'resourceName' in code and b'SkinAvatarFilterType="11"' in code):
-                                                code=code.replace(b'value="" refParamName="strReturnCityEffectPath" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huicheng_tongyong" refParamName="" useRefParam="false" />')
-                                                code=code.replace(b'value="" refParamName="strReturnCityFall" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huijidi" refParamName="" useRefParam="false" />')
+                                                #code=code.replace(b'value="" refParamName="strReturnCityEffectPath" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huicheng_tongyong" refParamName="" useRefParam="false" />')
+                                                #code=code.replace(b'value="" refParamName="strReturnCityFall" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huijidi" refParamName="" useRefParam="false" />')
                                                 code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
                                                 strin=strin.replace(code_goc, code)
                                                 dem+=1
                                             elif b'<SkinOrAvatarList id="' + skinid in code:
-                                                code=code.replace(b'value="" refParamName="strReturnCityEffectPath" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huicheng_tongyong" refParamName="" useRefParam="false" />')
-                                                code=code.replace(b'value="" refParamName="strReturnCityFall" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huijidi" refParamName="" useRefParam="false" />')
+                                                #code=code.replace(b'value="" refParamName="strReturnCityEffectPath" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huicheng_tongyong" refParamName="" useRefParam="false" />')
+                                                #code=code.replace(b'value="" refParamName="strReturnCityFall" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huijidi" refParamName="" useRefParam="false" />')
                                                 if skinid not in [b'15412']:
                                                     code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]).replace(b'\r\n      <SkinOrAvatarList id="'+skinid+b'" />',b''))
                                                 strin=strin.replace(code_goc, code)
@@ -2045,6 +2045,106 @@ else:
                     except Exception as bug:
                         print(bug)
                         print(Fore.RED+Style.BRIGHT+'Không Mod Biến Về'+Style.RESET_ALL)
+                else:
+                    try:
+                        if True:
+                            if True:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/back.xml','rb') as f:
+                                    strin = f.read()
+                                    if True:
+                                        back_id = b'    <Track trackName="ReupCC_'+bytes(str(i),'utf-8')+b'" eventType="CheckHeroIdTick" guid="Mod_by_YOUTUBE_'+hero_name[:3]+b'" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" isDuration="false" guid="Mod_Vip">\r\n      <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n      <int name="heroId" value="'+hero_name[:3]+b'" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'
+                                        goc_id = b'\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="HitTriggerTick0" eventType="HitTriggerTick" guid="3fcc5b3f-3a9c-495c-bddd-5e3b03e5c01b'
+                                        condition_mod = b'<Condition id="Pmin" guid="Mod_by_YOUTUBE_'+hero_name[:3]+b'" status="true"/>'
+                                        condition_mod_false = b'<Condition id="Pmin" guid="Mod_by_YOUTUBE_'+hero_name[:3]+b'" status="false"/>'
+                                        name = name.replace(b'<Event eventName="',condition_mod+b'\r\n      <Event eventName="')
+                                        ef=b'prefab_skill_effects/hero_skill_effects/'+hero_name+b'/'+skinid
+                                        list_fix_lag_ef_back.append(ef.decode()+'/huijidi_01')
+                                        list_fix_lag_ef_back.append(ef.decode()+'/huicheng_tongyong_01')
+                                        list_fix_lag_ef_back.append(ef.decode()+'/jiasu_tongyong_01')
+                                        #
+                                        if stoptrack_code==b'':
+                                            p_sua_track1=strin.find(b'    <Track trackName="GetResource[huijidi]"')
+                                            p_sua_track2=strin.find(b'    <Track trackName="GetResource[huicheng]"')
+                                            stoptrack_code=stoptrack_code+b'\r\n          <TrackObject id="'+str(strin[:p_sua_track1].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />'+b'\r\n          <TrackObject id="'+str(strin[:p_sua_track2].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />'
+                                            p_sua_track_3=strin.find(b'    <Track trackName="TriggerParticle')
+                                            while p_sua_track_3!=-1:
+                                                stoptrack_code=stoptrack_code+b'\r\n          <TrackObject id="'+str(strin[:p_sua_track_3].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />'
+                                                p_sua_track_3=strin.find(b'    <Track trackName="TriggerParticle',p_sua_track_3+10)
+                                        #xoa để đè all
+                                        dem = 0
+                                        split_code=split_code_back(strin[:strin.find(b'<Track trackName="Zalo_0357514770')])
+                                        stoptrack_code_big = stoptrack_code
+                                        ani_back = b''
+                                        for code in split_code_back(strin[:strin.find(b'<Track trackName="Zalo_0357514770')]):
+                                            code_goc=code
+                                            check=b'</Event>\r\n      <SkinOrAvatarList id="ID_SKIN01" />\r\n      <SkinOrAvatarList id="ID_SKIN02" />\r\n      <SkinOrAvatarList id="ID_SKIN03" />\r\n      <SkinOrAvatarList id="ID_SKIN04" />\r\n      <SkinOrAvatarList id="ID_SKIN05" />\r\n      <SkinOrAvatarList id="ID_SKIN06" />\r\n      <SkinOrAvatarList id="ID_SKIN07" />\r\n      <SkinOrAvatarList id="ID_SKIN08" />\r\n      <SkinOrAvatarList id="ID_SKIN09" />\r\n      <SkinOrAvatarList id="ID_SKIN10" />\r\n      <SkinOrAvatarList id="ID_SKIN11" />\r\n      <SkinOrAvatarList id="ID_SKIN12" />\r\n      <SkinOrAvatarList id="ID_SKIN13" />\r\n      <SkinOrAvatarList id="ID_SKIN14" />\r\n      <SkinOrAvatarList id="ID_SKIN15" />\r\n      <SkinOrAvatarList id="ID_SKIN16" />\r\n      <SkinOrAvatarList id="ID_SKIN17" />\r\n      <SkinOrAvatarList id="ID_SKIN18" />\r\n      <SkinOrAvatarList id="ID_SKIN19" />\r\n      <SkinOrAvatarList id="ID_SKIN20" />\r\n      <SkinOrAvatarList id="ID_SKIN21" />\r\n      <SkinOrAvatarList id="ID_SKIN22" />\r\n      <SkinOrAvatarList id="ID_SKIN23" />\r\n      <SkinOrAvatarList id="ID_SKIN24" />\r\n      <SkinOrAvatarList id="ID_SKIN00" />'
+                                            if b'GetHolidayResourcePathTick' in code:
+                                                def add_filter_attribute(xml_bytes=code, IN=b'11'):
+                                                    # Bước 1: Nếu có SkinAvatarFilterType thì thay giá trị
+                                                    new_bytes, count = re.subn(
+                                                        rb'(<Track[^>]*?)\sSkinAvatarFilterType="[^"]*"',
+                                                        rb'\1 SkinAvatarFilterType="' + IN + rb'"',
+                                                        xml_bytes
+                                                    )
+
+                                                    # Bước 2: Nếu không có thì thêm mới
+                                                    if count == 0:
+                                                        new_bytes = re.sub(
+                                                            rb'(<Track[^>]*?)>',
+                                                            rb'\1 SkinAvatarFilterType="' + IN + rb'">',
+                                                            xml_bytes
+                                                        )
+
+                                                    return new_bytes
+                                                code=add_filter_attribute()
+                                                code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
+                                                #strin=strin.replace(code_goc, b'')
+                                                strin=strin.replace(code_goc, code)
+                                                dem+=1
+                                            elif (b'resourceName' in code and b'SkinAvatarFilterType="11"' in code):
+                                                #code=code.replace(b'value="" refParamName="strReturnCityEffectPath" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huicheng_tongyong" refParamName="" useRefParam="false" />')
+                                                #code=code.replace(b'value="" refParamName="strReturnCityFall" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huijidi" refParamName="" useRefParam="false" />')
+                                                code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
+                                                strin=strin.replace(code_goc, code)
+                                                dem+=1
+                                            elif b'<SkinOrAvatarList id="' + skinid in code:
+                                                #code=code.replace(b'value="" refParamName="strReturnCityEffectPath" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huicheng_tongyong" refParamName="" useRefParam="false" />')
+                                                #code=code.replace(b'value="" refParamName="strReturnCityFall" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huijidi" refParamName="" useRefParam="false" />')
+                                                if skinid not in [b'15412']:
+                                                    code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]).replace(b'\r\n      <SkinOrAvatarList id="'+skinid+b'" />',b''))
+                                                strin=strin.replace(code_goc, code)
+                                        '''
+                                        for i in range(len(split_code)):
+                                            code_goc=code = split_code[i]
+                                            if b'<SkinOrAvatarList id="' + skinid in code:
+                                                if (b'clipName' in code or b'Animation' in code) and b'CheckAni' not in code:
+                                                    ch_st = b'\r\n          <TrackObject id="'+str(i).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />'
+                                                    if ch_st not in stoptrack_code_big:
+                                                        stoptrack_code_big+=ch_st
+                                                    if b'SkinAvatarFilterType="9"' in code:
+                                                        p1=code.find(b'</Event>')+len('</Event>')
+                                                        p2=code.find(b'\r\n    </Track>')
+                                                        ani_back+=code.replace(b'SkinAvatarFilterType="9"', b'').replace(code[p1:p2],b'').replace(b'<Event eventName',condition_mod+b'\r\n      <Event eventName')'''
+                                        #str(strin[:p_sua_track1].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />\r\n          <TrackObject id="'+str(strin[:p_sua_track2].count(b'<Track trackName=')).encode('utf-8')+b'" guid="Pmin_Vjp_Pro" />\r\n        </Array>\r\n        <bool name="alsoStopNotStartedTrack" value="true" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>'
+                                        back=back_id+b'    <Track trackName="Zalo_0357514770" eventType="TriggerParticleTick" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticleTick" time="7.000" isDuration="false" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="-1" objectName="None" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huijidi" useRefParam="false" />\r\n        <float name="lifeTime" value="5.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bUseHeroLocalForward" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="Zalo_0357514770" eventType="TriggerParticle" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticle" time="0.000" length="7.000" isDuration="true" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huicheng_tongyong" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="-0.300" z="0.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bEnableOptCull" value="false" useRefParam="false" />\r\n        <bool name="bTrailProtect" value="true" useRefParam="false" />\r\n        <String name="syncAnimationName" useRefParam="false" />\r\n        <bool name="bApplySpecialEffect" value="true" useRefParam="false" />\r\n        <bool name="bOnlySetAlpha" value="true" useRefParam="false" />\r\n        <String name="customTagName" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'#    <Track trackName="Zalo_0357514770" eventType="StopTracks" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="StopTracks" time="0.000" isDuration="false" guid="Zalo_0357514770">\r\n        <Array name="trackIds" useRefParam="false" type="TrackObject">'+stoptrack_code_big+b'\r\n        </Array>\r\n        <bool name="alsoStopNotStartedTrack" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'#+ani_back
+                                        #back=back_id + b'    <Track trackName="Zalo_0357514770" eventType="TriggerParticleTick" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticleTick" time="7.000" isDuration="false" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="-1" objectName="None" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huijidi_01" useRefParam="false" />\r\n        <float name="lifeTime" value="5.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bUseHeroLocalForward" value="true" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="Zalo_0357514770" eventType="TriggerParticle" guid="Zalo_0357514770" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      Pmin_Dep_Trai\r\n      <Event eventName="TriggerParticle" time="0.000" length="7.000" isDuration="true" guid="Zalo_0357514770">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" useRefParam="false" />\r\n        <String name="resourceName" value="Pmin_Pro_Vip/huicheng_tongyong_01" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="-0.300" z="0.000" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" useRefParam="false" />\r\n        <bool name="bEnableOptCull" value="false" useRefParam="false" />\r\n        <bool name="bTrailProtect" value="true" useRefParam="false" />\r\n        <String name="syncAnimationName" useRefParam="false" />\r\n        <bool name="bApplySpecialEffect" value="true" useRefParam="false" />\r\n        <bool name="bOnlySetAlpha" value="true" useRefParam="false" />\r\n        <String name="customTagName" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'
+                                        back=back.replace(b'Pmin_Dep_Trai',condition_mod)
+                                        back_need_2=back_need_
+                                        if skinid in [b'50604',b'15004',b'51504',b'13311',b'11620']:
+                                            strin=strin.replace(b'<Event eventName="PlayAnimDuration"',condition_mod_false+b'\r\n      <Event eventName="PlayAnimDuration"',3)
+                                            if skinid in [b'50604',b'15004',b'51504']:back_need_2=back_need_2.replace(b'clipName" value="',b'clipName" value="'+skinid+b'/')
+                                            if skinid == b'13311':
+                                                back_need_2=back_need_2.replace(b'clipName" value="',b'clipName" value="13311/Awaken/')
+                                            if skinid == b'11620':
+                                                back_need_2=back_need_2.replace(b'clipName" value="',b'clipName" value="11620/Awaken/')
+                                        else:back_need_2=b''
+                                        strin = strin.replace(b'  </Action>',back+name+back_need_2.replace(b'<Event eventName="PlayAnimDuration"',condition_mod+b'\r\n      <Event eventName="PlayAnimDuration"')+b'  </Action>')
+                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Back.xml','wb') as f1:
+                                            f1.write(strin)
+                        zz+=1;i+=1;j+=1
+                    except Exception as bug:
+                        print(bug)
+                        print(Fore.RED+Style.BRIGHT+'Không Mod Biến Về Skin Ko Có Biến Về'+Style.RESET_ALL)
             #-----------------------------------------------Mod LiteBullet------------------------------------------------------------#
                 print('Mod LiteBullet')
                 if skinid==b'15009':
