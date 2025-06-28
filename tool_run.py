@@ -219,6 +219,7 @@ else:
             a=a.replace(i,skin,1)
         return a
     def xoa_thua_thai(strin):
+        #return strin
         strin=strin.replace(b'>\r\n          <',b'><')
         strin=strin.replace(b'>\r\n        <',b'><')
         strin=strin.replace(b'>\r\n      <',b'><')
@@ -1952,9 +1953,9 @@ else:
                                         condition_mod_false = b'<Condition id="Pmin" guid="Mod_by_YOUTUBE_'+hero_name[:3]+b'" status="false"/>'
                                         name = name.replace(b'<Event eventName="',condition_mod+b'\r\n      <Event eventName="')
                                         ef=b'prefab_skill_effects/hero_skill_effects/'+hero_name+b'/'+skinid
-                                        list_fix_lag_ef_back.append(ef.decode()+'/huijidi_01')
-                                        list_fix_lag_ef_back.append(ef.decode()+'/huicheng_tongyong_01')
-                                        list_fix_lag_ef_back.append(ef.decode()+'/jiasu_tongyong_01')
+                                        #list_fix_lag_ef_back.append(ef.decode()+'/huijidi_01')
+                                        #list_fix_lag_ef_back.append(ef.decode()+'/huicheng_tongyong_01')
+                                        #list_fix_lag_ef_back.append(ef.decode()+'/jiasu_tongyong_01')
                                         #
                                         if stoptrack_code==b'':
                                             p_sua_track1=strin.find(b'    <Track trackName="GetResource[huijidi]"')
@@ -1972,7 +1973,7 @@ else:
                                         for code in split_code_back(strin[:strin.find(b'<Track trackName="Zalo_0357514770')]):
                                             code_goc=code
                                             check=b'</Event>\r\n      <SkinOrAvatarList id="ID_SKIN01" />\r\n      <SkinOrAvatarList id="ID_SKIN02" />\r\n      <SkinOrAvatarList id="ID_SKIN03" />\r\n      <SkinOrAvatarList id="ID_SKIN04" />\r\n      <SkinOrAvatarList id="ID_SKIN05" />\r\n      <SkinOrAvatarList id="ID_SKIN06" />\r\n      <SkinOrAvatarList id="ID_SKIN07" />\r\n      <SkinOrAvatarList id="ID_SKIN08" />\r\n      <SkinOrAvatarList id="ID_SKIN09" />\r\n      <SkinOrAvatarList id="ID_SKIN10" />\r\n      <SkinOrAvatarList id="ID_SKIN11" />\r\n      <SkinOrAvatarList id="ID_SKIN12" />\r\n      <SkinOrAvatarList id="ID_SKIN13" />\r\n      <SkinOrAvatarList id="ID_SKIN14" />\r\n      <SkinOrAvatarList id="ID_SKIN15" />\r\n      <SkinOrAvatarList id="ID_SKIN16" />\r\n      <SkinOrAvatarList id="ID_SKIN17" />\r\n      <SkinOrAvatarList id="ID_SKIN18" />\r\n      <SkinOrAvatarList id="ID_SKIN19" />\r\n      <SkinOrAvatarList id="ID_SKIN20" />\r\n      <SkinOrAvatarList id="ID_SKIN21" />\r\n      <SkinOrAvatarList id="ID_SKIN22" />\r\n      <SkinOrAvatarList id="ID_SKIN23" />\r\n      <SkinOrAvatarList id="ID_SKIN24" />\r\n      <SkinOrAvatarList id="ID_SKIN00" />'
-                                            if b'GetHolidayResourcePathTick' in code:
+                                            if b'GetHolidayResourcePathTick' in code and b'SkinAvatarFilterType="9"' not in code:
                                                 def add_filter_attribute(xml_bytes=code, IN=b'11'):
                                                     # Bước 1: Nếu có SkinAvatarFilterType thì thay giá trị
                                                     new_bytes, count = re.subn(
@@ -1993,12 +1994,18 @@ else:
                                                 code=add_filter_attribute()
                                                 code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
                                                 #strin=strin.replace(code_goc, b'')
-                                                strin=strin.replace(code_goc, code)
+                                                if dem ==0:
+                                                    ef_skin = b'    <Track trackName="Zalo 0357514770" eventType="GetHolidayResourcePathTick" guid="Mod By: YTB Pmin Mod" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" SkinAvatarFilterType="9">\r\n      <Event eventName="GetHolidayResourcePathTick" time="0.000" isDuration="false" guid="Telegram: @PminMod">\r\n        <String name="holidayResourcePathPrefix" value="Pmin_Pro_Vip/huijidi_01" refParamName="" useRefParam="false" />\r\n        <String name="outPathParamName" value="strReturnCityFall" refParamName="" useRefParam="false" />\r\n        <String name="outSoundEventParamName" value="" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="Zalo 0357514770" eventType="GetHolidayResourcePathTick" guid="Mod By: YTB Pmin Mod" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" SkinAvatarFilterType="9">\r\n      <Event eventName="GetHolidayResourcePathTick" time="0.000" isDuration="false" guid="Telegram: @PminMod">\r\n        <int name="battleEffectCfgID" value="11000" refParamName="" useRefParam="false" />\r\n        <String name="holidayResourcePathPrefix" value="Pmin_Pro_Vip/huicheng_tongyong_01" refParamName="" useRefParam="false" />\r\n        <String name="outPathParamName" value="strReturnCityEffectPath" refParamName="" useRefParam="false" />\r\n        <String name="outSoundEventParamName" value="" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3])).replace(b'Pmin_Pro_Vip',ef)
+                                                    ef_skin=b''
+                                                else:
+                                                    ef_skin=b''
+                                                strin=strin.replace(code_goc, code+ef_skin)
                                                 dem+=1
                                             elif (b'resourceName' in code and b'SkinAvatarFilterType="11"' in code):
                                                 #code=code.replace(b'value="" refParamName="strReturnCityEffectPath" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huicheng_tongyong" refParamName="" useRefParam="false" />')
                                                 #code=code.replace(b'value="" refParamName="strReturnCityFall" useRefParam="true" />',b'value="Prefab_Skill_Effects/Inner_Game_Effect/returncity_holidays/Holiday0/huijidi" refParamName="" useRefParam="false" />')
                                                 code=code.replace(b'</Event>',check.replace(b'ID_SKIN',skinid[:3]))
+                                                #chinh đây
                                                 strin=strin.replace(code_goc, code)
                                                 dem+=1
                                             elif b'<SkinOrAvatarList id="' + skinid in code:
@@ -3110,3 +3117,262 @@ else:
         except Exception as Bug:
             print(Bug)
             print('Nút Bấm Không Tồn Tại')
+
+#tachfile pmin mod
+folder_mod_goc = folder_mod
+
+
+import os
+try:import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style;from termcolor import colored
+except:
+    try:os.system('python -m pip install pyzstd');os.system('python -m pip install termcolor');os.system('python -m pip install colorama');import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style
+    except:os.system('pip install pyzstd');os.system('pip install termcolor');os.system('pip install colorama');import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style
+from shutil import make_archive;from pyzstd import decompress,compress,ZstdDict;from os import listdir;import sys;import os;from termcolor import colored;import re;import getopt;import pyzstd;import sys;import glob;import colorama;from colorama import Fore;from colorama import Style;from colorama import Fore;from colorama import Style;import shutil;import zipfile;import shutil;from zipfile import* 
+from __init__ import *
+def giai_nen(z,a): 
+    import zipfile 
+    fantasy_zip = zipfile.ZipFile(z+a)
+    fantasy_zip.extractall(z)
+    return '\033[1;32mGiai Nen Xong File: ' +a
+import sys
+from __init__ import*
+tien_trinh_dem = 0
+def tien_trinh(dem):
+    if dem<=100:
+        print(f'Tiến Trình: {dem}%',end='\r')
+    else:
+        print(f'Sắp Hoàn Tất !!!!',end='\r')
+    return dem+1
+try:
+    folder=sys.argv[8]
+except:
+    folder=folder_mod
+if os.path.isdir('./PminMod/') == 0 :
+    os.mkdir('./PminMod/')
+#try:
+#    folder_mod=sys.argv[7]
+#except:
+#    folder_mod=folder_mod
+folder_mod='PACK '+folder_mod+' PminMod'
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+if os.path.isdir(f'./PminMod/{folder_mod}/') == 1 :
+    shutil.rmtree(f'./PminMod/{folder_mod}/')
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+if os.path.isdir(f'./PminMod/{folder_mod}/') == 0 :
+    os.mkdir(f'./PminMod/{folder_mod}/')
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    os.mkdir(f'./PminMod/{folder_mod}/Máy Mạnh/')
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    os.mkdir(f'./PminMod/{folder_mod}/Máy Mạnh/Android')
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    os.mkdir(f'./PminMod/{folder_mod}/Máy Mạnh/IOS')
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    os.mkdir(f'./PminMod/{folder_mod}/Máy Trung Và Yếu/')
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    os.mkdir(f'./PminMod/{folder_mod}/Máy Trung Và Yếu/Android')
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    os.mkdir(f'./PminMod/{folder_mod}/Máy Trung Và Yếu/IOS')
+shutil.copytree(f'File_Mod/{folder}/com.garena.game.kgvn/files/Resources',f'./PminMod/{folder_mod}/Máy Mạnh/Android/Resources')
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+shutil.copytree(f'File_Mod/{folder}/com.garena.game.kgvn/files/Resources',f'./PminMod/{folder_mod}/Máy Trung Và Yếu/Android/Resources')
+#Máy Mạnh
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+if os.path.isdir(f'./PminMod/{folder_mod}/Máy Mạnh/Android/Resources/1.58.1/AssetRefs') == 1 :
+    shutil.rmtree(f'./PminMod/{folder_mod}/Máy Mạnh/Android/Resources/1.58.1/AssetRefs')
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+shutil.make_archive(f'./PminMod/{folder_mod}/Máy Mạnh/IOS/Resources','zip',f'./PminMod/{folder_mod}/Máy Mạnh/Android')
+#Máy Trung Và Yếu
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+giai_nen(f'./PminMod/{folder_mod}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/','CommonActions.pkg.bytes')
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+with open(f'pmin_sources/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/born.xml','rb') as f:
+    a=f.read()
+with open(f'PminMod/{folder_mod}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/born.xml','wb') as f:
+    f.write(a)
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+for file in ['Back.xml','HasteE1.xml','HasteE1_leave.xml']:
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    with open(f'PminMod/{folder_mod}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','rb') as f:
+        a=f.read()
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        check=a.find(b'Mod_by_YOUTUBE')
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        if check!=-1:
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            a1=a_goc=a[check:]
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            p=a1.find(b'prefab_skill_effects')
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            while p!=-1:
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                p1=a1.find(b'"',p)
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                a1=a1.replace(a1[p:p1],a1[p:p1]+b'_low')
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                p=a1.find(b'prefab_skill_effects',p1)
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            a=a.replace(a_goc,a1)
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    with open(f'PminMod/{folder_mod}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
+        f.write(compress_(a)+ngaunhien())
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+back_folder = ['commonresource','KeySpell','PassiveResource','mowen','Ultrafire','SeasonPlay']
+def zipdir2(path, ziph):
+        for ii in back_folder:
+            nonee = './{}'.format(ii)
+            DIR2 = './PminMod/{}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
+            DIR = './PminMod/{}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
+            for root, dirs, files in os.walk(DIR):
+                for file in listdir(DIR2):
+                    ziph.write(os.path.join(root, file),
+                            os.path.relpath(os.path.join(nonee,file),
+                                            os.path.join(path, '..')))
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+with zipfile.ZipFile('./PminMod/{}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes'.format(folder_mod), 'w', zipfile.ZIP_STORED) as zipf:
+        zipdir2('tmp/', zipf)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+for iii in back_folder:
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        if os.path.isdir('./PminMod/{}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))== 1 :
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            shutil.rmtree('./PminMod/{}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))
+shutil.make_archive(f'./PminMod/{folder_mod}/Máy Trung Và Yếu/IOS/Resources','zip',f'./PminMod/{folder_mod}/Máy Trung Và Yếu/Android')
+tien_trinh_dem = tien_trinh(tien_trinh_dem)
+checkCamXa='NamNgu'
+for camxa in listdir(f'File_Mod/{folder}/'):
+    if 'CAM XA' in camxa:
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        checkCamXa=camxa
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        break
+if checkCamXa!='NamNgu':
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    codeCamXa=b'    <Track trackName="HitTriggerTick0" eventType="HitTriggerTick" guid="CAM_XA_PMIN_MOD" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="HitTriggerTick" time="0.000" isDuration="false" guid="REUP_CC">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="hitTargetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="SelfSkillCombineID_1" value="530510" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="triggerId" id="-1" objectName="None" isTemp="false" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n  </Action>'
+    if os.path.isdir(f'./PminMod/{folder_mod}/{checkCamXa}') == 0 :
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        os.mkdir(f'./PminMod/{folder_mod}/{checkCamXa}/')
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        os.mkdir(f'./PminMod/{folder_mod}/{checkCamXa}/Máy Mạnh/')
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        os.mkdir(f'./PminMod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android')
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        os.mkdir(f'./PminMod/{folder_mod}/{checkCamXa}/Máy Mạnh/IOS')
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        os.mkdir(f'./PminMod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/')
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        os.mkdir(f'./PminMod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android')
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        os.mkdir(f'./PminMod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/IOS')
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    shutil.copytree(f'File_Mod/{folder}/{checkCamXa}/com.garena.game.kgvn/files/Resources',f'./PminMod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android/Resources')
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    shutil.copytree(f'File_Mod/{folder}/{checkCamXa}/com.garena.game.kgvn/files/Resources',f'./PminMod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources')
+    #Máy Mạnh
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    if os.path.isdir(f'./PminMod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android/Resources/1.58.1/AssetRefs') == 1 :
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        shutil.rmtree(f'./PminMod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android/Resources/1.58.1/AssetRefs')
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    shutil.make_archive(f'./PminMod/{folder_mod}/{checkCamXa}/Máy Mạnh/IOS/Resources','zip',f'./PminMod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android')
+    #Máy Trung Và Yếu
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    giai_nen(f'./PminMod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/','CommonActions.pkg.bytes')
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    with open(f'pmin_sources/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/born.xml','rb') as f:
+        a=f.read()
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        a=decompress_(a)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        a=a.replace(b'  </Action>',codeCamXa)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    with open(f'PminMod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/born.xml','wb') as f:
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        f.write(compress_(a)+ngaunhien())
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    for file in ['Back.xml','HasteE1.xml','HasteE1_leave.xml']:
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        with open(f'PminMod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','rb') as f:
+            a=f.read()
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            check=a.find(b'Mod_by_YOUTUBE')
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            if check!=-1:
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                a1=a_goc=a[check:]
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                p=a1.find(b'prefab_skill_effects')
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                while p!=-1:
+                    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                    p1=a1.find(b'"',p)
+                    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                    a1=a1.replace(a1[p:p1],a1[p:p1]+b'_low')
+                    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                    p=a1.find(b'prefab_skill_effects',p1)
+                    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                a=a.replace(a_goc,a1)
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        with open(f'PminMod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            f.write(compress_(a)+ngaunhien())
+    back_folder = ['commonresource','KeySpell','PassiveResource','mowen','Ultrafire','SeasonPlay']
+    def zipdir2(path, ziph):
+            for ii in back_folder:
+                nonee = './{}'.format(ii)
+                DIR2 = './PminMod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
+                DIR = './PminMod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
+                for root, dirs, files in os.walk(DIR):
+                    for file in listdir(DIR2):
+                        ziph.write(os.path.join(root, file),
+                                os.path.relpath(os.path.join(nonee,file),
+                                                os.path.join(path, '..')))
+    with zipfile.ZipFile('./PminMod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes'.format(folder_mod,checkCamXa), 'w', zipfile.ZIP_STORED) as zipf:
+            zipdir2('tmp/', zipf)
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    for iii in back_folder:
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            if os.path.isdir('./PminMod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,iii))== 1 :
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                shutil.rmtree('./PminMod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,iii))
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    shutil.make_archive(f'./PminMod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/IOS/Resources','zip',f'./PminMod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android')
+shutil.rmtree(f'File_Mod/{folder_mod_goc}')
+print('Đã Hoàn Thành !!!!!!!!')
