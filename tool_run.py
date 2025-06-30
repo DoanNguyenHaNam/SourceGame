@@ -3383,5 +3383,5 @@ if checkCamXa!='NamNgu':
                 shutil.rmtree('./PminMod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.58.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,iii))
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
     shutil.make_archive(f'./PminMod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/IOS/Resources','zip',f'./PminMod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android')
-shutil.rmtree(f'File_Mod/{folder_mod_goc}')
+#shutil.rmtree(f'File_Mod/{folder_mod_goc}')
 print('Đã Hoàn Thành !!!!!!!!')
