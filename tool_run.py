@@ -3164,7 +3164,7 @@ else:
             print(Bug)
             print('Nút Bấm Không Tồn Tại')
 
-
+'''
 #tachfile pmin mod
 folder_mod_goc = folder_mod
 
@@ -3372,5 +3372,5 @@ if checkCamXa!='NamNgu':
                 shutil.rmtree('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,iii))
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
     shutil.make_archive(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/IOS/Resources','zip',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android')
-shutil.rmtree(f'File_Mod/{folder_mod_goc}/com.garena.game.kgvn')
+shutil.rmtree(f'File_Mod/{folder_mod_goc}/com.garena.game.kgvn')'''
 print('Đã Hoàn Thành !!!!!!!!')
