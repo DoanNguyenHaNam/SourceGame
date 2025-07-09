@@ -3250,8 +3250,8 @@ tien_trinh_dem = tien_trinh(tien_trinh_dem)
 shutil.copytree(f'File_Mod/{folder}/com.garena.game.kgvn/files/Resources',f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/Android/Resources')
 #Máy Mạnh
 tien_trinh_dem = tien_trinh(tien_trinh_dem)
-if os.path.isdir(f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources/1.59.1/AssetRefs') == 1 :
-    shutil.rmtree(f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources/1.59.1/AssetRefs')
+#if os.path.isdir(f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources/1.59.1/AssetRefs') == 1 :
+#    shutil.rmtree(f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources/1.59.1/AssetRefs')
 tien_trinh_dem = tien_trinh(tien_trinh_dem)
 shutil.make_archive(f'./File_Mod/{folder_mod}/Máy Mạnh/IOS/Resources','zip',f'./File_Mod/{folder_mod}/Máy Mạnh/Android')
 #Máy Trung Và Yếu
