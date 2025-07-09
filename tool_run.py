@@ -1275,8 +1275,16 @@ else:
                                         for code in split_code_back2(strin):
                                             mod_all = b'    <Track trackName="PMIN" eventType="GetHolidayResourcePathTick" guid="Mod By: Lyna TV" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="GetHolidayResourcePathTick" time="0.000" isDuration="false" guid="Mod By: Pmin Mod">\r\n        <String name="holidayResourcePathPrefix" value="EFFECT\r\n        <String name="outPathParamName" value="CHECK_CODE" useRefParam="false" />\r\n        <String name="outSoundEventParamName" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'
                                             code_goc=code
+                                            if b'BattleUI' in code:
+                                                match = re.search(rb'<String name="prefab" value="([^"]+)"', code)
+                                                if match:
+                                                    full_value = match.group(1)
+                                                    last_part = full_value.split(b'/')[-1]
+
+                                                    ef = f'prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/'.encode('utf-8') + last_part
+                                                    code = code.replace(full_value, ef)
                                             p=re.search(rb'prefab_skill_effects.*?>',code,re.IGNORECASE)
-                                            if p and decompress.encode('utf-8').lower() in code.lower() and b'BattleUI' not in code and b'enabled="true"' in code and (b'ChangeActorMeshDuration' in code or b'ChangeActorMeshTick' in code or b'TriggerParticle' in code or b'TriggerParticleTick' in code):
+                                            if p and decompress.encode('utf-8').lower() in code.lower() and b'enabled="true"' in code and (b'ChangeActorMeshDuration' in code or b'ChangeActorMeshTick' in code or b'TriggerParticle' in code or b'TriggerParticleTick' in code):
                                                 ef = p.group()
                                                 match = re.search(rb'([^/"]+)"', ef, re.IGNORECASE)
                                                 match2 = re.search(rb'eventType="([^"]+)"', code, re.IGNORECASE)
@@ -1302,14 +1310,6 @@ else:
                                                 
                                                 mod_for_skin = mod_all.replace(b'<Event eventName',condition).replace(b'EFFECT',ef).replace(b'CHECK_CODE',nhan_dang)
                                                 strin=strin.replace(code_goc, mod_for_skin+code)
-                                            elif b'BattleUI' in code:
-                                                match = re.search(rb'<String name="prefab" value="([^"]+)"', code)
-                                                if match:
-                                                    full_value = match.group(1)
-                                                    last_part = full_value.split(b'/')[-1]
-
-                                                    ef = f'prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/'.encode('utf-8') + last_part
-                                                    strin=strin.replace(code_goc,code.replace(full_value, ef) + code_goc)
                                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                             f1.write(compress_(xoa_thua_thai(extract_guid_after_id(strin))))
                                     if may_yeu_mod and not HD_e and False:
