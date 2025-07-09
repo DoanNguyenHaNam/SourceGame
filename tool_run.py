@@ -1283,6 +1283,7 @@ else:
 
                                                     ef = f'prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/'.encode('utf-8') + last_part
                                                     code = code.replace(full_value, ef)
+                                                    strin = strin.replace(code_goc, code)
                                             p=re.search(rb'prefab_skill_effects.*?>',code,re.IGNORECASE)
                                             if p and decompress.encode('utf-8').lower() in code.lower() and b'enabled="true"' in code and (b'ChangeActorMeshDuration' in code or b'ChangeActorMeshTick' in code or b'TriggerParticle' in code or b'TriggerParticleTick' in code):
                                                 ef = p.group()
