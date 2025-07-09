@@ -195,6 +195,9 @@ else:
             a= a.replace(
                     'Prefab_Characters/Prefab_Hero/116_JingKe/11621_JingKe_AW1_Show',
                     'Prefab_Characters/Prefab_Hero/116_JingKe/Awaken/11621_JingKe_04_Show'
+                ).replace(
+                    'Prefab_Characters/Prefab_Hero/116_JingKe/Awaken/11621_JingKe_AW1_Cam</ArtSkinLobbyShowCamera>',
+                    'Prefab_Characters/Prefab_Hero/116_JingKe/Awaken/11621_JingKe_AW1_Cam</ArtSkinLobbyShowCamera>\n         <ArtSkinLobbyShowMovie Var="String" Type="System.String">Prefab_Characters/Prefab_Hero/116_JingKe/Awaken/11621_JingKe_Movie</ArtSkinLobbyShowMovie>'
                 )
             a=a.replace('AW1','AW5')
         #a=a.replace('         </ArtSkinLobbyShowLOD>','         </ArtSkinLobbyShowLOD>\n         <MSAA Var="Enum" Type="Assets.Scripts.GameLogic.EAntiAliasing">2</MSAA>')
@@ -878,6 +881,10 @@ else:
                                 f1.write(strin)
                     except:
                             pass
+        for file in ['ResAwakenBattleSound.bytes','ResAwakenBattleEffect.bytes']:
+            text = b'\x4D\x53\x45\x53\x07\x00\x00\x00\x5B\x00\x00\x00\x00\x00\x00\x00\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x55\x54\x46\x2D\x38\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x4D\x4F\x44\x42\x59\x5F\x59\x54\x42\x5F\x50\x4D\x49\x4E\x5F\x4D\x4F\x44\x5F\x44\x4F\x4E\x54\x5F\x52\x45\x55\x50\x46\x49\x4C\x45\x00\x00\x00\x00\x8C\x00\x00\x00\x00\x00\x00\x00'
+            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Databin/Client/Actor/{file}','wb') as f1:
+                f1.write(text)
         return back_need_
     ten_de_vao_ten=''
     ten_de_vao_ten_dem=1
@@ -1392,12 +1399,12 @@ else:
                                     elif skinid==b'13311':
                                         actor_mod=actor_mod[:4]+actor_0[4:10]+actor_mod[10:36]+b'\x00'+actor_mod[37:]
                                         actor_mod=actor_mod.replace(b'\x08\x00\x00\x003013311',b'\x07\x00\x00\x00301330',1)
-                                        actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_13311\x2ejpg',b'\x12\x00\x00\x00Share_13311_2\x2ejpg').replace(b'\x0a\x00\x00\x0013311\x2ejpg',b'\x0c\x00\x00\x0013311_2\x2ejpg').replace(b'\x0c\x00\x00\x003013311\x2ejpg',b'\x0e\x00\x00\x003013311_2\x2ejpg').replace(b'\x10\x00\x00\x003013311head\x2ejpg',b'\x12\x00\x00\x003013311head_2\x2ejpg')
+                                        actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_13311\x2ejpg',b'\x12\x00\x00\x00Share_13311_2\x2ejpg').replace(b'\x0a\x00\x00\x0013311\x2ejpg',b'\x0c\x00\x00\x0013311_2\x2ejpg').replace(b'\x0c\x00\x00\x003013311\x2ejpg',b'\x0e\x00\x00\x003013311_2\x2ejpg').replace(b'\x10\x00\x00\x003013311head\x2ejpg',b'\x12\x00\x00\x003013311_2head\x2ejpg').replace(b'\x25\x00\x00\x00\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x2f\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d',b'\x33\x00\x00\x00\x42\x47\x5f\x44\x69\x52\x65\x6e\x4a\x69\x65\x5f\x31\x33\x33\x31\x32\x5f\x54\x33\x2f\x42\x47\x5f\x79\x69\x6e\x79\x69\x6e\x67\x7a\x68\x69\x73\x68\x6f\x75\x5f\x30\x31\x5f\x70\x6c\x61\x74\x66\x6f\x72\x6d')
                                         
                                     elif skinid==b'11620':
                                         actor_mod=actor_mod[:4]+actor_0[4:10]+actor_mod[10:36]+b'\x00'+actor_mod[37:]
                                         actor_mod=actor_mod.replace(b'\x08\x00\x00\x003011620',b'\x07\x00\x00\x00301160',1)
-                                        actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_11620\x2ejpg',b'\x12\x00\x00\x00Share_11620_2\x2ejpg').replace(b'\x0a\x00\x00\x0011620\x2ejpg',b'\x0c\x00\x00\x0011620_2\x2ejpg').replace(b'\x0c\x00\x00\x003011620\x2ejpg',b'\x0e\x00\x00\x003011620_2\x2ejpg').replace(b'\x10\x00\x00\x003011620head\x2ejpg',b'\x12\x00\x00\x003011620head_2\x2ejpg')
+                                        actor_mod=actor_mod.replace(b'\x25\x00\x00\x00\x42\x47\x5F\x43\x6F\x6D\x6D\x6F\x6E\x73\x5F\x30\x31\x2F\x42\x47\x5F\x43\x6F\x6D\x6D\x6F\x6E\x73\x5F\x30\x31\x5F\x50\x6C\x61\x74\x66\x6F\x72\x6D\x00',b'\x36\x00\x00\x00\x42\x47\x5F\x44\x61\x6F\x46\x65\x6E\x67\x4A\x69\x4E\x69\x61\x6E\x67\x5F\x31\x31\x36\x32\x31\x2F\x42\x47\x5F\x79\x69\x6E\x79\x69\x6E\x67\x7A\x68\x69\x73\x68\x6F\x75\x5F\x30\x31\x5F\x70\x6C\x61\x74\x66\x6F\x72\x6D\x00').replace(b'\x10\x00\x00\x00Share_11620\x2ejpg',b'\x12\x00\x00\x00Share_11620_2\x2ejpg').replace(b'\x0a\x00\x00\x0011620\x2ejpg',b'\x0c\x00\x00\x0011620_2\x2ejpg').replace(b'\x0c\x00\x00\x003011620\x2ejpg',b'\x0e\x00\x00\x003011620_2\x2ejpg').replace(b'\x10\x00\x00\x003011620head\x2ejpg',b'\x12\x00\x00\x003011620_2head\x2ejpg')
                                         
                                     elif skinid==b'15412':
                                         actor_mod=actor_mod[:4]+actor_0[4:10]+actor_mod[10:36]+b'\x00'+actor_mod[37:]
@@ -1442,11 +1449,11 @@ else:
                                     actor_mod=dec_to_hex(len(actor_mod)-4)+actor_mod[2:]
                                 if skinid==b'13311':
                                     actor_mod=actor_mod.replace(b'\x08\x00\x00\x003013311',b'\x0a\x00\x00\x003013311_2',1)
-                                    actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_13311\x2ejpg',b'\x12\x00\x00\x00Share_13311_2\x2ejpg').replace(b'\x0a\x00\x00\x0013311\x2ejpg',b'\x0c\x00\x00\x0013311_2\x2ejpg').replace(b'\x0c\x00\x00\x003013311\x2ejpg',b'\x0e\x00\x00\x003013311_2\x2ejpg').replace(b'\x10\x00\x00\x003013311head\x2ejpg',b'\x12\x00\x00\x003013311head_2\x2ejpg').replace(b'\x25\x00\x00\x00\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x2f\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d',b'\x33\x00\x00\x00\x42\x47\x5f\x44\x69\x52\x65\x6e\x4a\x69\x65\x5f\x31\x33\x33\x31\x32\x5f\x54\x33\x2f\x42\x47\x5f\x79\x69\x6e\x79\x69\x6e\x67\x7a\x68\x69\x73\x68\x6f\x75\x5f\x30\x31\x5f\x70\x6c\x61\x74\x66\x6f\x72\x6d')
+                                    actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_13311\x2ejpg',b'\x12\x00\x00\x00Share_13311_2\x2ejpg').replace(b'\x0a\x00\x00\x0013311\x2ejpg',b'\x0c\x00\x00\x0013311_2\x2ejpg').replace(b'\x0c\x00\x00\x003013311\x2ejpg',b'\x0e\x00\x00\x003013311_2\x2ejpg').replace(b'\x10\x00\x00\x003013311head\x2ejpg',b'\x12\x00\x00\x003013311_2head\x2ejpg').replace(b'\x25\x00\x00\x00\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x2f\x42\x47\x5f\x43\x6f\x6d\x6d\x6f\x6e\x73\x5f\x30\x31\x5f\x50\x6c\x61\x74\x66\x6f\x72\x6d',b'\x33\x00\x00\x00\x42\x47\x5f\x44\x69\x52\x65\x6e\x4a\x69\x65\x5f\x31\x33\x33\x31\x32\x5f\x54\x33\x2f\x42\x47\x5f\x79\x69\x6e\x79\x69\x6e\x67\x7a\x68\x69\x73\x68\x6f\x75\x5f\x30\x31\x5f\x70\x6c\x61\x74\x66\x6f\x72\x6d')
                                     actor_mod=dec_to_hex(len(actor_mod)-4)+actor_mod[2:]
                                 if skinid==b'11620':
                                     actor_mod=actor_mod.replace(b'\x08\x00\x00\x003011620',b'\x0a\x00\x00\x003011620_1',1)
-                                    actor_mod=actor_mod.replace(b'\x10\x00\x00\x00Share_11620\x2ejpg',b'\x12\x00\x00\x00Share_11620_2\x2ejpg').replace(b'\x0a\x00\x00\x0011620\x2ejpg',b'\x0c\x00\x00\x0011620_2\x2ejpg').replace(b'\x0c\x00\x00\x003011620\x2ejpg',b'\x0e\x00\x00\x003011620_2\x2ejpg').replace(b'\x10\x00\x00\x003011620head\x2ejpg',b'\x12\x00\x00\x003011620head_2\x2ejpg')
+                                    actor_mod=actor_mod.replace(b'\x25\x00\x00\x00\x42\x47\x5F\x43\x6F\x6D\x6D\x6F\x6E\x73\x5F\x30\x31\x2F\x42\x47\x5F\x43\x6F\x6D\x6D\x6F\x6E\x73\x5F\x30\x31\x5F\x50\x6C\x61\x74\x66\x6F\x72\x6D\x00',b'\x36\x00\x00\x00\x42\x47\x5F\x44\x61\x6F\x46\x65\x6E\x67\x4A\x69\x4E\x69\x61\x6E\x67\x5F\x31\x31\x36\x32\x31\x2F\x42\x47\x5F\x79\x69\x6E\x79\x69\x6E\x67\x7A\x68\x69\x73\x68\x6F\x75\x5F\x30\x31\x5F\x70\x6C\x61\x74\x66\x6F\x72\x6D\x00').replace(b'\x10\x00\x00\x00Share_11620\x2ejpg',b'\x12\x00\x00\x00Share_11620_2\x2ejpg').replace(b'\x0a\x00\x00\x0011620\x2ejpg',b'\x0c\x00\x00\x0011620_2\x2ejpg').replace(b'\x0c\x00\x00\x003011620\x2ejpg',b'\x0e\x00\x00\x003011620_2\x2ejpg').replace(b'\x10\x00\x00\x003011620head\x2ejpg',b'\x12\x00\x00\x003011620_2head\x2ejpg')
                                     actor_mod=dec_to_hex(len(actor_mod)-4)+actor_mod[2:]
                                 id_2=dec_to_hex(int(skinid[:3].decode())*100+nnn)
                                 pos = strin.find(id_2+b'\x00\x00'+hero_actor)
@@ -3164,7 +3171,6 @@ else:
             print(Bug)
             print('Nút Bấm Không Tồn Tại')
 
-'''
 #tachfile pmin mod
 folder_mod_goc = folder_mod
 
@@ -3258,14 +3264,13 @@ for file in ['Back.xml','HasteE1.xml','HasteE1_leave.xml','born.xml']:
     with open(f'File_Mod/{folder_mod}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
         f.write(a)
 tien_trinh_dem = tien_trinh(tien_trinh_dem)
-
 tien_trinh_dem = tien_trinh(tien_trinh_dem)
 back_folder = ['commonresource','KeySpell','PassiveResource','mowen','Ultrafire','SeasonPlay']
 def zipdir2(path, ziph):
         for ii in back_folder:
             nonee = './{}'.format(ii)
-            DIR2 = './PminMod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
-            DIR = './PminMod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
+            DIR2 = './File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
+            DIR = './File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
             for root, dirs, files in os.walk(DIR):
                 for file in files:
                     full_path = os.path.join(root, file)
@@ -3355,8 +3360,8 @@ if checkCamXa!='NamNgu':
     def zipdir2(path, ziph):
             for ii in back_folder:
                 nonee = './{}'.format(ii)
-                DIR2 = './PminMod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
-                DIR = './PminMod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
+                DIR2 = './File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
+                DIR = './File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
                 for root, dirs, files in os.walk(DIR):
                     for file in files:
                         full_path = os.path.join(root, file)
@@ -3372,5 +3377,6 @@ if checkCamXa!='NamNgu':
                 shutil.rmtree('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,iii))
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
     shutil.make_archive(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/IOS/Resources','zip',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android')
-shutil.rmtree(f'File_Mod/{folder_mod_goc}/com.garena.game.kgvn')'''
+    shutil.rmtree(f'File_Mod/{folder_mod_goc}/{checkCamXa}/com.garena.game.kgvn')
+shutil.rmtree(f'File_Mod/{folder_mod_goc}/com.garena.game.kgvn')
 print('Đã Hoàn Thành !!!!!!!!')
