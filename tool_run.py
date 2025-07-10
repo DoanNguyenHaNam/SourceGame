@@ -3085,7 +3085,7 @@ else:
     strin = b''
     os.makedirs(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/assetbundle',exist_ok=True)
     i=0
-    for file in listdir(f'Pmin_Sources/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero'):
+    '''for file in listdir(f'Pmin_Sources/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero'):
         if file[:6].lower() == 'actor_' and len(file) == len('Actor_105_Actions.pkg.bytes') and '_Actions.pkg.bytes'.lower() in file.lower():
             with open(f'Pmin_Sources/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{file}','rb') as f2:
                 a=f2.read()
@@ -3093,7 +3093,7 @@ else:
                 strin=re.sub(file.encode('utf-8'),t.encode('utf-8'),strin, flags = re.IGNORECASE)
                 i+=1
             with open(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{t}','wb') as f2:
-                f2.write(a)
+                f2.write(a)'''
     with open(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/assetbundle/resourceverificationinfosetall.assetbundle','wb') as f:f.write(strin)
 
     ###
