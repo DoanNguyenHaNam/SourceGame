@@ -240,12 +240,18 @@ else:
         return a
     def xoa_thua_thai(strin):
         #return strin
-        strin=strin.replace(b'>\r\n          <',b'><')
-        strin=strin.replace(b'>\r\n        <',b'><')
-        strin=strin.replace(b'>\r\n      <',b'><')
-        strin=strin.replace(b'>\r\n    <',b'><')
-        strin=strin.replace(b'>\r\n  <',b'><')
-        strin=strin.replace(b'>\r\n<',b'><')
+        strin=strin.replace(b'>\r\n          <',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
+        strin=strin.replace(b'>\r\n        <',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
+        strin=strin.replace(b'>\r\n      <',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
+        strin=strin.replace(b'>\r\n    <',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
+        strin=strin.replace(b'>\r\n  <',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
+        strin=strin.replace(b'>\r\n<',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
+        strin=strin.replace(b'>\n          <',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
+        strin=strin.replace(b'>\n        <',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
+        strin=strin.replace(b'>\n      <',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
+        strin=strin.replace(b'>\n    <',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
+        strin=strin.replace(b'>\n  <',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
+        strin=strin.replace(b'>\n<',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
         return strin
         strin2=strin
         try:
@@ -3340,7 +3346,6 @@ if checkCamXa!='NamNgu':
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
     if os.path.isdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android/Resources/1.59.1/AssetRefs') == 1 :
         tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        shutil.rmtree(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android/Resources/1.59.1/AssetRefs')
         tien_trinh_dem = tien_trinh(tien_trinh_dem)
     shutil.make_archive(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/IOS/Resources','zip',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android')
     #Máy Trung Và Yếu
