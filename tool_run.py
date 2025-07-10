@@ -2627,6 +2627,8 @@ else:
                             ef=ef.replace(b'IDSKIN',skinid)
                             pos = strin.find(b'  </Action>')
                             if pos!=-1:
+                                if skinid == b'15710':
+                                    ef +=b'\r\n    <Track trackName="TriggerParticle0" eventType="TriggerParticle" guid="IDSKIN_Mod_by_YOUTUBE" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="pmin" guid="Mod_by_YOUTUBE'+hero_name[3:]+b'" status="true" />\r\n      <Event eventName="TriggerParticle" time="0.000" length="5.000" isDuration="true" guid="3f4a326c-6b74-4d7e-b9ac-f36378e06052">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" objectName="target" id="1" isTemp="false" useRefParam="false" />\r\n        <uint name="RefLiteBulletID" value="0" useRefParam="false" />\r\n        <bool name="bChooseResourceNameByCamp" value="false" useRefParam="false" />\r\n        <String name="parentResourceName" useRefParam="false" />\r\n        <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/'+hero_name+b'/'+skinid+b'/jiasu_tongyong_02" useRefParam="false" />\r\n        <bool name="bUseTargetSkinEffect" value="true" refParamName="" useRefParam="false" />\r\n        <bool name="bReverseXWhenCameraMirror" value="true" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>'
                                 if skinid==b'15009':
                                     ef=ef.replace(skinid+b'/jiasu_tongyong_01" refParamName="" useRefParam="false"/>\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.700" z="-0.600',skinid+b'/t2_spint" refParamName="" useRefParam="false"/>\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.000" z="0.000')
                                     ef=ef.replace(b'CheckHeroIdTick',b'CheckSkinIdTick').replace(b'heroId" value="'+skinid[:3],b'skinId" value="'+skinid[:3]+b'00')
@@ -2651,7 +2653,7 @@ else:
                                     #strin=strin.replace(code_goc, b'')
                                     strin=strin.replace(code_goc, code)
                                     break
-                            if skinid in id_haste and may_yeu_mod:
+                            if skinid in id_haste:
                                 ef = b'   <Track trackName="CheckHeroIdTick'+bytes(str(has),'utf-8')+b'" eventType="CheckHeroIdTick" guid="Mod_by_YOUTUBE'+hero_name[3:]+b'" enabled="true" useRefParam="false" r="0.667" g="1.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" isDuration="false">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" useRefParam="false"/>\r\n        <int name="heroId" value="'+skinid[:3]+b'" useRefParam="false"/>\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="TriggerParticle0" eventType="TriggerParticle" guid="IDSKIN_Mod_by_YOUTUBE" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="pmin" guid="Mod_by_YOUTUBE'+hero_name[3:]+b'" status="true" />\r\n      <Event eventName="TriggerParticle" time="0.000" length="5.000" isDuration="true" guid="3f4a326c-6b74-4d7e-b9ac-f36378e06052">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" objectName="target" id="1" isTemp="false" useRefParam="false" />\r\n        <uint name="RefLiteBulletID" value="0" useRefParam="false" />\r\n        <bool name="bChooseResourceNameByCamp" value="false" useRefParam="false" />\r\n        <String name="parentResourceName" useRefParam="false" />\r\n        <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/'+hero_name+b'/'+skinid+b'/jiasu_tongyong_01" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.700" z="-0.600" useRefParam="false" />\r\n      </Event>\r\n    </Track>'
                             else:
                                 ef = b'   <Track trackName="CheckHeroIdTick'+bytes(str(has),'utf-8')+b'" eventType="CheckHeroIdTick" guid="Mod_by_YOUTUBE'+hero_name[3:]+b'" enabled="true" useRefParam="false" r="0.667" g="1.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" isDuration="false">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" useRefParam="false"/>\r\n        <int name="heroId" value="'+skinid[:3]+b'" useRefParam="false"/>\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="TriggerParticle0" eventType="TriggerParticle" guid="IDSKIN_Mod_by_YOUTUBE" enabled="true" useRefParam="false" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="pmin" guid="Mod_by_YOUTUBE'+hero_name[3:]+b'" status="true" />\r\n      <Event eventName="TriggerParticle" time="0.000" length="5.000" isDuration="true" guid="3f4a326c-6b74-4d7e-b9ac-f36378e06052">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" objectName="target" id="1" isTemp="false" useRefParam="false" />\r\n        <uint name="RefLiteBulletID" value="0" useRefParam="false" />\r\n        <bool name="bChooseResourceNameByCamp" value="false" useRefParam="false" />\r\n        <String name="parentResourceName" useRefParam="false" />\r\n        <String name="resourceName" value="prefab_skill_effects/common_effects/jiasu_tongyong_01" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.700" z="-0.600" useRefParam="false" />\r\n      </Event>\r\n    </Track>'
@@ -2909,7 +2911,7 @@ else:
                                 analynode(None, byt.tell())
                         byt.close
                         xmlstr = minidom.parseString(ET.tostring(root)).toprettyxml(indent="   ")
-                        if skinid == b'13210':
+                        if skinid == b'13210' and False:
                             xml_code='''<Item Var="Com" Type="AssetRefAnalyser.Pair`2[System.UInt32,System.Int32]">
             <v1 Var="String" Type="System.UInt32">132111</v1>
             <v2 Var="String" Type="System.Int32">1</v2>
@@ -2955,10 +2957,10 @@ else:
             <v1 Var="String" Type="System.UInt32">524043</v1>
             <v2 Var="String" Type="System.Int32">1</v2>
          </Item>''',xml_code)
-                            if skinid==b'11620':
-                                xmlstr = process_xml(xmlstr,skinid.decode())
-                                xmlstr=xmlstr.replace('11620_3','11620_5')
-                        xmlstr=move_and_insert_particles(xmlstr, skinid.decode(), list_fix_lag_ef_back)
+                        if skinid==b'11620':
+                            xmlstr=xmlstr.replace('11620_3','11620_5')
+                        if skinid not in [b'52414',b'13118']:
+                            xmlstr=move_and_insert_particles(xmlstr, skinid.decode(), list_fix_lag_ef_back)
                         xmlstr=fix_ef(mod_ef_sound2(xmlstr.encode('utf-8'),decompress,skinid),skinid).decode()
                         with open(filexml, "w" , encoding="utf-8") as f:
                             f.write(xmlstr)
