@@ -1318,7 +1318,10 @@ else:
                                                 mod_for_skin = mod_all.replace(b'<Event eventName',condition).replace(b'EFFECT',ef).replace(b'CHECK_CODE',nhan_dang)
                                                 strin=strin.replace(code_goc, mod_for_skin+code)
                                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
-                                            f1.write(compress_(xoa_thua_thai(extract_guid_after_id(strin))))
+                                            if skinid[:3]!=b'530':
+                                                f1.write(compress_(xoa_thua_thai(extract_guid_after_id(strin))))
+                                            else:
+                                                f1.write(compress_(extract_guid_after_id(strin)))
                                     if may_yeu_mod and not HD_e and False:
                                         for ef in [b'Prefab_Skill_Effects',b'Prefab_Skill_Effects'.lower()]:
                                             p=strin.find(ef)
