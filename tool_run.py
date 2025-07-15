@@ -47,6 +47,9 @@ else:
         os.mkdir('./com.garena.game.kgvn/files')
         os.mkdir('./com.garena.game.kgvn/files/Resources/')
         os.mkdir(f'./com.garena.game.kgvn/files/Resources/{inp}/')
+        with open(f'pmin_sources/Resources/{inp}/version.txt','rb') as f:
+            with open(f'com.garena.game.kgvn/files/Resources/{inp}/version.txt','wb') as f2:
+                f2.write(f.read())
         os.mkdir(f'./com.garena.game.kgvn/files/Resources/{inp}/Ages/')
         os.mkdir(f'./com.garena.game.kgvn/files/Resources/{inp}/Ages/Prefab_Characters/')
         os.mkdir(f'./com.garena.game.kgvn/files/Resources/{inp}/Ages/Prefab_Characters/Prefab_Hero/')
@@ -2395,7 +2398,7 @@ else:
                                     strin=strin.replace(sound_find,sound_find+b'_skin11_aw2')
                                 pos=strin.find(b'<String name="eventName" value="',pos2)
                             with open(inp+f'Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
-                                f1.write(strin)
+                                f1.write(compress_(strin))
                     for file in ['BattleBank.bytes','ChatSound.bytes','HeroSound.bytes','LobbyBank.bytes','LobbySound.bytes']:
                         with open(inp+f'Databin/Client/Sound/{file}','rb') as f:
                             strin=f.read()
@@ -2417,7 +2420,7 @@ else:
                                     strin=strin.replace(sound_find,sound_find+b'_skin20_aw5')
                                 pos=strin.find(b'<String name="eventName" value="',pos2)
                             with open(inp+f'Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
-                                f1.write(strin)
+                                f1.write(compress_(strin))
                     for file in ['BattleBank.bytes','ChatSound.bytes','HeroSound.bytes','LobbyBank.bytes','LobbySound.bytes']:
                         with open(inp+f'Databin/Client/Sound/{file}','rb') as f:
                             strin=f.read()
@@ -2444,7 +2447,7 @@ else:
                                             strin = strin.replace(sound,sound+b'_Skin7_Aw3')
                                     pos = strin.find(b'<Track trackName="PlayHeroSoundTick',posid2)
                                 with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
-                                    f1.write(strin)
+                                    f1.write(compress_(strin))
                     for file in ['BattleBank.bytes','ChatSound.bytes','HeroSound.bytes','LobbyBank.bytes','LobbySound.bytes']:
                         with open(inp+f'Databin/Client/Sound/{file}','rb') as f:
                             strin=f.read()
@@ -2621,6 +2624,9 @@ else:
                             strin = f.read()
                             for code in split_code_back(strin[:strin.find(b'    <Track trackName="CheckHeroId')]):
                                 code_goc=code
+                                check_Back=b'</Event>'
+                                for ID in List_SkinIfosMod:
+                                    check_Back=check_Back + b'\r\n      <SkinOrAvatarList id="'+ID+b'" />'
                                 check=check_Back
                                 if b'412ea073-5944-46e4-ae5e-3037e855fda7' in code and b'resourceName' in code:
                                     code=add_filter_attribute(code)
@@ -2655,6 +2661,9 @@ else:
                             strin = f.read()
                             for code in split_code_back(strin[:strin.find(b'    <Track trackName="CheckHeroId')]):
                                 code_goc=code
+                                check_Back=b'</Event>'
+                                for ID in List_SkinIfosMod:
+                                    check_Back=check_Back + b'\r\n      <SkinOrAvatarList id="'+ID+b'" />'
                                 check=check_Back
                                 if b'412ea073-5944-46e4-ae5e-3037e855fda7' in code and b'resourceName' in code:
                                     code=add_filter_attribute(code)
@@ -2681,8 +2690,8 @@ else:
                             strin = strin.replace(b' </Action>',ef+b'\n  </Action>')
                             with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1_leave.xml','wb') as f1:
                                 f1.write(strin)
-                except:
-                    print(Fore.RED+Style.BRIGHT+'Không Mod Gia Tốc'+Style.RESET_ALL)
+                except Exception as bg:
+                    print(Fore.RED+Style.BRIGHT+f'Không Mod Gia Tốc ERROR: {bg}'+Style.RESET_ALL)
                 #mod thông báo hạ gục
                 try:
                     if skinid[:3] in [b'150']:
@@ -3109,6 +3118,9 @@ else:
         shutil.copytree(f'./File_Mod/{folder_mod}/com.garena.game.kgvn',f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn')
         try:
             giai_nen(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/','Actor_530_Actions.pkg.bytes')
+            os.mkdir(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak')
+            shutil.copytree(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/skill',f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill')
+            shutil.rmtree(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/skill')
         except:
             shutil.copytree(f'./Pmin_Sources/resources/1.59.1/ages/Prefab_Characters/Prefab_Hero/530_Dirak',f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak')
         hittringer_dirak=b'    <Track trackName="HitTriggerTick0" eventType="HitTriggerTick" guid="CAM_XA_PMIN_MOD" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="HitTriggerTick" time="0.000" isDuration="false" guid="REUP_CC">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="hitTargetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="SelfSkillCombineID_1" value="530510" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="triggerId" id="-1" objectName="None" isTemp="false" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n  </Action>'
