@@ -3408,5 +3408,23 @@ if checkCamXa!='NamNgu':
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
     shutil.make_archive(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/IOS/Resources','zip',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android')
     shutil.rmtree(f'File_Mod/{folder_mod_goc}/{checkCamXa}/com.garena.game.kgvn')
-shutil.rmtree(f'File_Mod/{folder_mod_goc}/com.garena.game.kgvn')
+try:
+    shutil.rmtree(f'File_Mod/{folder_mod_goc}/com.garena.game.kgvn')
+except:
+    import subprocess
+    import os
+
+    def force_delete_windows(path):
+        if os.path.exists(path):
+            try:
+                # Sử dụng rmdir /S /Q để xóa thư mục và mọi thứ bên trong
+                subprocess.run(f'rmdir /S /Q "{path}"', shell=True, check=True)
+                print(f"✅ Đã xóa thư mục: {path}")
+            except subprocess.CalledProcessError as e:
+                print(f"❌ Xóa thất bại: {e}")
+        else:
+            print(f"⚠️ Thư mục không tồn tại: {path}")
+    folder_path = f'./File_Mod/{folder_mod_goc}/com.garena.game.kgvn'
+    force_delete_windows(folder_path)
+
 print('Đã Hoàn Thành !!!!!!!!')
