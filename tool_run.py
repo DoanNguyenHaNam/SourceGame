@@ -1045,6 +1045,7 @@ else:
             #-----------------------------------------------Mod Effect------------------------------------------------------------#
                 if True:
                     ca=ca+tat+'\n'
+                    list_full_value_fixasset=''
                     if hieu_ung == b'\x8f':
                         du_kien_mod_born=b''
                         
@@ -1287,7 +1288,7 @@ else:
                                             if b'BattleUI' in code:
                                                 match = re.search(rb'<String name="prefab" value="([^"]+)"', code)
                                                 if match:
-                                                    full_value = match.group(1)
+                                                    list_full_value_fixasset = full_value = match.group(1)
                                                     last_part = full_value.split(b'/')[-1]
 
                                                     ef = f'prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/'.encode('utf-8') + last_part
@@ -2096,7 +2097,7 @@ else:
                     except Exception as bug:
                         print(bug)
                         print(Fore.RED+Style.BRIGHT+'Không Mod Biến Về'+Style.RESET_ALL)
-                else:
+                if False:
                     try:
                         if True:
                             if True:
@@ -2980,6 +2981,12 @@ else:
                         if skinid not in [b'52414',b'13118']:
                             xmlstr=move_and_insert_particles(xmlstr, skinid.decode(), list_fix_lag_ef_back)
                         xmlstr=fix_ef(mod_ef_sound2(xmlstr.encode('utf-8'),decompress,skinid),skinid).decode()
+                        if list_full_value_fixasset:
+                            last_part = list_full_value_fixasset.split(b'/')[-1].decode()
+                            ef = f'prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/' + last_part
+                            xmlstr = re.sub(list_full_value_fixasset.decode(), ef,xmlstr, flags = re.IGNORECASE)
+
+                        print(list_full_value_fixasset)
                         with open(filexml, "w" , encoding="utf-8") as f:
                             f.write(xmlstr)
                         tree=ET.parse(filexml)
