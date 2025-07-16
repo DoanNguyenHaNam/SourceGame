@@ -1291,7 +1291,7 @@ else:
                                                     list_full_value_fixasset = full_value = match.group(1)
                                                     last_part = full_value.split(b'/')[-1]
 
-                                                    ef = f'prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/'.encode('utf-8') + last_part
+                                                    ef = f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/".encode('utf-8') + last_part
                                                     code = code.replace(full_value, ef)
                                                     strin = strin.replace(code_goc, code)
                                             p=re.search(rb'prefab_skill_effects.*?>',code,re.IGNORECASE)
@@ -2983,7 +2983,7 @@ else:
                         xmlstr=fix_ef(mod_ef_sound2(xmlstr.encode('utf-8'),decompress,skinid),skinid).decode()
                         if list_full_value_fixasset:
                             last_part = list_full_value_fixasset.split(b'/')[-1].decode()
-                            ef = f'prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/' + last_part
+                            ef = f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/" + last_part
                             xmlstr = re.sub(list_full_value_fixasset.decode(), ef,xmlstr, flags = re.IGNORECASE)
 
                         print(list_full_value_fixasset)
