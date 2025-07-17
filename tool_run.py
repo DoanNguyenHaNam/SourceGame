@@ -50,6 +50,11 @@ else:
         with open(f'pmin_sources/Resources/{inp}/version.txt','rb') as f:
             with open(f'com.garena.game.kgvn/files/Resources/{inp}/version.txt','wb') as f2:
                 f2.write(f.read())
+        os.mkdir(f'./com.garena.game.kgvn/files/Resources/{inp}/Languages/')
+        os.mkdir(f'./com.garena.game.kgvn/files/Resources/{inp}/Languages/VN_Garena_VN/')
+        with open(f'pmin_sources/Resources/{inp}/Languages/VN_Garena_VN/languageMap.txt','rb') as f:
+            with open(f'com.garena.game.kgvn/files/Resources/{inp}/Languages/VN_Garena_VN/languageMap.txt','wb') as f2:
+                f2.write(decompress_(f.read()).replace(b'Tip_WaterMark_Str = UID: {0}', b'Tip_WaterMark_Str = MOD BY PMIN MOD'))
         os.mkdir(f'./com.garena.game.kgvn/files/Resources/{inp}/Ages/')
         os.mkdir(f'./com.garena.game.kgvn/files/Resources/{inp}/Ages/Prefab_Characters/')
         os.mkdir(f'./com.garena.game.kgvn/files/Resources/{inp}/Ages/Prefab_Characters/Prefab_Hero/')
@@ -1290,8 +1295,10 @@ else:
                                                 if match:
                                                     list_full_value_fixasset = full_value = match.group(1)
                                                     last_part = full_value.split(b'/')[-1]
-
-                                                    ef = f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/".encode('utf-8') + last_part
+                                                    if skinid in [b'11620',b'13311',b'16707']:
+                                                        ef = f'prefab_skill_effects/component_effects/{skinid.decode('utf-8')}/{skinid.decode('utf-8')}_5/'.encode('utf-8') + last_part
+                                                    else:
+                                                        ef = f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/".encode('utf-8') + last_part
                                                     code = code.replace(full_value, ef)
                                                     strin = strin.replace(code_goc, code)
                                             p=re.search(rb'prefab_skill_effects.*?>',code,re.IGNORECASE)
@@ -2983,7 +2990,10 @@ else:
                         xmlstr=fix_ef(mod_ef_sound2(xmlstr.encode('utf-8'),decompress,skinid),skinid).decode()
                         if list_full_value_fixasset:
                             last_part = list_full_value_fixasset.split(b'/')[-1].decode()
-                            ef = f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/" + last_part
+                            if skinid in [b'11620',b'13311',b'16707']:
+                                ef = f'prefab_skill_effects/component_effects/{skinid.decode('utf-8')}/{skinid.decode('utf-8')}_5/' + last_part
+                            else:
+                                ef = f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/" + last_part
                             xmlstr = re.sub(list_full_value_fixasset.decode(), ef,xmlstr, flags = re.IGNORECASE)
 
                         print(list_full_value_fixasset)
@@ -3100,7 +3110,7 @@ else:
         with open(f'Pmin_Sources/Resources/1.59.1/assetbundle/resourceverificationinfosetall.assetbundle','rb') as f:
             strin=f.read()
     except:
-        strin = b''
+        strin = b'MODBYPMINMOD'
     strin = b''
     os.makedirs(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/assetbundle',exist_ok=True)
     i=0
