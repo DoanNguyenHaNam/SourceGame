@@ -1296,7 +1296,7 @@ else:
                                                     list_full_value_fixasset = full_value = match.group(1)
                                                     last_part = full_value.split(b'/')[-1]
                                                     if skinid in [b'11620',b'13311',b'16707']:
-                                                        ef = f'prefab_skill_effects/component_effects/{skinid.decode('utf-8')}/{skinid.decode('utf-8')}_5/'.encode('utf-8') + last_part
+                                                        ef = f"prefab_skill_effects/component_effects/{skinid.decode('utf-8')}/{skinid.decode('utf-8')}_5/".encode('utf-8') + last_part
                                                     else:
                                                         ef = f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/".encode('utf-8') + last_part
                                                     code = code.replace(full_value, ef)
@@ -2991,7 +2991,7 @@ else:
                         if list_full_value_fixasset:
                             last_part = list_full_value_fixasset.split(b'/')[-1].decode()
                             if skinid in [b'11620',b'13311',b'16707']:
-                                ef = f'prefab_skill_effects/component_effects/{skinid.decode('utf-8')}/{skinid.decode('utf-8')}_5/' + last_part
+                                ef = f"prefab_skill_effects/component_effects/{skinid.decode('utf-8')}/{skinid.decode('utf-8')}_5/" + last_part
                             else:
                                 ef = f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/" + last_part
                             xmlstr = re.sub(list_full_value_fixasset.decode(), ef,xmlstr, flags = re.IGNORECASE)
