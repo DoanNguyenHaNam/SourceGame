@@ -230,9 +230,10 @@ else:
         skin=skin[skin.find('<ArtPrefabLOD '):]
         skin=skin.replace('>\n      ','>\n')
         p2=a.find('\n   <SkinPrefab ')
-        if skinid in ['5486']:
+        if skinid in ['5486','1749']:
             p=a.find('</ActorName>\n   ')
             de=a[p+len('</ActorName>\n   '):p2]
+            skin = skin.replace('useNewMecanim','oriSkinUseNewMecanim')
         else:
             p=a.find('<ArtPrefabLOD ')
             de=a[p:p2]
@@ -402,7 +403,7 @@ else:
                 if b in a:
                     a=a.replace(b,b+ID+b'/')
         T=b''
-        if (ID == b'51504' and file in ['A1.xml', 'A2.xml', 'A3.xml', 'A4.xml', 'A5.xml', 'S1.xml', 'S11.xml', 'S12.xml', 'S21B0.xml', 'S21B5.xml', 'S2B0.xml', 'S2B1.xml', 'S2B5.xml', 'U1B0.xml']) or (ID == b'11107' and 'E' not in file and 'eath' not in file)  or (ID == b'12304' and 'E' not in file) or (ID == b'15704' and file in ['S1.xml','A1.xml','A3.xml','A4.xml','S2.xml','U1.xml']):
+        if (ID == b'51504' and file in ['A1.xml', 'A2.xml', 'A3.xml', 'A4.xml', 'A5.xml', 'S1.xml', 'S11.xml', 'S12.xml', 'S21B0.xml', 'S21B5.xml', 'S2B0.xml', 'S2B1.xml', 'S2B5.xml', 'U1B0.xml']) or (ID == b'11107' and 'E' not in file and 'eath' not in file) or (ID == b'12304' and 'E' not in file) or (ID == b'15704' and file in ['S1.xml','A1.xml','A3.xml','A4.xml','S2.xml','U1.xml']):
             a=a.replace(b'<String name="clipName" value="',b'<String name="clipName" value="'+ID+b'/')
             def split_code_clipname(data):
                 split_code = []
