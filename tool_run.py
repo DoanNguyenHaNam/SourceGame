@@ -508,6 +508,23 @@ else:
         if len(a)%2==1:
             a='0'+a
         return (bytes.fromhex(a))[::-1]
+    def add_filter_attribute(xml_bytes=code, IN=b'11'):
+        # Bước 1: Nếu có SkinAvatarFilterType thì thay giá trị
+        new_bytes, count = re.subn(
+            rb'(<Track[^>]*?)\sSkinAvatarFilterType="[^"]*"',
+            rb'\1 SkinAvatarFilterType="' + IN + rb'"',
+            xml_bytes
+        )
+
+        # Bước 2: Nếu không có thì thêm mới
+        if count == 0:
+            new_bytes = re.sub(
+                rb'(<Track[^>]*?)>',
+                rb'\1 SkinAvatarFilterType="' + IN + rb'">',
+                xml_bytes
+            )
+
+        return new_bytes
     def fix_condition(a):
         p=a.find(b'<Condition id="')
         while p!=-1:
