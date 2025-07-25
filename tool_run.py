@@ -230,10 +230,9 @@ else:
         skin=skin[skin.find('<ArtPrefabLOD '):]
         skin=skin.replace('>\n      ','>\n')
         p2=a.find('\n   <SkinPrefab ')
-        if skinid in ['5486','1749']:
+        if skinid in ['5486']:
             p=a.find('</ActorName>\n   ')
             de=a[p+len('</ActorName>\n   '):p2]
-            skin = skin.replace('useNewMecanim','oriSkinUseNewMecanim')
         else:
             p=a.find('<ArtPrefabLOD ')
             de=a[p:p2]
@@ -403,7 +402,7 @@ else:
                 if b in a:
                     a=a.replace(b,b+ID+b'/')
         T=b''
-        if (ID == b'51504' and file in ['A1.xml', 'A2.xml', 'A3.xml', 'A4.xml', 'A5.xml', 'S1.xml', 'S11.xml', 'S12.xml', 'S21B0.xml', 'S21B5.xml', 'S2B0.xml', 'S2B1.xml', 'S2B5.xml', 'U1B0.xml']) or (ID == b'11107' and 'E' not in file and 'eath' not in file) or (ID == b'12304' and 'E' not in file) or (ID == b'15704' and file in ['S1.xml','A1.xml','A3.xml','A4.xml','S2.xml','U1.xml']):
+        if (ID == b'51504' and file in ['A1.xml', 'A2.xml', 'A3.xml', 'A4.xml', 'A5.xml', 'S1.xml', 'S11.xml', 'S12.xml', 'S21B0.xml', 'S21B5.xml', 'S2B0.xml', 'S2B1.xml', 'S2B5.xml', 'U1B0.xml']) or (ID == b'11107' and 'E' not in file and 'eath' not in file)  or (ID == b'12304' and 'E' not in file) or (ID == b'15704' and file in ['S1.xml','A1.xml','A3.xml','A4.xml','S2.xml','U1.xml']):
             a=a.replace(b'<String name="clipName" value="',b'<String name="clipName" value="'+ID+b'/')
             def split_code_clipname(data):
                 split_code = []
@@ -1328,6 +1327,14 @@ else:
                                                     condition=b'<Event eventName'
                                                 
                                                 mod_for_skin = mod_all.replace(b'<Event eventName',condition).replace(b'EFFECT',ef).replace(b'CHECK_CODE',nhan_dang)
+                                                if b'SkinAvatarFilterType="9"' in code_goc or b'SkinAvatarFilterType="11"' in code_goc:
+                                                    if b'SkinAvatarFilterType="9"' in code_goc:
+                                                        mod_for_skin = add_filter_attribute(mod_for_skin, b'9')
+                                                    if b'SkinAvatarFilterType="11"' in code_goc:
+                                                        mod_for_skin = add_filter_attribute(mod_for_skin, b'11')
+                                                    p = code_goc.find(b'    </Track>')
+                                                    p2 = code_goc.find(b'</Event>')
+                                                    mod_for_skin = mod_for_skin.replace(b'</Event>\r\n',code_goc[p2:p])
                                                 strin=strin.replace(code_goc, mod_for_skin+code)
                                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                             if skinid[:3]!=b'530':
@@ -1872,6 +1879,8 @@ else:
                                     #if code[p:p2]==b'eventType="PlayAnimDuration' and skinid in [b'51504']:
                                     #    code = code.replace(b'<String name="clipName" value="',b'<String name="clipName" value="'+skinid+b'/')
                                     if code[p:p2] in List_ngoai_le:
+                                        continue
+                                    if raz_15710_back and b'clipName' in code:
                                         continue
                                     patterns = [
                                         rb'eventType\s*=\s*"PlayAnimDuration',
