@@ -508,7 +508,7 @@ else:
         if len(a)%2==1:
             a='0'+a
         return (bytes.fromhex(a))[::-1]
-    def add_filter_attribute(xml_bytes=code, IN=b'11'):
+    def add_filter_attribute(xml_bytes, IN=b'11'):
         # Bước 1: Nếu có SkinAvatarFilterType thì thay giá trị
         new_bytes, count = re.subn(
             rb'(<Track[^>]*?)\sSkinAvatarFilterType="[^"]*"',
