@@ -972,7 +972,7 @@ else:
             check_skill_an=False
             ten_de_vao_ten=ten_de_vao_ten+str(ten_de_vao_ten_dem)+'. '+tat+'\n'
             ten_de_vao_ten_dem+=1
-            if skinid[:3] in List_Hero_Da_Mod or '[ex]' in tat:
+            if skinid[:3] in List_Hero_Da_Mod:# or '[ex]' in tat:
                 ten_de_vao_ten=ten_de_vao_ten+f'\t\tSkin Bị Trùng Hoặc Không Tồn Tại: {tat}\n'
             else:
                 List_Hero_Da_Mod.append(skinid[:3])
@@ -1256,16 +1256,16 @@ else:
                                         #   
                                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                             f1.write(compress_((strin)))
-                                    if ('e' in file.lower() and len(list_du_kien_mod_born)==0) or (skinid[:3]!=b'524' and file in ['A1E1.xml','A1e1.xml','a1e1.xml']) or (skinid[:3]==b'524' and file in ['A1E6.xml','A1e6.xml','a1e6.xml']):
-                                        for ef in [b'Prefab_Skill_Effects',b'Prefab_Skill_Effects'.lower()]:
-                                            p=strin.find(ef)
-                                            while p!=-1:
-                                                p2=strin.find(b'"',p)
-                                                du_kien_mod_born=strin[p:p2].lower()
-                                                list_du_kien_mod_born.append(du_kien_mod_born)
-                                                print('born')
-                                                print(file, du_kien_mod_born)
-                                                p=strin.find(ef,p2)
+                                    # if ('e' in file.lower() and len(list_du_kien_mod_born)==0) or (skinid[:3]!=b'524' and file in ['A1E1.xml','A1e1.xml','a1e1.xml']) or (skinid[:3]==b'524' and file in ['A1E6.xml','A1e6.xml','a1e6.xml']):
+                                    #     for ef in [b'Prefab_Skill_Effects',b'Prefab_Skill_Effects'.lower()]:
+                                    #         p=strin.find(ef)
+                                    #         while p!=-1:
+                                    #             p2=strin.find(b'"',p)
+                                    #             du_kien_mod_born=strin[p:p2].lower()
+                                    #             list_du_kien_mod_born.append(du_kien_mod_born)
+                                    #             print('born')
+                                    #             print(file, du_kien_mod_born)
+                                    #             p=strin.find(ef,p2)
                                     if b'Prefab_Skill_Effects'.lower() in strin.lower() or b'BattleUI' in strin:
                                         def split_code_back2(a):
                                             split_code=[]
@@ -1359,18 +1359,18 @@ else:
                                                 f1.write(compress_(xoa_thua_thai(extract_guid_after_id(strin))))
                                             else:
                                                 f1.write(compress_(extract_guid_after_id(strin)))
-                                    if may_yeu_mod and not HD_e and False:
-                                        for ef in [b'Prefab_Skill_Effects',b'Prefab_Skill_Effects'.lower()]:
-                                            p=strin.find(ef)
-                                            while p!=-1:
-                                                p2=strin.find(b'"',p)
-                                                du_kien_mod_born=strin[p:p2].lower()
-                                                if strin[p:p2].lower().replace(b'.prefab',b'') not in check_asef and b'pmin' not in strin[p:p2].lower() and skinid in strin[p:p2].lower():
-                                                    print('born')
-                                                    print(du_kien_mod_born)
-                                                    list_du_kien_mod_born.append(du_kien_mod_born)
-                                                p=strin.find(ef,p2)
-                                    list_du_kien_mod_born=list(set(list_du_kien_mod_born))
+                                    # if may_yeu_mod and not HD_e and False:
+                                    #     for ef in [b'Prefab_Skill_Effects',b'Prefab_Skill_Effects'.lower()]:
+                                    #         p=strin.find(ef)
+                                    #         while p!=-1:
+                                    #             p2=strin.find(b'"',p)
+                                    #             du_kien_mod_born=strin[p:p2].lower()
+                                    #             if strin[p:p2].lower().replace(b'.prefab',b'') not in check_asef and b'pmin' not in strin[p:p2].lower() and skinid in strin[p:p2].lower():
+                                    #                 print('born')
+                                    #                 print(du_kien_mod_born)
+                                    #                 list_du_kien_mod_born.append(du_kien_mod_born)
+                                    #             p=strin.find(ef,p2)
+                                    # list_du_kien_mod_born=list(set(list_du_kien_mod_born))
                                     if DeAllSkin:
                                         ListRandom=['1','2','3','4','5','6','7','8','9','P','M','I','N','O','D','G','A','0']
                                         import random
@@ -2409,6 +2409,13 @@ else:
                     except:
                         print(Fore.RED+Style.BRIGHT+'Không Mod Đánh Thường'+Style.RESET_ALL)
                 with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Databin/Client/Skill/liteBulletCfg.bytes','rb') as f:a=f.read()
+                
+                t=b'prefab_skill_effects/hero_skill_effects/'+skinid[:3]+b'_'
+                p = a.find(t)
+                while p!=-1:
+                    p2 = a.find(b'\x00',p)
+                    list_du_kien_mod_born.append(a[p:p2])
+                    p = a.find(t,p2)
                 if b'/'+skinid[:3]+b'_' in a and hieu_ung==b'\x8f':
                     if skinid!=b'13311':
                         mod_lite(folder_mod,hero_name,skinid)
@@ -2492,25 +2499,25 @@ else:
                                 f1.write(strin)
                 try:
                     if True:
-                        if not os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}/imprint'.format(folder_mod,decompress)):
-                            DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill'.format(folder_mod,decompress)
-                            DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill'.format(folder_mod,decompress)
-                            nonee = './{}/skill'.format(decompress)
-                            with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/Actor_{}_Actions.pkg.bytes'.format(folder_mod,hero_name[:3].decode()), 'w', zipfile.ZIP_STORED) as zipf:
-                                zipdir('tmp/', zipf)
-                        else:
-                            def zipdir4(path, ziph):
-                                for ii in listdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/'):
-                                    nonee = f'./{decompress}/{ii}'
-                                    DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,ii)
-                                    DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,ii)
-                                    for root, dirs, files in os.walk(DIR):
-                                        for file in files:
-                                            full_path = os.path.join(root, file)
-                                            arcname = os.path.relpath(full_path, os.path.join(DIR, '..'))
-                                            ziph.write(full_path,arcname)
-                            with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/Actor_{}_Actions.pkg.bytes'.format(folder_mod,hero_name[:3].decode()), 'w', zipfile.ZIP_STORED) as zipf:
-                                zipdir4('tmp/', zipf)
+                        # if not os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}/imprint'.format(folder_mod,decompress)) and  not os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}/imprint'.format(folder_mod,decompress)):
+                        #     DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill'.format(folder_mod,decompress)
+                        #     DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill'.format(folder_mod,decompress)
+                        #     nonee = './{}/skill'.format(decompress)
+                        #     with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/Actor_{}_Actions.pkg.bytes'.format(folder_mod,hero_name[:3].decode()), 'w', zipfile.ZIP_STORED) as zipf:
+                        #         zipdir('tmp/', zipf)
+                        # else:
+                        def zipdir4(path, ziph):
+                            for ii in listdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/'):
+                                nonee = f'./{decompress}/{ii}'
+                                DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,ii)
+                                DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,ii)
+                                for root, dirs, files in os.walk(DIR):
+                                    for file in files:
+                                        full_path = os.path.join(root, file)
+                                        arcname = os.path.relpath(full_path, os.path.join(DIR, '..'))
+                                        ziph.write(full_path,arcname)
+                        with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/Actor_{}_Actions.pkg.bytes'.format(folder_mod,hero_name[:3].decode()), 'w', zipfile.ZIP_STORED) as zipf:
+                            zipdir4('tmp/', zipf)
                         if skinid[:3]==b'526' or skinid[:3]==b'137':
                             os.mkdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Prefab_Characters/{decompress}')
                             os.mkdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Prefab_Characters/{decompress}_pet')
@@ -3015,7 +3022,10 @@ else:
                             xmlstr=xmlstr.replace('11620_3','11620_5')
                         if skinid not in [b'52414',b'13118']:
                             xmlstr=move_and_insert_particles(xmlstr, skinid.decode(), list_fix_lag_ef_back)
-                        xmlstr=fix_ef(mod_ef_sound2(xmlstr.encode('utf-8'),decompress,skinid),skinid).decode()
+                        matches = re.findall(r'(prefab_skill_effects.*?)(?=</v1>)', xmlstr, re.IGNORECASE)
+                        for ef in matches:
+                            if not any(re.search(ef.encode('utf-8'), item, re.IGNORECASE) for item in list_du_kien_mod_born):
+                                xmlstr = xmlstr.replace(ef, fix_ef(mod_ef_sound2(ef.encode('utf-8'),decompress,skinid),skinid).decode())
                         if list_full_value_fixasset:
                             last_part = list_full_value_fixasset.split(b'/')[-1].decode()
                             if skinid in [b'11620',b'13311',b'16707']:
