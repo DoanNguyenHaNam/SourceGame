@@ -114,8 +114,6 @@ else:
             strin = f1.read()
         HD_e = 's' if 'hd' in strin.lower() else 't'
         list_mod = "\n".join([a for a in strin.split('\n') if 'hd' not in a.lower()])
-        with open('list_mod.txt', 'w') as f:
-            f.write(list_mod)
     except:
         HD_e='t'
     if HD_e=='' or 's' in HD_e or 'S' in HD_e:
@@ -138,6 +136,15 @@ else:
         fantasy_zip = zipfile.ZipFile(z+a)
         fantasy_zip.extractall(z)
         return '\033[1;32mGiai Nen Xong'
+    def split_code_back(a):
+        if True:
+            split_code=[]
+            p=a.find(b'    <Track trackName=')
+            while p!=-1:
+                code=a[p:a.find(b'    <Track trackName=',p+10)].replace(b'  </Action>\r\n</Project',b'')
+                split_code.append(code)
+                p=a.find(b'    <Track trackName=',p+10)
+        return split_code
     def split_code_(data):
         split_code = []
         start_tag = b'    <Track trackName='
@@ -942,7 +949,7 @@ else:
             cam_xa_goc=str(cam_xa_goc)
         elif 'nut' in skinid.lower():
             nut_bam_auto_mod=skinid.lower()
-        elif 'mayyeu' in skinid.lower() or 'rov' in skinid.lower():pass
+        elif 'mayyeu' in skinid.lower() or 'hd' in skinid.lower() or 'rov' in skinid.lower():pass
         else:
             phu_kien=False
             veres_rt=False
@@ -1066,6 +1073,7 @@ else:
                 except:
                     print(Fore.RED+Style.BRIGHT+'Không Mod skillmark'+Style.RESET_ALL)
             #-----------------------------------------------Mod Effect------------------------------------------------------------#
+                list_fix_lag_ef_back = []
                 if True:
                     ca=ca+tat+'\n'
                     list_full_value_fixasset=''
@@ -1074,9 +1082,6 @@ else:
                         
                         with open(f'./Pmin_Sources/Resources/1.59.1/AssetRefs/Hero/{decompress[:3]}_AssetRef.bytes','rb') as asef:
                             check_asef=fix_ef(mod_ef_sound2(decompress_(asef.read()),decompress,skinid),skinid).lower()
-                            p=check_asef.find(b'skinsubset')
-                            if p!=-1:
-                                check_asef=check_asef[:p]
                         for filez in listdir(f'./Pmin_Sources/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}'):
                             if filez=='skill' or filez=='Skill':
                                 for file in listdir('./Pmin_Sources/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill/'.format(decompress)):
@@ -1086,6 +1091,10 @@ else:
                                                 strin = f.read()
                                                 print(Fore.GREEN+Style.BRIGHT+'File Có Skill Ẩn: '+file)
                                                 strin=mod_ef_sound2(strin,decompress,skinid)
+                                                if '_back.xml' in file.lower():
+                                                    for code in split_code_back(strin):
+                                                        if b'SetObjectDirectionTick' in code:
+                                                            strin=strin.replace(code, b'')
                                                 check_skill_an=True
                                                 list_skill_an.append(file)
                                                 if HD_e:
@@ -1093,8 +1102,6 @@ else:
                                                     while p!=-1:
                                                         p2=strin.find(b'"',p+len('<String name="resourceName2" value="'))
                                                         if b'.prefab' not in strin[p:p2+1] and b'value=""' not in strin[p:p2+1]:
-                                                            print('HD_E')
-                                                            print(strin[p:p2+1])
                                                             strin=strin.replace(strin[p:p2+1],strin[p:p2]+b'.prefab"',1)
                                                         p=strin.find(b'<String name="resourceName',p2)
                                         except:
@@ -1129,8 +1136,6 @@ else:
                                                     while p!=-1:
                                                         p2=strin.find(b'"',p+len('<String name="resourceName2" value="'))
                                                         if b'.prefab' not in strin[p:p2+1] and b'value=""' not in strin[p:p2+1]:
-                                                            print('HD_E')
-                                                            print(strin[p:p2+1])
                                                             strin=strin.replace(strin[p:p2+1],strin[p:p2]+b'.prefab"',1)
                                                         p=strin.find(b'<String name="resourceName',p2)
                                         if KatakanaXinhGai and skinid not in [b'11620',b'13111',b'16707']:
@@ -1343,7 +1348,13 @@ else:
                                                     condition = con.group()
                                                 else:
                                                     condition=b'<Event eventName'
-                                                
+                                                if nhan_dang.lower().replace(b'.prefab',b'') not in check_asef.lower():
+                                                    if skinid in [b'11620',b'13311',b'16707']:
+                                                        list_fix_lag_ef_back.append(f"prefab_skill_effects/component_effects/{skinid.decode('utf-8')}/{skinid.decode('utf-8')}_5/".encode('utf-8') + nhan_dang.lower())
+                                                        print(f"prefab_skill_effects/component_effects/{skinid.decode('utf-8')}/{skinid.decode('utf-8')}_5/".encode('utf-8') + nhan_dang.lower())
+                                                    else:
+                                                        list_fix_lag_ef_back.append(f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/".encode('utf-8') + nhan_dang.lower())
+                                                        print(f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/".encode('utf-8') + nhan_dang.lower())
                                                 mod_for_skin = mod_all.replace(b'<Event eventName',condition).replace(b'EFFECT',ef).replace(b'CHECK_CODE',nhan_dang)
                                                 if b'SkinAvatarFilterType="9"' in code_goc or b'SkinAvatarFilterType="11"' in code_goc:
                                                     if b'SkinAvatarFilterType="9"' in code_goc:
@@ -1853,16 +1864,6 @@ else:
                     with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Databin/Client/Actor/heroSkin.bytes','wb') as f:f.write(a)
             #-----------------------------------------------Mod Back------------------------------------------------------------#
                 print('mod back')
-                list_fix_lag_ef_back = []
-                def split_code_back(a):
-                    if True:
-                        split_code=[]
-                        p=a.find(b'    <Track trackName=')
-                        while p!=-1:
-                            code=a[p:a.find(b'    <Track trackName=',p+10)].replace(b'  </Action>\r\n</Project',b'')
-                            split_code.append(code)
-                            p=a.find(b'    <Track trackName=',p+10)
-                    return split_code
                 name = b''
                 if skinid in id_back and may_yeu_mod:# ((check_bien_ve_ef or skinid in [b'15004',b'13311',b'16707',b'11620']) or ) and may_yeu_mod:
                     try:
@@ -3035,8 +3036,24 @@ else:
                             xmlstr = re.sub(list_full_value_fixasset.decode(), ef,xmlstr, flags = re.IGNORECASE)
 
                         print(list_full_value_fixasset)
+                        if True: #HD_e:
+                            t_ef = f"prefab_skill_effects/hero_skill_effects/"
+                            t_replace = f"prefab_skill_effects/hero_skill_effects/"+decompress+'/'
+                            if skinid in [b'11620',b'13311',b'16707']:
+                                t_ef = f"prefab_skill_effects/component_effects/"
+                            matches = re.findall(r'(<v1[^>]*>' + re.escape(t_ef) + r'.*?)</v1>', xmlstr, re.IGNORECASE)
+                            for ef in matches:
+                                if not re.search(re.escape(t_replace+skinid.decode()+'/'), ef, re.IGNORECASE):
+                                    print(ef)
+                                    xmlstr = re.sub(ef, re.sub(t_replace, t_replace+skinid.decode()+'/', ef, flags=re.IGNORECASE), xmlstr, flags=re.IGNORECASE)
+                                if HD_e:
+                                    if ef + '.prefab' + '</v1>' not in xmlstr:
+                                        xmlstr = re.sub(ef + '</v1>', ef + '.prefab' + '</v1>', xmlstr, flags=re.IGNORECASE)
+                                        xmlstr = re.sub('.prefab' + '.prefab' + '</v1>', '.prefab' + '</v1>', xmlstr, flags=re.IGNORECASE)
                         with open(filexml, "w" , encoding="utf-8") as f:
                             f.write(xmlstr)
+                        # with open('output.xml', "w" , encoding="utf-8") as f:
+                        #     f.write(xmlstr)
                         tree=ET.parse(filexml)
                         attr=b''
                         byt=bytenode(tree.getroot())
