@@ -1168,6 +1168,13 @@ else:
                                             strin=strin.replace(b'Florentino_spell01_bullet03_3"',b'Florentino_spell01_bullet03"').replace(b'Florentino_spell01_bullet03_fade_3"',b'Florentino_spell01_bullet03_fade"').replace(b'Florentino_spell01_bullet03_3_e"',b'Florentino_spell01_bullet03_e"').replace(b'Florentino_spell01_buff01_3"',b'Florentino_spell01_buff01"')
                                         elif skinid[:3]==b'524' and file =='A1E9.xml':
                                             strin=strin.replace(b'hero_skill_effects/524_Capheny/'+skinid,b'hero_skill_effects/524_Capheny')
+
+                                        elif skinid[:3]==b'191' and file.lower() in ['u1b1.xml', 'u1e6.xml']:
+                                            strin = re.sub(
+                                                rb'prefab_skill_effects/hero_skill_effects/191_daqiao/' + skinid + rb'/',
+                                                rb'prefab_skill_effects/hero_skill_effects/191_daqiao/',
+                                                strin, flags=re.IGNORECASE)
+
                                         elif skinid[:3] == b'537':
                                             strin = re.sub(
                                                 rb'prefab_skill_effects/hero_skill_effects/537_Trip/' + skinid + rb'/Trip_attack_spell01_Indicator',
@@ -2314,15 +2321,18 @@ else:
                         file.close()
                     organSkin(skinid.decode())
     #------------------------mod ăn bùa nak----------------------
-                if skinid==b'15013':
+                if skinid[:3]==b'150':
                     for file in ['BlueBuff_CD.xml']:
                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/PassiveResource/{file}','rb') as f:
                             a=f.read()
                             a=decompress_(a,ZSTD_DICT)
-                            check=b'    <Track trackName="15013" eventType="CheckHeroIdTick" guid="PMIN_MOD" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" isDuration="false" guid="reupCC">\r\n        <TemplateObject name="targetId" id="1" objectName="target" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="heroId" value="150" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n  </Action>'
-                            a=a.replace(b'  </Action>',check)
-                            a=a.replace(b'<Event eventName="CheckSkinIdTick',b'<Condition id="pmin" guid="PMIN_MOD" status="true" />\r\n      <Event eventName="CheckSkinIdTick')
-                            a=fix_ef_pro_vip(a,skinid)
+                            if skinid == b'15013':
+                                check=b'    <Track trackName="15013" eventType="CheckHeroIdTick" guid="PMIN_MOD" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" isDuration="false" guid="reupCC">\r\n        <TemplateObject name="targetId" id="1" objectName="target" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="heroId" value="150" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n  </Action>'
+                                a=a.replace(b'  </Action>',check)
+                                a=a.replace(b'<Event eventName="CheckSkinIdTick',b'<Condition id="pmin" guid="PMIN_MOD" status="true" />\r\n      <Event eventName="CheckSkinIdTick')
+                                a=fix_ef_pro_vip(a,skinid)
+                            else:
+                                a = a.replace(b'f2ab8cf5-e623-4ea8-a978-bc54db67aa83">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="skinId" value="15013', b'f2ab8cf5-e623-4ea8-a978-bc54db67aa83">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="skinId" value="13579')
                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/PassiveResource/{file}','wb') as f:
                             f.write(fix_condition(a))
                     for file in ['Dead_Born.xml']:
@@ -2330,7 +2340,10 @@ else:
                             a=f.read()
                             for code in split_code_(a):
                                 if b'skinId" value="15013' in code:
-                                    a=a.replace(code,code.replace(b'CheckSkinIdVirtualTick',b'CheckHeroIdTick').replace(b'skinId" value="15013',b'heroId" value="150'))
+                                    if skinid == b'15013':
+                                        a=a.replace(code,code.replace(b'CheckSkinIdVirtualTick',b'CheckHeroIdTick').replace(b'skinId" value="15013',b'heroId" value="150'))
+                                    else:
+                                        a=a.replace(code,code.replace(b'skinId" value="15013',b'skinId" value="13579'))
                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
                             f.write(a)
     #------------------------mod ăn bùa nak----------------------
