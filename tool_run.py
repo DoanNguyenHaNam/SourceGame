@@ -1170,10 +1170,12 @@ else:
                                             strin=strin.replace(b'hero_skill_effects/524_Capheny/'+skinid,b'hero_skill_effects/524_Capheny')
 
                                         elif skinid[:3]==b'191' and file.lower() in ['u1b1.xml', 'u1e6.xml']:
-                                            strin = re.sub(
-                                                rb'prefab_skill_effects/hero_skill_effects/191_daqiao/' + skinid + rb'/',
-                                                rb'prefab_skill_effects/hero_skill_effects/191_daqiao/',
-                                                strin, flags=re.IGNORECASE)
+                                            for code in split_code_back(strin):
+                                                if b'MinimapEffect' in code:
+                                                    strin = strin.replace(code, re.sub(
+                                                        rb'prefab_skill_effects/hero_skill_effects/191_daqiao/' + skinid + rb'/',
+                                                        rb'prefab_skill_effects/hero_skill_effects/191_daqiao/',
+                                                        code, flags=re.IGNORECASE))
 
                                         elif skinid[:3] == b'537':
                                             strin = re.sub(
