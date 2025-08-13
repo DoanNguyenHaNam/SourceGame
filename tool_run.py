@@ -936,6 +936,7 @@ else:
     ten_de_vao_skill_an=''
     stoptrack_code=b''
     List_skinor_back=[]
+    only_cam_xa = True
     nut_bam_auto_mod=''
     def checkmayyeu():
         mayyeu = open('./list_mod.txt','r')
@@ -982,6 +983,8 @@ else:
             if skinid[:3] in List_Hero_Da_Mod:# or '[ex]' in tat:
                 ten_de_vao_ten=ten_de_vao_ten+f'\t\tSkin Bị Trùng Hoặc Không Tồn Tại: {tat}\n'
             else:
+                if only_cam_xa:
+                    only_cam_xa = False
                 List_Hero_Da_Mod.append(skinid[:3])
                 List_SkinIfosMod, SoInfos = infoAboutSkin(skinid)
                 print(List_SkinIfosMod, SoInfos)
@@ -3285,146 +3288,57 @@ else:
 #tachfile pmin mod
 folder_mod_goc = folder_mod
 
+if not only_cam_xa:
+    import os
+    try:import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style;from termcolor import colored
+    except:
+        try:os.system('python -m pip install pyzstd');os.system('python -m pip install termcolor');os.system('python -m pip install colorama');import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style
+        except:os.system('pip install pyzstd');os.system('pip install termcolor');os.system('pip install colorama');import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style
+    from shutil import make_archive;from pyzstd import decompress,compress,ZstdDict;from os import listdir;import sys;import os;from termcolor import colored;import re;import getopt;import pyzstd;import sys;import glob;import colorama;from colorama import Fore;from colorama import Style;from colorama import Fore;from colorama import Style;import shutil;import zipfile;import shutil;from zipfile import* 
+    from __init__ import *
+    def giai_nen(z,a): 
+        import zipfile 
+        fantasy_zip = zipfile.ZipFile(z+a)
+        fantasy_zip.extractall(z)
+        return '\033[1;32mGiai Nen Xong File: ' +a
+    import sys
+    from __init__ import*
+    tien_trinh_dem = 0
+    def tien_trinh(dem):
+        if dem<=100:
+            print(f'Tiến Trình: {dem}%',end='\r')
+        else:
+            print(f'Sắp Hoàn Tất !!!!',end='\r')
+        return dem+1
+    try:
+        folder=sys.argv[8]
+    except:
+        folder=folder_mod
+    if os.path.isdir('./File_Mod/') == 0 :
+        os.mkdir('./File_Mod/')
+    #try:
+    #    folder_mod=sys.argv[7]
+    #except:
+    #    folder_mod=folder_mod
 
-import os
-try:import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style;from termcolor import colored
-except:
-    try:os.system('python -m pip install pyzstd');os.system('python -m pip install termcolor');os.system('python -m pip install colorama');import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style
-    except:os.system('pip install pyzstd');os.system('pip install termcolor');os.system('pip install colorama');import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style
-from shutil import make_archive;from pyzstd import decompress,compress,ZstdDict;from os import listdir;import sys;import os;from termcolor import colored;import re;import getopt;import pyzstd;import sys;import glob;import colorama;from colorama import Fore;from colorama import Style;from colorama import Fore;from colorama import Style;import shutil;import zipfile;import shutil;from zipfile import* 
-from __init__ import *
-def giai_nen(z,a): 
-    import zipfile 
-    fantasy_zip = zipfile.ZipFile(z+a)
-    fantasy_zip.extractall(z)
-    return '\033[1;32mGiai Nen Xong File: ' +a
-import sys
-from __init__ import*
-tien_trinh_dem = 0
-def tien_trinh(dem):
-    if dem<=100:
-        print(f'Tiến Trình: {dem}%',end='\r')
-    else:
-        print(f'Sắp Hoàn Tất !!!!',end='\r')
-    return dem+1
-try:
-    folder=sys.argv[8]
-except:
-    folder=folder_mod
-if os.path.isdir('./File_Mod/') == 0 :
-    os.mkdir('./File_Mod/')
-#try:
-#    folder_mod=sys.argv[7]
-#except:
-#    folder_mod=folder_mod
-
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-if os.path.isdir(f'./File_Mod/{folder_mod}/Máy Mạnh/') == 1 :
-    shutil.rmtree(f'./File_Mod/{folder_mod}/Máy Mạnh/')
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-if os.path.isdir(f'./File_Mod/{folder_mod}/Máy Mạnh/') == 0 :
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    os.mkdir(f'./File_Mod/{folder_mod}/Máy Mạnh/')
+    if os.path.isdir(f'./File_Mod/{folder_mod}/Máy Mạnh/') == 1 :
+        shutil.rmtree(f'./File_Mod/{folder_mod}/Máy Mạnh/')
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    os.mkdir(f'./File_Mod/{folder_mod}/Máy Mạnh/Android')
-    tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    os.mkdir(f'./File_Mod/{folder_mod}/Máy Mạnh/IOS')
-    tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    os.mkdir(f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/')
-    tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    os.mkdir(f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/Android')
-    tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    os.mkdir(f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/IOS')
-shutil.copytree(f'File_Mod/{folder}/com.garena.game.kgvn/files/Resources',f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources')
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-shutil.copytree(f'File_Mod/{folder}/com.garena.game.kgvn/files/Resources',f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/Android/Resources')
-#Máy Mạnh
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-#if os.path.isdir(f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources/1.59.1/AssetRefs') == 1 :
-#    shutil.rmtree(f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources/1.59.1/AssetRefs')
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-shutil.make_archive(f'./File_Mod/{folder_mod}/Máy Mạnh/IOS/Resources','zip',f'./File_Mod/{folder_mod}/Máy Mạnh/Android')
-#Máy Trung Và Yếu
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-giai_nen(f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/','CommonActions.pkg.bytes')
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-for file in ['Back.xml','HasteE1.xml','HasteE1_leave.xml','born.xml']:
-    with open(f'pmin_sources/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','rb') as f:
-        a=f.read()
-    with open(f'File_Mod/{folder_mod}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
-        f.write(a)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-back_folder = ['commonresource','KeySpell','PassiveResource','mowen','Ultrafire','SeasonPlay']
-def zipdir2(path, ziph):
-        for ii in back_folder:
-            nonee = './{}'.format(ii)
-            DIR2 = './File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
-            DIR = './File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
-            for root, dirs, files in os.walk(DIR):
-                for file in files:
-                    full_path = os.path.join(root, file)
-                    arcname = os.path.relpath(full_path, os.path.join(DIR, '..'))
-                    ziph.write(full_path,arcname)
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-with zipfile.ZipFile('./File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes'.format(folder_mod), 'w', zipfile.ZIP_STORED) as zipf:
-        zipdir2('tmp/', zipf)
+    if os.path.isdir(f'./File_Mod/{folder_mod}/Máy Mạnh/') == 0 :
         tien_trinh_dem = tien_trinh(tien_trinh_dem)
-for iii in back_folder:
+        os.mkdir(f'./File_Mod/{folder_mod}/Máy Mạnh/')
         tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        if os.path.isdir('./File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))== 1 :
-            tien_trinh_dem = tien_trinh(tien_trinh_dem)
-            shutil.rmtree('./File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))
-shutil.make_archive(f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/IOS/Resources','zip',f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/Android')
-tien_trinh_dem = tien_trinh(tien_trinh_dem)
-checkCamXa='NamNgu'
-for camxa in listdir(f'File_Mod/{folder}/'):
-    if 'CAM XA' in camxa:
+        os.mkdir(f'./File_Mod/{folder_mod}/Máy Mạnh/Android')
         tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        checkCamXa=camxa
+        os.mkdir(f'./File_Mod/{folder_mod}/Máy Mạnh/IOS')
         tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        break
-if checkCamXa!='NamNgu':
-    tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    codeCamXa=b'    <Track trackName="HitTriggerTick0" eventType="HitTriggerTick" guid="CAM_XA_PMIN_MOD" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="HitTriggerTick" time="0.000" isDuration="false" guid="REUP_CC">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="hitTargetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="SelfSkillCombineID_1" value="530510" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="triggerId" id="-1" objectName="None" isTemp="false" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n  </Action>'
-    if os.path.isdir(f'./File_Mod/{folder_mod}/{checkCamXa}') == 0 :
+        os.mkdir(f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/')
         tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/')
+        os.mkdir(f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/Android')
         tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/')
-        tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android')
-        tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/IOS')
-        tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/')
-        tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android')
-        tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/IOS')
-        tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    shutil.copytree(f'File_Mod/{folder}/{checkCamXa}/com.garena.game.kgvn/files/Resources',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android/Resources')
+        os.mkdir(f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/IOS')
+    shutil.copytree(f'File_Mod/{folder}/com.garena.game.kgvn/files/Resources',f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources')
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
@@ -3443,68 +3357,213 @@ if checkCamXa!='NamNgu':
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    shutil.copytree(f'File_Mod/{folder}/{checkCamXa}/com.garena.game.kgvn/files/Resources',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources')
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    shutil.copytree(f'File_Mod/{folder}/com.garena.game.kgvn/files/Resources',f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/Android/Resources')
     #Máy Mạnh
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    if os.path.isdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android/Resources/1.59.1/AssetRefs') == 1 :
-        tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    shutil.make_archive(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/IOS/Resources','zip',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android')
+    #if os.path.isdir(f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources/1.59.1/AssetRefs') == 1 :
+    #    shutil.rmtree(f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources/1.59.1/AssetRefs')
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    shutil.make_archive(f'./File_Mod/{folder_mod}/Máy Mạnh/IOS/Resources','zip',f'./File_Mod/{folder_mod}/Máy Mạnh/Android')
     #Máy Trung Và Yếu
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    giai_nen(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/','CommonActions.pkg.bytes')
+    giai_nen(f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/','CommonActions.pkg.bytes')
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
     for file in ['Back.xml','HasteE1.xml','HasteE1_leave.xml','born.xml']:
         with open(f'pmin_sources/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','rb') as f:
             a=f.read()
-            tien_trinh_dem = tien_trinh(tien_trinh_dem)
-            a=decompress_(a)
-            tien_trinh_dem = tien_trinh(tien_trinh_dem)
-            a=a.replace(b'  </Action>',codeCamXa)
-            tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        with open(f'File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
-            tien_trinh_dem = tien_trinh(tien_trinh_dem)
-            f.write(compress_(a)+ngaunhien())
-            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        with open(f'File_Mod/{folder_mod}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
+            f.write(a)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
     back_folder = ['commonresource','KeySpell','PassiveResource','mowen','Ultrafire','SeasonPlay']
     def zipdir2(path, ziph):
             for ii in back_folder:
                 nonee = './{}'.format(ii)
-                DIR2 = './File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
-                DIR = './File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
+                DIR2 = './File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
+                DIR = './File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
                 for root, dirs, files in os.walk(DIR):
                     for file in files:
                         full_path = os.path.join(root, file)
                         arcname = os.path.relpath(full_path, os.path.join(DIR, '..'))
                         ziph.write(full_path,arcname)
-    with zipfile.ZipFile('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes'.format(folder_mod,checkCamXa), 'w', zipfile.ZIP_STORED) as zipf:
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    with zipfile.ZipFile('./File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes'.format(folder_mod), 'w', zipfile.ZIP_STORED) as zipf:
             zipdir2('tmp/', zipf)
             tien_trinh_dem = tien_trinh(tien_trinh_dem)
     for iii in back_folder:
             tien_trinh_dem = tien_trinh(tien_trinh_dem)
-            if os.path.isdir('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,iii))== 1 :
+            if os.path.isdir('./File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))== 1 :
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
-                shutil.rmtree('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,iii))
+                shutil.rmtree('./File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))
+    shutil.make_archive(f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/IOS/Resources','zip',f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/Android')
+    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+    checkCamXa='NamNgu'
+    for camxa in listdir(f'File_Mod/{folder}/'):
+        if 'CAM XA' in camxa:
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            checkCamXa=camxa
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            break
+    if checkCamXa!='NamNgu':
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        codeCamXa=b'    <Track trackName="HitTriggerTick0" eventType="HitTriggerTick" guid="CAM_XA_PMIN_MOD" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="HitTriggerTick" time="0.000" isDuration="false" guid="REUP_CC">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="hitTargetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="SelfSkillCombineID_1" value="530510" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="triggerId" id="-1" objectName="None" isTemp="false" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n  </Action>'
+        if os.path.isdir(f'./File_Mod/{folder_mod}/{checkCamXa}') == 0 :
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/')
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/')
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android')
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/IOS')
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/')
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android')
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            os.mkdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/IOS')
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        shutil.copytree(f'File_Mod/{folder}/{checkCamXa}/com.garena.game.kgvn/files/Resources',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android/Resources')
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        shutil.copytree(f'File_Mod/{folder}/{checkCamXa}/com.garena.game.kgvn/files/Resources',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources')
+        #Máy Mạnh
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        if os.path.isdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android/Resources/1.59.1/AssetRefs') == 1 :
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        shutil.make_archive(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/IOS/Resources','zip',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android')
+        #Máy Trung Và Yếu
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        giai_nen(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/','CommonActions.pkg.bytes')
+        tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        for file in ['Back.xml','HasteE1.xml','HasteE1_leave.xml','born.xml']:
+            with open(f'pmin_sources/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','rb') as f:
+                a=f.read()
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    shutil.make_archive(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/IOS/Resources','zip',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android')
-    shutil.rmtree(f'File_Mod/{folder_mod_goc}/{checkCamXa}/com.garena.game.kgvn')
-try:
-    shutil.rmtree(f'File_Mod/{folder_mod_goc}/com.garena.game.kgvn')
-except:
-    import subprocess
-    import os
+                a=decompress_(a)
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                a=a.replace(b'  </Action>',codeCamXa)
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+            with open(f'File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                f.write(compress_(a)+ngaunhien())
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        back_folder = ['commonresource','KeySpell','PassiveResource','mowen','Ultrafire','SeasonPlay']
+        def zipdir2(path, ziph):
+                for ii in back_folder:
+                    nonee = './{}'.format(ii)
+                    DIR2 = './File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
+                    DIR = './File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
+                    for root, dirs, files in os.walk(DIR):
+                        for file in files:
+                            full_path = os.path.join(root, file)
+                            arcname = os.path.relpath(full_path, os.path.join(DIR, '..'))
+                            ziph.write(full_path,arcname)
+        with zipfile.ZipFile('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes'.format(folder_mod,checkCamXa), 'w', zipfile.ZIP_STORED) as zipf:
+                zipdir2('tmp/', zipf)
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        for iii in back_folder:
+                tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                if os.path.isdir('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,iii))== 1 :
+                    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+                    shutil.rmtree('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,iii))
+                    tien_trinh_dem = tien_trinh(tien_trinh_dem)
+        shutil.make_archive(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/IOS/Resources','zip',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android')
+        shutil.rmtree(f'File_Mod/{folder_mod_goc}/{checkCamXa}/com.garena.game.kgvn')
+    try:
+        shutil.rmtree(f'File_Mod/{folder_mod_goc}/com.garena.game.kgvn')
+    except:
+        import subprocess
+        import os
 
-    def force_delete_windows(path):
-        if os.path.exists(path):
-            try:
-                # Sử dụng rmdir /S /Q để xóa thư mục và mọi thứ bên trong
-                subprocess.run(f'rmdir /S /Q "{path}"', shell=True, check=True)
-                print(f"✅ Đã xóa thư mục: {path}")
-            except subprocess.CalledProcessError as e:
-                print(f"❌ Xóa thất bại: {e}")
-        else:
-            print(f"⚠️ Thư mục không tồn tại: {path}")
-    folder_path = f'./File_Mod/{folder_mod_goc}/com.garena.game.kgvn'
-    force_delete_windows(folder_path)
+        def force_delete_windows(path):
+            if os.path.exists(path):
+                try:
+                    # Sử dụng rmdir /S /Q để xóa thư mục và mọi thứ bên trong
+                    subprocess.run(f'rmdir /S /Q "{path}"', shell=True, check=True)
+                    print(f"✅ Đã xóa thư mục: {path}")
+                except subprocess.CalledProcessError as e:
+                    print(f"❌ Xóa thất bại: {e}")
+            else:
+                print(f"⚠️ Thư mục không tồn tại: {path}")
+        folder_path = f'./File_Mod/{folder_mod_goc}/com.garena.game.kgvn'
+        force_delete_windows(folder_path)
+
+else:
+    shutil.rmtree(f'File_Mod/{folder_mod_goc}/com.garena.game.kgvn')
+    def clean_folders(root_path, files_to_keep):
+        """
+        Keep only specified files and their folder structure, remove everything else
+        
+        Args:
+            root_path (str): Root folder path to clean
+            files_to_keep (list): List of filenames to keep (with extensions)
+        """
+        # Keep track of folders that have files we want to keep
+        folders_to_keep = set()
+        
+        # First pass - identify files and folders to keep
+        for root, dirs, files in os.walk(root_path):
+            for file in files:
+                full_path = os.path.join(root, file)
+                if file in files_to_keep:
+                    # Add all parent folders to keep list
+                    current_dir = root
+                    while current_dir != root_path:
+                        folders_to_keep.add(current_dir)
+                        current_dir = os.path.dirname(current_dir)
+                else:
+                    # Remove unwanted files
+                    os.remove(full_path)
+                    print(f"Removed file: {full_path}")
+
+        # Second pass - remove empty folders that aren't in keep list
+        for root, dirs, files in os.walk(root_path, topdown=False):
+            for dir_name in dirs:
+                dir_path = os.path.join(root, dir_name)
+                if dir_path not in folders_to_keep and not os.listdir(dir_path):
+                    shutil.rmtree(dir_path)
+                    print(f"Removed empty folder: {dir_path}")
+    # Example usage
+    # Replace with your folder path
+    root_folder = f'File_Mod/{folder_mod_goc}'
+    
+    # List of files to keep (with extensions)
+    files_to_preserve = [
+        "version.txt",
+        "Actor_530_Actions.pkg.bytes",
+        "CommonActions.pkg.bytes"
+    ]
+    
+    try:
+        clean_folders(root_folder, files_to_preserve)
+        print("\nCleanup completed successfully!")
+    except Exception as e:
+        print(f"Error during cleanup: {e}")
+    for checkCamXa in listdir(f'File_Mod/{folder_mod}/'):
+        break
+    shutil.copytree(f'File_Mod/{folder_mod_goc}/{checkCamXa}/com.garena.game.kgvn/files/resources',f'./File_Mod/{folder_mod}/resources')
+    shutil.rmtree(f'File_Mod/{folder_mod_goc}/{checkCamXa}')
 
 print('Đã Hoàn Thành !!!!!!!!')
