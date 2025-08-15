@@ -945,6 +945,7 @@ else:
     txt = open('./list_mod.txt','r')
     List_Hero_Da_Mod = []
     for skinid in txt:
+        list_mod_back_error = []
         if "%" in skinid:
             cam_xa_goc=int(skinid.replace('%',''))
             cam_xa_goc=str(cam_xa_goc)
@@ -1094,10 +1095,6 @@ else:
                                                 strin = f.read()
                                                 print(Fore.GREEN+Style.BRIGHT+'File Có Skill Ẩn: '+file)
                                                 strin=mod_ef_sound2(strin,decompress,skinid)
-                                                if '_back.xml' in file.lower():
-                                                    for code in split_code_back(strin):
-                                                        if b'SetObjectDirectionTick' in code:
-                                                            strin=strin.replace(code, b'')
                                                 check_skill_an=True
                                                 list_skill_an.append(file)
                                                 if HD_e:
@@ -1268,6 +1265,14 @@ else:
                                                     rb'prefab_skill_effects/hero_skill_effects/140_guanyu/guanyu_attack03_spell02',
                                                     strin, flags=re.IGNORECASE)
 
+                                        # if '_back.xml' in file.lower():
+                                        #     for code in split_code_back(strin):
+                                        #         if b'SetObjectDirectionTick' in code:
+                                        #             strin=strin.replace(code, b'')
+
+                                        if '_back.xml' in file.lower():
+                                            if b'SetObjectDirectionTick' not in strin:
+                                                list_mod_back_error.append(file[:5].encode('utf-8'))
                                         #xoa dong thua thai
                                         
                                         #   
@@ -2059,7 +2064,8 @@ else:
                                         ani_back = b''
                                         check=b'</Event>'
                                         for ID in List_SkinIfosMod:
-                                            check=check + b'\r\n      <SkinOrAvatarList id="'+ID+b'" />'
+                                            if ID not in list_mod_back_error:
+                                                check=check + b'\r\n      <SkinOrAvatarList id="'+ID+b'" />'
                                         check_Back = check
                                         for code in split_code_back(strin[:strin.find(b'<Track trackName="Zalo_0357514770')]):
                                             code_goc=code
