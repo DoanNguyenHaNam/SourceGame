@@ -1497,12 +1497,12 @@ if True:
             #-----------------------------------------------Mod Skin Phụ------------------------------------------------------------#
                 print('Mod Skin Phụ')
                 try:
-                    for nnn in List_SkinIfosMod:
-                        nnn=int(nnn.decode()[3:])-1
+                    id_mod=dec_to_hex(int(skinid.decode()))
+                    for nnn in range(1,30):
+                        #nnn=int(nnn.decode()[3:])-1
                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
                             strin = f.read()
                             hero_actor=dec_to_hex(int(skinid[:3].decode()))
-                            id_mod=dec_to_hex(int(skinid.decode()))
                             pos = strin.find(id_mod+b'\x00\x00'+hero_actor)
                             if pos!=-1:
                                 actor_mod = strin[pos-4:pos+hex_to_dec(strin[pos-4:pos-2])]
@@ -1559,9 +1559,13 @@ if True:
                             strin = strin.replace(hs_2,hs_mod)
                             with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Databin/Client/Shop/HeroSkinShop.bytes','wb') as f1:
                                 f1.write(strin)
-                        except Exception as bug:
-                            print(bug)          
-                            pass
+
+                        except Exception as e:
+                            import traceback
+                            print(f"Lỗi tại dòng {traceback.extract_tb(e.__traceback__)[-1].lineno}: {str(e)}")
+                        # except Exception as bug:
+                        #     print(bug)          
+                        #     pass
                 except Exception as bug:
                     print(bug)          
                     pass
