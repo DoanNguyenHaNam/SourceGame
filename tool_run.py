@@ -242,7 +242,7 @@ if True:
             a=a.replace(i,skin,1)
         return a
     def xoa_thua_thai(strin):
-        #return strin
+        return strin
         strin=strin.replace(b'>\r\n          <',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
         strin=strin.replace(b'>\r\n        <',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
         strin=strin.replace(b'>\r\n      <',b'><!--Please do not steal my file. If you are interested, we can cooperate via Zalo 0357514770 or Telegram @pminmod. mod by ytb pmin mod https://www.youtube.com/@hongcogidauma --><')
@@ -311,7 +311,7 @@ if True:
         return a
     def compress_(input_blob,ZSTD_DICT=ZSTD_DICT):
         output_blob=input_blob
-        #return output_blob
+        return output_blob
         if b'\x22\x4a\x67\x00' not in input_blob and b"\x28\xb5\x2f\xfd" not in input_blob:
             output_blob = bytearray(pyzstd.compress(input_blob, ZSTD_LEVEL, pyzstd.ZstdDict(ZSTD_DICT, True)))
             output_blob[0:0] = len(input_blob).to_bytes(4, byteorder="little", signed=False)
