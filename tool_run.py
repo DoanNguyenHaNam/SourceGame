@@ -311,16 +311,17 @@ if True:
         return a
     def compress_(input_blob,ZSTD_DICT=ZSTD_DICT):
         output_blob=input_blob
-        return output_blob
+        #return output_blob
         if b'\x22\x4a\x67\x00' not in input_blob and b"\x28\xb5\x2f\xfd" not in input_blob:
             output_blob = bytearray(pyzstd.compress(input_blob, ZSTD_LEVEL, pyzstd.ZstdDict(ZSTD_DICT, True)))
             output_blob[0:0] = len(input_blob).to_bytes(4, byteorder="little", signed=False)
             output_blob[0:0] = b"\x22\x4a\x00\xef"
-            output_blob+=b''
+            output_blob+=b'TELE: CHATPMIN'
         return output_blob
     def decompress_(strin,ZSTD_DICT=ZSTD_DICT):
         posdecompress = strin.find(b"\x28\xb5\x2f\xfd")
         if posdecompress != -1:
+            strin = strin.replace(b'TELE: CHATPMIN', b'')
             strin = strin[posdecompress:]
             strin = strin[strin.find(b"\x28\xb5\x2f\xfd"):]
             strin = pyzstd.decompress(strin, pyzstd.ZstdDict(ZSTD_DICT, True))
@@ -3062,7 +3063,7 @@ if True:
                             for ef in matches:
                                 if not re.search(re.escape(t_replace+skinid.decode()+'/'), ef, re.IGNORECASE):
                                     print(ef)
-                                    xmlstr = re.sub(ef, re.sub(t_replace, t_replace+skinid.decode()+'/', ef, flags=re.IGNORECASE), xmlstr, flags=re.IGNORECASE)
+                                    #xmlstr = re.sub(ef, re.sub(t_replace, t_replace+skinid.decode()+'/', ef, flags=re.IGNORECASE), xmlstr, flags=re.IGNORECASE)
                                 if HD_e:
                                     if ef + '.prefab' + '</v1>' not in xmlstr:
                                         xmlstr = re.sub(ef + '</v1>', ef + '.prefab' + '</v1>', xmlstr, flags=re.IGNORECASE)
