@@ -3183,7 +3183,7 @@ if True:
             strin=f.read()
     except:
         strin = b'MODBYPMINMOD'
-    strin = b''
+    strin = b'MOD BY YTB: '
     os.makedirs(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/assetbundle',exist_ok=True)
     i=0
     '''for file in listdir(f'Pmin_Sources/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero'):
