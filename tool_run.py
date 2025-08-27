@@ -97,7 +97,11 @@ if True:
         folder_mod=input('\t\tNhập Folder Để Vào: ')
     n=0;born=8;born_dem = 0;ca='';hasteE1 = 48;hasteE1_leave=41;has = 0
     try:
-        with open(f"list_mod.txt", 'r') as f1:
+        input_fileid = sys.argv[2]
+    except:
+        input_fileid = 'list_mod.txt'
+    try:
+        with open(f"{input_fileid}", 'r') as f1:
             strin = f1.read()
         HD_e = 's' if 'hd' in strin.lower() else 't'
         list_mod = "\n".join([a for a in strin.split('\n') if 'hd' not in a.lower()])
@@ -928,16 +932,25 @@ if True:
     only_cam_xa = True
     nut_bam_auto_mod=''
     def checkmayyeu():
-        mayyeu = open('./list_mod.txt','r')
+        mayyeu = open(f'./{input_fileid}','r')
         return 'mayyeu' not in (mayyeu.read()).lower()
     may_yeu_mod=checkmayyeu()
-    txt = open('./list_mod.txt','r')
+    txt = open(f'./{input_fileid}','r')
     List_Hero_Da_Mod = []
     for skinid in txt:
         list_mod_back_error = []
         if "%" in skinid:
             cam_xa_goc=int(skinid.replace('%',''))
             cam_xa_goc=str(cam_xa_goc)
+        elif "uid" in skinid.lower():
+            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Languages/VN_Garena_VN/languageMap.txt','rb') as f:
+                strin=(f.read())
+
+                pattern = rb"Tip_WaterMark_Str[^\n]*"
+                match = (re.search(pattern, strin)).group()
+                strin = strin.replace(match, skinid.encode('utf-8'))
+            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Languages/VN_Garena_VN/languageMap.txt','wb') as f:
+                f.write(compress_(strin))
         elif 'nut' in skinid.lower():
             nut_bam_auto_mod=skinid.lower()
         elif 'mayyeu' in skinid.lower() or 'hd' in skinid.lower() or 'rov' in skinid.lower():pass
@@ -946,6 +959,7 @@ if True:
             veres_rt=False
             skinid = bytes(skinid,'utf-8')
             skinid=skinid.replace(b'\n',b'').replace(b' ',b'')
+            if skinid==b'':continue
             if skinid==b'15412':yena_15412_back=True
             if skinid==b'15710':raz_15710_back=True
             if skinid==b'13116':murad_13116=True
@@ -3165,10 +3179,11 @@ if True:
     except:
         print('\033[1;33mKhong Mod ResCharacterComponent.bytes')
     try:
-        try:
-            nut_bam=sys.argv[2]
-        except:
-            nut_bam=''
+        # try:
+        #     nut_bam=sys.argv[2]
+        # except:
+        #     nut_bam=''
+        nut_bam=''
         if len(nut_bam)==5:
             for file in listdir('NutBam'):
                 if nut_bam in file:
@@ -3299,16 +3314,9 @@ if not only_cam_xa:
         else:
             print(f'Sắp Hoàn Tất !!!!',end='\r')
         return dem+1
-    try:
-        folder=sys.argv[8]
-    except:
-        folder=folder_mod
+    folder=folder_mod
     if os.path.isdir('./File_Mod/') == 0 :
         os.mkdir('./File_Mod/')
-    #try:
-    #    folder_mod=sys.argv[7]
-    #except:
-    #    folder_mod=folder_mod
 
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
     if os.path.isdir(f'./File_Mod/{folder_mod}/Máy Mạnh/') == 1 :
@@ -3554,5 +3562,13 @@ else:
         break
     shutil.copytree(f'File_Mod/{folder_mod_goc}/{checkCamXa}/com.garena.game.kgvn/files/resources',f'./File_Mod/{folder_mod}/resources')
     shutil.rmtree(f'File_Mod/{folder_mod_goc}/{checkCamXa}')
+
+try:
+    tu_nen = sys.argv[3]
+except:
+    tu_nen = '0'
+if tu_nen != '0':
+    shutil.make_archive(f'File_Mod/{folder_mod}', 'zip', f'File_Mod/{folder_mod}')
+    shutil.rmtree(f'File_Mod/{folder_mod}')
 
 print('Đã Hoàn Thành !!!!!!!!')
