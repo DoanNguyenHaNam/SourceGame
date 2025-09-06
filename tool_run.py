@@ -946,11 +946,12 @@ if True:
             with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Languages/VN_Garena_VN/languageMap.txt','rb') as f:
                 strin=(f.read())
 
-                pattern = rb"Tip_WaterMark_Str[^\n]*"
+                pattern = rb"Tip_WaterMark_Str[^\r]*"
                 match = (re.search(pattern, strin)).group()
-                strin = strin.replace(match, skinid.encode('utf-8'))
+                strin = strin.replace(match, b'Tip_WaterMark_Str = ' + skinid.encode('utf-8'))
+                print(match, b'Tip_WaterMark_Str = ' + skinid.encode('utf-8'))
             with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Languages/VN_Garena_VN/languageMap.txt','wb') as f:
-                f.write(compress_(strin))
+                f.write((strin))
         elif 'nut' in skinid.lower():
             nut_bam_auto_mod=skinid.lower()
         elif 'mayyeu' in skinid.lower() or 'hd' in skinid.lower() or 'rov' in skinid.lower():pass
@@ -3199,7 +3200,7 @@ if True:
             strin=f.read()
     except:
         strin = b'MODBYPMINMOD'
-    strin = b'MOD BY YTB: '
+    strin = b'MOD BY YTB: TKI3T x MODSKINPRO'
     os.makedirs(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/assetbundle',exist_ok=True)
     i=0
     '''for file in listdir(f'Pmin_Sources/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero'):
