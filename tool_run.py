@@ -320,12 +320,12 @@ if True:
             output_blob = bytearray(pyzstd.compress(input_blob, ZSTD_LEVEL, pyzstd.ZstdDict(ZSTD_DICT, True)))
             output_blob[0:0] = len(input_blob).to_bytes(4, byteorder="little", signed=False)
             output_blob[0:0] = b"\x22\x4a\x00\xef"
-            output_blob+=b'TELE: CHATPMIN'
+            output_blob+=b''
         return output_blob
     def decompress_(strin,ZSTD_DICT=ZSTD_DICT):
         posdecompress = strin.find(b"\x28\xb5\x2f\xfd")
         if posdecompress != -1:
-            strin = strin.replace(b'TELE: CHATPMIN', b'')
+            # strin = strin.replace(b'TELE: CHATPMIN', b'')
             strin = strin[posdecompress:]
             strin = strin[strin.find(b"\x28\xb5\x2f\xfd"):]
             strin = pyzstd.decompress(strin, pyzstd.ZstdDict(ZSTD_DICT, True))
