@@ -1100,24 +1100,57 @@ if True:
                             if filez=='skill' or filez=='Skill':
                                 for file in listdir('./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill/'.format(decompress)):
                                     if True:
-                                        try:
-                                            if skinid not in accept_ids:
-                                                "NAM BỊ NGU" = nrtyuio
-
-                                            with open('./Pmin_Sources/check/{}/{}'.format(skinid.decode(),file),'rb') as f:
-                                                strin = f.read()
-                                                print(Fore.GREEN+Style.BRIGHT+'File Có Skill Ẩn: '+file)
-                                                strin=mod_ef_sound2(strin,decompress,skinid)
-                                                check_skill_an=True
-                                                list_skill_an.append(file)
-                                                if HD_e:
-                                                    p=strin.find(b'<String name="resourceName')
-                                                    while p!=-1:
-                                                        p2=strin.find(b'"',p+len('<String name="resourceName2" value="'))
-                                                        if b'.prefab' not in strin[p:p2+1] and b'value=""' not in strin[p:p2+1]:
-                                                            strin=strin.replace(strin[p:p2+1],strin[p:p2]+b'.prefab"',1)
-                                                        p=strin.find(b'<String name="resourceName',p2)
-                                        except:
+                                        if skinid in accept_ids:
+                                            try:
+                                                
+                                                with open('./Pmin_Sources/check/{}/{}'.format(skinid.decode(),file),'rb') as f:
+                                                    strin = f.read()
+                                                    print(Fore.GREEN+Style.BRIGHT+'File Có Skill Ẩn: '+file)
+                                                    strin=mod_ef_sound2(strin,decompress,skinid)
+                                                    check_skill_an=True
+                                                    list_skill_an.append(file)
+                                                    if HD_e:
+                                                        p=strin.find(b'<String name="resourceName')
+                                                        while p!=-1:
+                                                            p2=strin.find(b'"',p+len('<String name="resourceName2" value="'))
+                                                            if b'.prefab' not in strin[p:p2+1] and b'value=""' not in strin[p:p2+1]:
+                                                                strin=strin.replace(strin[p:p2+1],strin[p:p2]+b'.prefab"',1)
+                                                            p=strin.find(b'<String name="resourceName',p2)
+                                            except:
+                                                with open(f'./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f:
+                                                    strin = f.read()
+                                                    strin=decompress_(strin,ZSTD_DICT)
+                                                    strin=mod_ef_sound(strin,decompress,skinid,file,folder_mod)
+                                                    if veres_rt:
+                                                        strin=strin.replace(b'prefab_skill_effects/hero_skill_effects/520_Veres/52007/',b'prefab_skill_effects/component_effects/52007/'+skinid_veres+b'/')
+                                                    if phu_kien and skinid==b'54004':
+                                                        strin=strin.replace(b'hero_skill_effects/540_Bright/54004/5401_Bright_God',b'component_effects/54004/540040'+str(int(skinid_phu_kien[9:].decode())-1).encode('utf-8')+b'/5401_Bright_God')
+                                                    pos = strin.find(b'<int name="skinId" value="'+skinid)
+                                                    if pos!=-1:
+                                                        print(Fore.GREEN+Style.BRIGHT+'File Có Skill Ẩn: '+file)
+                                                        check_skill_an=True
+                                                        list_skill_an.append(file)
+                                                        if check_skill_an and False:
+                                                            strin=fix_ef_pro_vip(strin,skinid)
+                                                    def xoa_skinid_no_need(xml_bytes, skinid):
+                                                        for i in range(1, 25):
+                                                            i_bytes = b'0' * (2 - len(str(i))) + str(i).encode('utf-8')
+                                                            t = b'<int name="skinId" value="' + skinid[:3] + i_bytes
+                                                            t_next = b'<int name="skinId" value="' + skinid[:3] + b'91'
+                                                            t_0 = b'<int name="skinId" value="' + skinid[:3] + b'00'
+                                                            if t in xml_bytes and t_0 not in xml_bytes and skinid[:3] + i_bytes != skinid:
+                                                                xml_bytes = xml_bytes.replace(t, t_next)
+                                                        return xml_bytes
+                                                    if skinid[:3]==b'190' and file.lower() in ['s1b1.xml','s1b2.xml','s1b3.xml']:
+                                                        strin=xoa_skinid_no_need(strin,skinid)
+                                                    if HD_e:
+                                                        p=strin.find(b'<String name="resourceName')
+                                                        while p!=-1:
+                                                            p2=strin.find(b'"',p+len('<String name="resourceName2" value="'))
+                                                            if b'.prefab' not in strin[p:p2+1] and b'value=""' not in strin[p:p2+1]:
+                                                                strin=strin.replace(strin[p:p2+1],strin[p:p2]+b'.prefab"',1)
+                                                            p=strin.find(b'<String name="resourceName',p2)
+                                        else:
                                             with open(f'./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f:
                                                 strin = f.read()
                                                 strin=decompress_(strin,ZSTD_DICT)
