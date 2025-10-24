@@ -90,6 +90,12 @@ if True:
             id_haste = [line for line in f.read().split(b'\n') if line]
     except:
         id_haste = []
+    try:
+        with open(f'Input Text/skin.txt','rb') as f:
+            accept_ids = [line for line in f.read().split(b'\n') if line]
+    except:
+        accept_ids = []
+                
     print('------------------ BẮT ĐẦU MOD THOI --------------------')
     try:
         folder_mod = sys.argv[1]
@@ -1095,6 +1101,9 @@ if True:
                                 for file in listdir('./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill/'.format(decompress)):
                                     if True:
                                         try:
+                                            if skinid not in accept_ids:
+                                                "NAM BỊ NGU" = nrtyuio
+
                                             with open('./Pmin_Sources/check/{}/{}'.format(skinid.decode(),file),'rb') as f:
                                                 strin = f.read()
                                                 print(Fore.GREEN+Style.BRIGHT+'File Có Skill Ẩn: '+file)
