@@ -253,10 +253,27 @@ if True:
             if f'/{skinid}_' in skin[:p]:
                 break
         for i in split_code_infos_a(a):
-            if skinid in List:
-                a=a.replace(i,skin_full,1)
-            else:
+            # match = re.search(r"Prefab_Characters/Prefab_Hero/.*/(\d+)_", i)
+            # if match:
+            #     id_de = match.group(1)
+            #     id_de = str(int(id_de[:3])*100 + int(id_de[3:]) - 1)
+            #     print(id_de, end=': ')
+            #     if id_de.encode('utf-8') in List:
+            #         print("Không mod ngoại hình icon")
+            #         #a=a.replace(i,skin_full,1)
+            #     else:
+            #         a=a.replace(i,skin,1)
+            # else:
                 a=a.replace(i,skin,1)
+        m1 = re.search(r'<LookAt\b[^>]*>.*?</LookAt>', a[a.find('</SkinPrefab>'):], flags=re.DOTALL)
+        block1 = m1.group(0) if m1 else None
+        print(block1)
+        m2 = re.search(r'<LookAt\b[^>]*>.*?</LookAt>', skin_full, flags=re.DOTALL)
+        block2 = m2.group(0) if m2 else None
+        print(block2)
+        if block1 and block2:
+            p = a.find('</SkinPrefab>')
+            a = a[:p] + a[p:].replace(block1, block2, 1)
         return a
     def xoa_thua_thai(strin):
         return strin
@@ -836,6 +853,7 @@ if True:
             a=f.read()
             a=decompress_(a,ZSTD_DICT)
             List_IDSkin = []
+            List_ef_mod = []
             List_IDSkin.append(skinid[:3]+b'00')
             for i in range(1, 30):
                 ID = int(skinid[:3].decode())*100+i
@@ -846,7 +864,7 @@ if True:
                     if b'Share' in code:
                         List_IDSkin.append(ID)
                         izzzz, hzzz, bvzzzz = ten_skin_hieu_ung(int(ID.decode()))
-                        if hzzz == b'\x8f':
+                        if izzzz == b'\x8f':
                             List_ef_mod.append(ID)
             SoInfos=b''
             p=a.find(dec_to_hex(int(skinid.decode()))+b'\x00\x00'+dec_to_hex(int(skinid[:3].decode())))
@@ -863,7 +881,7 @@ if True:
                     SoInfos = 0
             else:
                 SoInfos = 0
-        return List_IDSkin, SoInfos, List_IDSkin
+        return List_IDSkin, SoInfos, List_ef_mod
     ######
     def find_skin_A(skinid):
         import re
@@ -1352,8 +1370,7 @@ if True:
                                     #             print('born')
                                     #             print(file, du_kien_mod_born)
                                     #             p=strin.find(ef,p2)
-                                    # if b'Prefab_Skill_Effects'.lower() in strin.lower() or b'BattleUI' in strin:
-                                    if False:
+                                    if (b'Prefab_Skill_Effects'.lower() in strin.lower() or b'BattleUI' in strin) and skinid[:3] not in [b'106']:
                                         def split_code_back2(a):
                                             split_code=[]
                                             p=a.find(b'    <Track trackName=')
@@ -1447,7 +1464,7 @@ if True:
                                                     p2 = code_goc.find(b'</Event>')
                                                     mod_for_skin = mod_for_skin.replace(b'</Event>\r\n',code_goc[p2:p])
                                                 strin=strin.replace(code_goc, mod_for_skin+code)
-                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
+                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                             if skinid[:3]!=b'530':
                                                 f1.write(compress_(xoa_thua_thai(extract_guid_after_id(strin))))
                                             else:
@@ -1603,7 +1620,8 @@ if True:
                                     if re_2!=b'' and actor_2!=b'' and nnn!=int(skinid[3:].decode()):
                                         strin=strin.replace(actor_2,re_2)
                                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Actor/heroSkin.bytes','wb') as f1:
-                                            f1.write(strin)
+                                            # if str(int(skinid[:3].decode())*100+nnn).encode('utf-8') not in List_ef_mod:
+                                                f1.write(strin)
                         try:
                             with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Shop/HeroSkinShop.bytes','rb') as f:
                                 strin = f.read()
@@ -1691,7 +1709,8 @@ if True:
                             analynode(None, byt.tell())
                     byt.close
                     xmlstr = minidom.parseString(ET.tostring(root)).toprettyxml(indent="   ")
-                    xmlstr=mod_infos_mac_dinh(xmlstr,skinid.decode(),skin_phu_bac_a, SoInfos)
+                    xmlstr=mod_infos_mac_dinh(xmlstr,skinid.decode(),List_ef_mod, SoInfos)
+                    print(List_ef_mod)
                     if veres_rt:
                         xmlstr=xmlstr.replace('Prefab_Hero/520_Veres/5208_Veres_LOD','Prefab_Hero/520_Veres/Component/5208_Veres_RT_'+str(int(skinid_veres[6:].decode())+1)+'_LOD')
                         xmlstr=xmlstr.replace('Prefab_Hero/520_Veres/5208_Veres_Show','Prefab_Hero/520_Veres/Component/5208_Veres_RT_'+str(int(skinid_veres[6:].decode())+1)+'_Show')
