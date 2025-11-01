@@ -242,6 +242,10 @@ if True:
             p=a.find('<ArtPrefabLOD ')
             de=a[p:p2]
         a=a.replace(de,skin,1)
+        for skin_full in split_code_infos_a(a):
+            p=skin_full.find('_Show')
+            if f'/{skinid}_' in skin_full[:p]:
+                break
         a=rut_gon_infos(a)
         pz=a.split('\n      <Item Var="Com" Type="Assets.Scripts.GameLogic.SkinElement">')
         for skin in split_code_infos_a(a):
@@ -249,7 +253,10 @@ if True:
             if f'/{skinid}_' in skin[:p]:
                 break
         for i in split_code_infos_a(a):
-            a=a.replace(i,skin,1)
+            if skinid in List:
+                a=a.replace(i,skin_full,1)
+            else:
+                a=a.replace(i,skin,1)
         return a
     def xoa_thua_thai(strin):
         return strin
@@ -321,7 +328,7 @@ if True:
         return a
     def compress_(input_blob,ZSTD_DICT=ZSTD_DICT):
         output_blob=input_blob
-        #return output_blob
+        return output_blob
         if b'\x22\x4a\x67\x00' not in input_blob and b"\x28\xb5\x2f\xfd" not in input_blob:
             output_blob = bytearray(pyzstd.compress(input_blob, ZSTD_LEVEL, pyzstd.ZstdDict(ZSTD_DICT, True)))
             output_blob[0:0] = len(input_blob).to_bytes(4, byteorder="little", signed=False)
@@ -546,6 +553,14 @@ if True:
                         break
             p=a.find(b'<Condition id="',p2)
         return a
+    def split_code_back2(a):
+        split_code=[]
+        p=a.find(b'    <Track trackName=')
+        while p!=-1:
+            code=a[p:a.find(b'    <Track trackName=',p+10)].replace(b'  </Action>\r\n</Project',b'')
+            split_code.append(code)
+            p=a.find(b'    <Track trackName=',p+10)
+        return split_code
     def back_need(a):
         b=0;za=b''
         p=a.find(b'    <Track trackName=')
@@ -830,6 +845,9 @@ if True:
                     code=a[p-4:p+hex_to_dec(a[p-4:p-2])]
                     if b'Share' in code:
                         List_IDSkin.append(ID)
+                        izzzz, hzzz, bvzzzz = ten_skin_hieu_ung(int(ID.decode()))
+                        if hzzz == b'\x8f':
+                            List_ef_mod.append(ID)
             SoInfos=b''
             p=a.find(dec_to_hex(int(skinid.decode()))+b'\x00\x00'+dec_to_hex(int(skinid[:3].decode())))
             if p!=-1:
@@ -845,7 +863,7 @@ if True:
                     SoInfos = 0
             else:
                 SoInfos = 0
-        return List_IDSkin, SoInfos
+        return List_IDSkin, SoInfos, List_IDSkin
     ######
     def find_skin_A(skinid):
         import re
@@ -997,7 +1015,7 @@ if True:
                 if only_cam_xa:
                     only_cam_xa = False
                 List_Hero_Da_Mod.append(skinid[:3])
-                List_SkinIfosMod, SoInfos = infoAboutSkin(skinid)
+                List_SkinIfosMod, SoInfos, List_ef_mod = infoAboutSkin(skinid)
                 print(List_SkinIfosMod, SoInfos)
                 if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero'.format(folder_mod)) == 0 :
                     os.mkdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero'.format(folder_mod))
@@ -1334,7 +1352,8 @@ if True:
                                     #             print('born')
                                     #             print(file, du_kien_mod_born)
                                     #             p=strin.find(ef,p2)
-                                    if b'Prefab_Skill_Effects'.lower() in strin.lower() or b'BattleUI' in strin:
+                                    # if b'Prefab_Skill_Effects'.lower() in strin.lower() or b'BattleUI' in strin:
+                                    if False:
                                         def split_code_back2(a):
                                             split_code=[]
                                             p=a.find(b'    <Track trackName=')
