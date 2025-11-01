@@ -1464,7 +1464,7 @@ if True:
                                                     p2 = code_goc.find(b'</Event>')
                                                     mod_for_skin = mod_for_skin.replace(b'</Event>\r\n',code_goc[p2:p])
                                                 strin=strin.replace(code_goc, mod_for_skin+code)
-                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.59.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
+                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                             if skinid[:3]!=b'530':
                                                 f1.write(compress_(xoa_thua_thai(extract_guid_after_id(strin))))
                                             else:
