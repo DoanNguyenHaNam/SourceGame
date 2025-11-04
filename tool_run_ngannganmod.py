@@ -246,25 +246,24 @@ if True:
             p=skin_full.find('_Show')
             if f'/{skinid}_' in skin_full[:p]:
                 break
-        a=rut_gon_infos(a)
+        # a=rut_gon_infos(a)
         pz=a.split('\n      <Item Var="Com" Type="Assets.Scripts.GameLogic.SkinElement">')
         for skin in split_code_infos_a(a):
             p=skin.find('_Show')
             if f'/{skinid}_' in skin[:p]:
                 break
         for i in split_code_infos_a(a):
-            # match = re.search(r"Prefab_Characters/Prefab_Hero/.*/(\d+)_", i)
-            # if match:
-            #     id_de = match.group(1)
-            #     id_de = str(int(id_de[:3])*100 + int(id_de[3:]) - 1)
-            #     print(id_de, end=': ')
-            #     if id_de.encode('utf-8') in List:
-            #         print("Không mod ngoại hình icon")
-            #         #a=a.replace(i,skin_full,1)
-            #     else:
-            #         a=a.replace(i,skin,1)
-            # else:
-                a=a.replace(i,skin,1)
+            match = re.search(r"Prefab_Characters/Prefab_Hero/.*/(\d+)_", i)
+            if match:
+                id_de = match.group(1)
+                id_de = str(int(id_de[:3])*100 + int(id_de[3:]) - 1)
+                print(id_de, end=': ')
+                if id_de.encode('utf-8') not in List:
+                    print("Không mod ngoại hình icon: ",id_de)
+                    #a=a.replace(i,skin_full,1)
+                else:
+                    print("Mod ngoại hình icon: ",id_de)
+                    a=a.replace(i,skin,1)
         m1 = re.search(r'<LookAt\b[^>]*>.*?</LookAt>', a[a.find('</SkinPrefab>'):], flags=re.DOTALL)
         block1 = m1.group(0) if m1 else None
         print(block1)
@@ -1370,7 +1369,7 @@ if True:
                                     #             print('born')
                                     #             print(file, du_kien_mod_born)
                                     #             p=strin.find(ef,p2)
-                                    if (b'Prefab_Skill_Effects'.lower() in strin.lower() or b'BattleUI' in strin) and skinid[:3] not in [b'106']:
+                                    if (b'Prefab_Skill_Effects'.lower() in strin.lower() or b'BattleUI' in strin):
                                         def split_code_back2(a):
                                             split_code=[]
                                             p=a.find(b'    <Track trackName=')
@@ -1408,67 +1407,6 @@ if True:
                                                                     xml_bytes=xml_bytes.replace(f'{id_str} guid="{guid_val}"'.encode('utf-8'),f'id="{i}" guid="{guid_val}"'.encode('utf-8'))
 
                                             return xml_bytes
-                                        #print(file, extract_guid_after_id(strin).decode('utf-8'),end="\n\n")
-                                        for code in split_code_back2(strin):
-                                            mod_all = b'    <Track trackName="PMIN" eventType="GetHolidayResourcePathTick" guid="Mod By: Lyna TV" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="GetHolidayResourcePathTick" time="0.000" isDuration="false" guid="Mod By: Pmin Mod">\r\n        <String name="holidayResourcePathPrefix" value="EFFECT\r\n        <String name="outPathParamName" value="CHECK_CODE" useRefParam="false" />\r\n        <String name="outSoundEventParamName" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'
-                                            code_goc=code
-                                            if b'BattleUI' in code:
-                                                match = re.search(rb'<String name="prefab" value="([^"]+)"', code)
-                                                if match:
-                                                    list_full_value_fixasset = full_value = match.group(1)
-                                                    last_part = full_value.split(b'/')[-1]
-                                                    if skinid in [b'11620',b'13311',b'16707']:
-                                                        ef = f"prefab_skill_effects/component_effects/{skinid.decode('utf-8')}/{skinid.decode('utf-8')}_5/".encode('utf-8') + last_part
-                                                    else:
-                                                        ef = f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/".encode('utf-8') + last_part
-                                                    code = code.replace(full_value, ef)
-                                                    strin = strin.replace(code_goc, code)
-                                            p=re.search(rb'prefab_skill_effects.*?>',code,re.IGNORECASE)
-                                            if p and decompress.encode('utf-8').lower() in code.lower() and b'enabled="true"' in code and (b'ChangeActorMeshDuration' in code or b'ChangeActorMeshTick' in code or b'TriggerParticle' in code or b'TriggerParticleTick' in code):
-                                                ef = p.group()
-                                                match = re.search(rb'([^/"]+)"', ef, re.IGNORECASE)
-                                                match2 = re.search(rb'eventType="([^"]+)"', code, re.IGNORECASE)
-                                                if match:
-                                                    nhan_dang = match.group(1)  # Output: zhaoyunn_hurt01
-                                                else:
-                                                    nhan_dang = b''
-                                                try:
-                                                    with open(f'a.xml','rb') as f:
-                                                        code_sua_getholi = f.read()
-                                                except:
-                                                    code_sua_getholi=b''
-                                                if match2.group(1) not in code_sua_getholi:
-                                                    with open(f'a.xml','wb') as f2:
-                                                        f2.write(match2.group(1)+b'\r\b'+code_sua_getholi)
-                                                check_ef=b'" refParamName="'+nhan_dang+b'" useRefParam="true" />'
-                                                code=code.replace(ef,check_ef)
-                                                con = re.search(rb'<Condition.*?<Event\s*eventName',code_goc,re.IGNORECASE | re.DOTALL)
-                                                if con:
-                                                    condition = con.group()
-                                                else:
-                                                    condition=b'<Event eventName'
-                                                if nhan_dang.lower().replace(b'.prefab',b'') not in check_asef.lower():
-                                                    if skinid in [b'11620',b'13311',b'16707']:
-                                                        list_fix_lag_ef_back.append(f"prefab_skill_effects/component_effects/{skinid.decode('utf-8')}/{skinid.decode('utf-8')}_5/".encode('utf-8') + nhan_dang.lower())
-                                                        print(f"prefab_skill_effects/component_effects/{skinid.decode('utf-8')}/{skinid.decode('utf-8')}_5/".encode('utf-8') + nhan_dang.lower())
-                                                    else:
-                                                        list_fix_lag_ef_back.append(f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/".encode('utf-8') + nhan_dang.lower())
-                                                        print(f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/".encode('utf-8') + nhan_dang.lower())
-                                                mod_for_skin = mod_all.replace(b'<Event eventName',condition).replace(b'EFFECT',ef).replace(b'CHECK_CODE',nhan_dang)
-                                                if b'SkinAvatarFilterType="9"' in code_goc or b'SkinAvatarFilterType="11"' in code_goc:
-                                                    if b'SkinAvatarFilterType="9"' in code_goc:
-                                                        mod_for_skin = add_filter_attribute(mod_for_skin, b'9')
-                                                    if b'SkinAvatarFilterType="11"' in code_goc:
-                                                        mod_for_skin = add_filter_attribute(mod_for_skin, b'11')
-                                                    p = code_goc.find(b'    </Track>')
-                                                    p2 = code_goc.find(b'</Event>')
-                                                    mod_for_skin = mod_for_skin.replace(b'</Event>\r\n',code_goc[p2:p])
-                                                strin=strin.replace(code_goc, mod_for_skin+code)
-                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
-                                            if skinid[:3]!=b'530':
-                                                f1.write(compress_(xoa_thua_thai(extract_guid_after_id(strin))))
-                                            else:
-                                                f1.write(compress_(extract_guid_after_id(strin)))
                                     # if may_yeu_mod and not HD_e and False:
                                     #     for ef in [b'Prefab_Skill_Effects',b'Prefab_Skill_Effects'.lower()]:
                                     #         p=strin.find(ef)
@@ -1709,8 +1647,7 @@ if True:
                             analynode(None, byt.tell())
                     byt.close
                     xmlstr = minidom.parseString(ET.tostring(root)).toprettyxml(indent="   ")
-                    xmlstr=mod_infos_mac_dinh(xmlstr,skinid.decode(),List_ef_mod, SoInfos)
-                    print(List_ef_mod)
+                    xmlstr=mod_infos_mac_dinh(xmlstr,skinid.decode(),List_SkinIfosMod, SoInfos)
                     if veres_rt:
                         xmlstr=xmlstr.replace('Prefab_Hero/520_Veres/5208_Veres_LOD','Prefab_Hero/520_Veres/Component/5208_Veres_RT_'+str(int(skinid_veres[6:].decode())+1)+'_LOD')
                         xmlstr=xmlstr.replace('Prefab_Hero/520_Veres/5208_Veres_Show','Prefab_Hero/520_Veres/Component/5208_Veres_RT_'+str(int(skinid_veres[6:].decode())+1)+'_Show')
