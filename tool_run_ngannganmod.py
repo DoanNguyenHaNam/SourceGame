@@ -1896,7 +1896,7 @@ if True:
                             skinid2=skin_phu_bac_a[0]
                             skinid2=int(skinid2[:3].decode())*100+int(skinid2[3:].decode())-1
                             skinid2=str(skinid2).encode('utf-8')
-                        else:skinid2=skinid
+                        skinid2=skinid
                         skin=a.find(dec_to_hex(int(skinid2.decode()))+b'\x00\x00'+dec_to_hex(int(skinid2.decode()[:3])))
                         de=a.find(dec_to_hex(int(skinid2.decode()[:3]+'00'))+b'\x00\x00'+dec_to_hex(int(skinid2.decode()[:3])))
                         skin2=skin=a[skin-4:skin+hex_to_dec(a[skin-4:skin-2])]
@@ -3591,4 +3591,5 @@ if tu_nen != '0':
 
 
 print('Đã Hoàn Thành !!!!!!!!')
+
 
