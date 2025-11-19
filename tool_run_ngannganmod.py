@@ -40,7 +40,7 @@ if True:
         os.mkdir(f'./com.garena.game.kgvn/files/Resources/{inp}/Languages/VN_Garena_VN/')
         with open(f'pmin_sources/Resources/{inp}/Languages/VN_Garena_VN/languageMap.txt','rb') as f:
             with open(f'com.garena.game.kgvn/files/Resources/{inp}/Languages/VN_Garena_VN/languageMap.txt','wb') as f2:
-                f2.write(decompress_(f.read()).replace(b'Tip_WaterMark_Str = UID: {0}', b'Tip_WaterMark_Str = MOD BY NG\xc2N NG\xc2N MOD'))
+                f2.write(decompress_(f.read()).replace(b'Tip_WaterMark_Str = UID: {0}', b'Tip_WaterMark_Str = MOD BY NGAN NGAN MOD'))
         os.mkdir(f'./com.garena.game.kgvn/files/Resources/{inp}/Ages/')
         os.mkdir(f'./com.garena.game.kgvn/files/Resources/{inp}/Ages/Prefab_Characters/')
         os.mkdir(f'./com.garena.game.kgvn/files/Resources/{inp}/Ages/Prefab_Characters/Prefab_Hero/')
@@ -3591,5 +3591,6 @@ if tu_nen != '0':
 
 
 print('Đã Hoàn Thành !!!!!!!!')
+
 
 
