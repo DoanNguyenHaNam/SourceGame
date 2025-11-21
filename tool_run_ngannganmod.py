@@ -3023,27 +3023,6 @@ if True:
                                 analynode(None, byt.tell())
                         byt.close
                         xmlstr = minidom.parseString(ET.tostring(root)).toprettyxml(indent="   ")
-                        if skinid == b'13210' and False:
-                            xml_code='''<Item Var="Com" Type="AssetRefAnalyser.Pair`2[System.UInt32,System.Int32]">
-            <v1 Var="String" Type="System.UInt32">132111</v1>
-            <v2 Var="String" Type="System.Int32">1</v2>
-         </Item>
-         <Item Var="Com" Type="AssetRefAnalyser.Pair`2[System.UInt32,System.Int32]">
-            <v1 Var="String" Type="System.UInt32">132117</v1>
-            <v2 Var="String" Type="System.Int32">1</v2>
-         </Item>
-         <Item Var="Com" Type="AssetRefAnalyser.Pair`2[System.UInt32,System.Int32]">
-            <v1 Var="String" Type="System.UInt32">132118</v1>
-            <v2 Var="String" Type="System.Int32">1</v2>
-         </Item>
-         <Item Var="Com" Type="AssetRefAnalyser.Pair`2[System.UInt32,System.Int32]">
-            <v1 Var="String" Type="System.UInt32">132119</v1>
-            <v2 Var="String" Type="System.Int32">1</v2>
-         </Item>'''
-                            xmlstr=xmlstr.replace('''<Item Var="Com" Type="AssetRefAnalyser.Pair`2[System.UInt32,System.Int32]">
-            <v1 Var="String" Type="System.UInt32">132111</v1>
-            <v2 Var="String" Type="System.Int32">1</v2>
-         </Item>''',xml_code)
                         if skinid==b'52414':
                             xml_code='''<Item Var="Com" Type="AssetRefAnalyser.Pair`2[System.UInt32,System.Int32]">
             <v1 Var="String" Type="System.UInt32">524043</v1>
@@ -3069,14 +3048,35 @@ if True:
             <v1 Var="String" Type="System.UInt32">524043</v1>
             <v2 Var="String" Type="System.Int32">1</v2>
          </Item>''',xml_code)
+                        
+                        def collapse_segment(text: str, segment: str) -> str:
+                            """
+                            Gom các đoạn /segment/ lặp liên tiếp còn 1 lần.
+                            VD: collapse_segment("/abc/abc/xyz", "abc") -> "/abc/xyz"
+                            """
+                            # Chuẩn hóa đoạn cần tìm: /segment/
+                            seg = "/" + re.escape(segment) + "/"
+                            # Regex: ( /segment/ ){2,}  → thay bằng 1 lần /segment/
+                            pattern = f"(?:{seg}){{2,}}"
+                            return re.sub(pattern, seg, text)
+                        def mod_ef_sound_assetref(v1_bytes,decompress=decompress,skinid=skinid):
+                            v1_bytes_goc = v1_bytes
+                            v1_bytes = v1_bytes.lower()
+                            check = False
+                            if decompress.lower() in v1_bytes and "hero_skill_effects" in v1_bytes:
+                                check = True
+                                if skinid not in [b'13311',b'16707',b'11620']:
+                                    v1_bytes = v1_bytes.replace(f"hero_skill_effects/{decompress.lower()}/",f"hero_skill_effects/{decompress.lower()}/{skinid.decode()}/")
+                                else:
+                                    v1_bytes = v1_bytes.replace(f"hero_skill_effects/{decompress.lower()}/",f"component_effects/{skinid.decode().lower()}/{skinid.decode()}_5/")
+                                v1_bytes = collapse_segment(v1_bytes, f"{skinid.decode()}")
+                            return v1_bytes, check
+                        
                         if skinid==b'11620':
                             xmlstr=xmlstr.replace('11620_3','11620_5')
                         if skinid not in [b'52414',b'13118']:
                             xmlstr=move_and_insert_particles(xmlstr, skinid.decode(), list_fix_lag_ef_back)
-                        matches = re.findall(r'(prefab_skill_effects.*?)(?=</v1>)', xmlstr, re.IGNORECASE)
-                        for ef in matches:
-                            if not any(re.search(ef.encode('utf-8'), item, re.IGNORECASE) for item in list_du_kien_mod_born):
-                                xmlstr = xmlstr.replace(ef, fix_ef(mod_ef_sound2(ef.encode('utf-8'),decompress,skinid),skinid).decode())
+                        xmlstr = fix_ef(mod_ef_sound2(xmlstr.encode('utf-8'),decompress,skinid),skinid).decode()
                         if list_full_value_fixasset:
                             last_part = list_full_value_fixasset.split(b'/')[-1].decode()
                             if skinid in [b'11620',b'13311',b'16707']:
@@ -3085,21 +3085,22 @@ if True:
                                 ef = f"prefab_skill_effects/hero_skill_effects/{decompress}/{skinid.decode('utf-8')}/" + last_part
                             xmlstr = re.sub(list_full_value_fixasset.decode(), ef,xmlstr, flags = re.IGNORECASE)
 
-                        print(list_full_value_fixasset)
-                        if True: #HD_e:
-                            t_ef = f"prefab_skill_effects/hero_skill_effects/"
-                            t_replace = f"prefab_skill_effects/hero_skill_effects/"+decompress+'/'
-                            if skinid in [b'11620',b'13311',b'16707']:
-                                t_ef = f"prefab_skill_effects/component_effects/"
-                            matches = re.findall(r'(<v1[^>]*>' + re.escape(t_ef) + r'.*?)</v1>', xmlstr, re.IGNORECASE)
-                            for ef in matches:
-                                if not re.search(re.escape(t_replace+skinid.decode()+'/'), ef, re.IGNORECASE):
-                                    print(ef)
-                                    #xmlstr = re.sub(ef, re.sub(t_replace, t_replace+skinid.decode()+'/', ef, flags=re.IGNORECASE), xmlstr, flags=re.IGNORECASE)
-                                if HD_e:
-                                    if ef + '.prefab' + '</v1>' not in xmlstr:
-                                        xmlstr = re.sub(ef + '</v1>', ef + '.prefab' + '</v1>', xmlstr, flags=re.IGNORECASE)
-                                        xmlstr = re.sub('.prefab' + '.prefab' + '</v1>', '.prefab' + '</v1>', xmlstr, flags=re.IGNORECASE)
+
+
+                        # if True: #HD_e:
+                        #     t_ef = f"prefab_skill_effects/hero_skill_effects/"
+                        #     t_replace = f"prefab_skill_effects/hero_skill_effects/"+decompress+'/'
+                        #     if skinid in [b'11620',b'13311',b'16707']:
+                        #         t_ef = f"prefab_skill_effects/component_effects/"
+                        #     matches = re.findall(r'(<v1[^>]*>' + re.escape(t_ef) + r'.*?)</v1>', xmlstr, re.IGNORECASE)
+                        #     for ef in matches:
+                        #         if not re.search(re.escape(t_replace+skinid.decode()+'/'), ef, re.IGNORECASE):
+                        #             print(ef)
+                        #             #xmlstr = re.sub(ef, re.sub(t_replace, t_replace+skinid.decode()+'/', ef, flags=re.IGNORECASE), xmlstr, flags=re.IGNORECASE)
+                        #         if HD_e:
+                        #             if ef + '.prefab' + '</v1>' not in xmlstr:
+                        #                 xmlstr = re.sub(ef + '</v1>', ef + '.prefab' + '</v1>', xmlstr, flags=re.IGNORECASE)
+                        #                 xmlstr = re.sub('.prefab' + '.prefab' + '</v1>', '.prefab' + '</v1>', xmlstr, flags=re.IGNORECASE)
                         with open(filexml, "w" , encoding="utf-8") as f:
                             f.write(xmlstr)
                         # with open('output.xml', "w" , encoding="utf-8") as f:
@@ -3111,7 +3112,7 @@ if True:
                         f.write(compress_(byt))
                         f.close()
                 except Exception as bug:
-                    print(bug)
+                    print("Không mod assetref: ",bug)
     print('kết cục')
     def zipdir2(path, ziph):
         for ii in back_folder:
@@ -3589,8 +3590,4 @@ if tu_nen != '0':
     shutil.make_archive(f'File_Mod/{folder_mod}', 'zip', f'File_Mod/{folder_mod}')
     shutil.rmtree(f'File_Mod/{folder_mod}')
 
-
 print('Đã Hoàn Thành !!!!!!!!')
-
-
-
