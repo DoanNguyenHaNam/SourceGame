@@ -363,7 +363,7 @@ if True:
     def code_assetref(code,skinid):
         code=code.lower().replace(b'/'+skinid+b'/',b'/')
         skinid=skinid.decode()[:3]
-        with open(f'./Pmin_Sources/Resources/1.60.1/AssetRefs/Hero/{skinid}_AssetRef.bytes','rb') as f:
+        with open(f'./Pmin_Sources/Resources/1.61.1/AssetRefs/Hero/{skinid}_AssetRef.bytes','rb') as f:
             a=decompress_(f.read(),ZSTD_DICT)
             a=a.lower()
             if code in a:
@@ -457,10 +457,10 @@ if True:
                     event_start = code.find(b'<Event eventName="')
                     if event_start != -1 and event_start > condition_start:
                         code = code.replace(code[condition_start:event_start], b'', 1)
-                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Dance.xml','rb') as f:
+                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Dance.xml','rb') as f:
                     dance = f.read()
                     dance = dance.replace(b'  </Action>',code+b'  </Action>')
-                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Dance.xml','wb') as f1:
+                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Dance.xml','wb') as f1:
                         f1.write(dance)
         a=a.replace(b'        <bool name="bAllowEmptyEffect" value="true" refParamName="" useRefParam="false" />\r\n',b'        <bool name="bAllowEmptyEffect" value="false" refParamName="" useRefParam="false" />\r\n')
         #a=a.replace(b'<String name="resourceName"',b'<int name="frameRate" value="120" refParamName="" useRefParam="false" />\r\n        <String name="resourceName"')
@@ -805,7 +805,7 @@ if True:
     #####
 
     def ten_skin_hieu_ung(skinid):
-        with open('./Pmin_Sources/Resources/1.60.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
+        with open('./Pmin_Sources/Resources/1.61.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
             a=f.read()
             a=decompress_(a,ZSTD_DICT)
             p=a.find(dec_to_hex(skinid)+b'\x00\x00'+dec_to_hex(int(str(skinid)[:3])))
@@ -820,7 +820,7 @@ if True:
                     h=b'\x8f'
                 else:
                     h=b'PminMod'
-                    with open(f'./Pmin_Sources/Resources/1.60.1/Databin/Client/Sound/BattleBank.bytes','rb') as f:
+                    with open(f'./Pmin_Sources/Resources/1.61.1/Databin/Client/Sound/BattleBank.bytes','rb') as f:
                         a=f.read()
                         a=decompress_(a,ZSTD_DICT)
                         if bytes(str(skinid),'utf-8') in a:
@@ -831,9 +831,9 @@ if True:
         a1=''
         a2=''
         if ten!=b'' and skin!=b'':
-            for file in os.listdir('./Pmin_Sources/Resources/1.60.1/Languages/VN_Garena_VN'):
+            for file in os.listdir('./Pmin_Sources/Resources/1.61.1/Languages/VN_Garena_VN'):
 
-                txt=open(f'./Pmin_Sources/Resources/1.60.1/Languages/VN_Garena_VN/{file}','rb')
+                txt=open(f'./Pmin_Sources/Resources/1.61.1/Languages/VN_Garena_VN/{file}','rb')
                 a=txt.read()
                 a=decompress_(a,ZSTD_DICT)
                 p=a.find(ten)
@@ -849,7 +849,7 @@ if True:
             return b'PMINMOD','',False
     ######
     def infoAboutSkin(skinid: bytes):
-        with open('./Pmin_Sources/Resources/1.60.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
+        with open('./Pmin_Sources/Resources/1.61.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
             a=f.read()
             a=decompress_(a,ZSTD_DICT)
             List_IDSkin = []
@@ -915,8 +915,8 @@ if True:
                 os.mkdir('./File_Mod/{}/'.format(folder_mod))
             shutil.copytree('com.garena.game.kgvn','File_Mod/{}/com.garena.game.kgvn'.format(folder_mod))
             for fo in ['commonresource', 'KeySpell', 'PassiveResource', 'mowen', 'Ultrafire', 'SeasonPlay']:
-                inp = f'./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/'
-                inp2 = f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/'
+                inp = f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/'
+                inp2 = f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/'
                 
                 src_dir = os.path.join(inp, fo)
                 dst_dir = os.path.join(inp2, fo)
@@ -942,22 +942,22 @@ if True:
                     if os.path.exists(dst_dir):
                         shutil.rmtree(dst_dir)
                     shutil.copytree(src_dir, dst_dir)
-            os.mkdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero'.format(folder_mod))
+            os.mkdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero'.format(folder_mod))
         databin = ['Sound','Actor','Skill','Shop','Motion','Huanhua']
         name = ['BattleBank.bytes','ChatSound.bytes','HeroSound.bytes','LobbyBank.bytes','LobbySound.bytes','heroSkin.bytes','HeroSkinShop.bytes','liteBulletCfg.bytes','skillmark.bytes','ResSkinMotionBaseCfg.bytes','ResKillBillboardCfg.bytes','ResPersonalButtonCfg.bytes','organSkin.bytes']
         for data in databin:
             for file in name:
                     try:    
-                        with open(f'./Pmin_Sources/Resources/1.60.1/Databin/Client/{data}/{file}','rb') as f:
+                        with open(f'./Pmin_Sources/Resources/1.61.1/Databin/Client/{data}/{file}','rb') as f:
                             strin = f.read()
                             strin=decompress_(strin,ZSTD_DICT)
-                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/{data}/{file}','wb') as f1:
+                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/{data}/{file}','wb') as f1:
                                 f1.write(strin)
                     except:
                             pass
         for file in ['ResAwakenBattleSound.bytes','ResAwakenBattleEffect.bytes']:
             text = b'\x4D\x53\x45\x53\x07\x00\x00\x00\x5B\x00\x00\x00\x00\x00\x00\x00\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x61\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x55\x54\x46\x2D\x38\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x4D\x4F\x44\x42\x59\x5F\x59\x54\x42\x5F\x50\x4D\x49\x4E\x5F\x4D\x4F\x44\x5F\x44\x4F\x4E\x54\x5F\x52\x45\x55\x50\x46\x49\x4C\x45\x00\x00\x00\x00\x8C\x00\x00\x00\x00\x00\x00\x00'
-            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Actor/{file}','wb') as f1:
+            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Actor/{file}','wb') as f1:
                 f1.write(text)
         return back_need_
     ten_de_vao_ten=''
@@ -985,14 +985,14 @@ if True:
             cam_xa_goc=int(skinid.replace('%',''))
             cam_xa_goc=str(cam_xa_goc)
         elif "uid" in skinid.lower():
-            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Languages/VN_Garena_VN/languageMap.txt','rb') as f:
+            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Languages/VN_Garena_VN/languageMap.txt','rb') as f:
                 strin=(f.read())
 
                 pattern = rb"Tip_WaterMark_Str[^\r]*"
                 match = (re.search(pattern, strin)).group()
                 strin = strin.replace(match, b'Tip_WaterMark_Str = ' + skinid.encode('utf-8'))
                 print(match, b'Tip_WaterMark_Str = ' + skinid.encode('utf-8'))
-            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Languages/VN_Garena_VN/languageMap.txt','wb') as f:
+            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Languages/VN_Garena_VN/languageMap.txt','wb') as f:
                 f.write((strin))
         elif 'nut' in skinid.lower():
             nut_bam_auto_mod=skinid.lower()
@@ -1015,7 +1015,7 @@ if True:
                 phu_kien=True
                 skinid_phu_kien=skinid
                 skinid=skinid[:5]
-            for hero_name in listdir('./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/'):
+            for hero_name in listdir('./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/'):
                 if '.rar' not in hero_name and '_' in hero_name:
                     hero_name = bytes(hero_name,'utf-8')
                     if skinid[:3]== hero_name[:3]:
@@ -1035,15 +1035,15 @@ if True:
                 List_Hero_Da_Mod.append(skinid[:3])
                 List_SkinIfosMod, SoInfos, List_ef_mod = infoAboutSkin(skinid)
                 print(List_SkinIfosMod, SoInfos)
-                if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero'.format(folder_mod)) == 0 :
-                    os.mkdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero'.format(folder_mod))
-                if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress)) == 0 :
-                    os.mkdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress))
-                for filezz in listdir(f'./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/'):
-                    if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,filezz)) == 0 :
-                        os.mkdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,filezz))
-                if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress)) == 0 :
-                    os.mkdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress))
+                if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero'.format(folder_mod)) == 0 :
+                    os.mkdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero'.format(folder_mod))
+                if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress)) == 0 :
+                    os.mkdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress))
+                for filezz in listdir(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/'):
+                    if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,filezz)) == 0 :
+                        os.mkdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,filezz))
+                if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress)) == 0 :
+                    os.mkdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress))
                 
                 #-----------------------------------------------Mod Sound------------------------------------------------------------#
 
@@ -1052,7 +1052,7 @@ if True:
                     id_0=dec_to_hex(int(skinid.decode()[:3]+'00'))
                     print('Mod Sound')
                     if True:
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/BattleBank.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/BattleBank.bytes','rb') as f:
                             strin = f.read()
                             pos = strin.find(b'\x01\x00\x00\x00\x00'+id_mod+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                             KatakanaXinhGai=False
@@ -1060,41 +1060,41 @@ if True:
                                 KatakanaXinhGai=True
                                 strin = strin.replace(b'\x01\x00\x00\x00\x00'+id_0+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x01\x00\x00\x00\x00\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                                 strin = strin.replace(b'\x01\x00\x00\x00\x00'+id_mod+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x01\x00\x00\x00\x00'+id_0+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/BattleBank.bytes','wb') as f1:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/BattleBank.bytes','wb') as f1:
                                     f1.write(strin)
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/ChatSound.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/ChatSound.bytes','rb') as f:
                             strin = f.read()
                             pos = strin.find(b'\x00'+id_mod+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                             if pos!=-1:
                                 strin = strin.replace(b'\x00'+id_0+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x00\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                                 strin = strin.replace(b'\x00'+id_mod+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x00'+id_0+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/ChatSound.bytes','wb') as f:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/ChatSound.bytes','wb') as f:
                                     f.write(strin)
                         find_back=0
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/HeroSound.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/HeroSound.bytes','rb') as f:
                             strin = f.read()
                             find_back=strin.count(b'\x00'+id_mod+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                             pos = strin.find(b'\x00'+id_mod+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                             if pos!=-1:
                                 strin = strin.replace(b'\x00'+id_0+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x00\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                                 strin = strin.replace(b'\x00'+id_mod+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x00'+id_0+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/HeroSound.bytes','wb') as f:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/HeroSound.bytes','wb') as f:
                                     f.write(strin)  
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/LobbyBank.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/LobbyBank.bytes','rb') as f:
                             strin = f.read()
                             pos = strin.find(b'\x00\x00\x00\x00'+id_mod+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                             if pos!=-1:
                                 strin = strin.replace(b'\x00\x00\x00\x00'+id_0+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x00\x00\x00\x00\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                                 strin = strin.replace(b'\x00\x00\x00\x00'+id_mod+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x00\x00\x00\x00'+id_0+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/LobbyBank.bytes','wb') as f1:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/LobbyBank.bytes','wb') as f1:
                                     f1.write(strin)
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/LobbySound.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/LobbySound.bytes','rb') as f:
                             strin = f.read()
                             pos = strin.find(b'\x00'+id_mod + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                             if pos!=-1:
                                 strin = strin.replace(b'\x00'+id_0+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x00\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                                 strin = strin.replace(b'\x00'+id_mod+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x00'+id_0+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/LobbySound.bytes','wb') as f1:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/LobbySound.bytes','wb') as f1:
                                     f1.write(strin)
                 except Exception as bug:
                     print(bug)
@@ -1105,7 +1105,7 @@ if True:
                 list_skill_mark=[]
                 try:
                     
-                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Skill/skillmark.bytes','rb') as f:
+                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Skill/skillmark.bytes','rb') as f:
                         a=f.read()
                         t=b'prefab_skill_effects/hero_skill_effects/'+skinid[:3]+b'_'
                         if b's/'+skinid[:3]+b'_' in a or b'S/'+skinid[:3]+b'_' in a:
@@ -1118,7 +1118,7 @@ if True:
                                     print(code)
                                     list_du_kien_mod_born.append(code)
                                 p=a.find(t,p2)
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Skill/skillmark.bytes','wb') as f1:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Skill/skillmark.bytes','wb') as f1:
                             f1.write(a)
                 except:
                     print(Fore.RED+Style.BRIGHT+'Không Mod skillmark'+Style.RESET_ALL)
@@ -1130,11 +1130,11 @@ if True:
                     if hieu_ung == b'\x8f':
                         du_kien_mod_born=b''
                         
-                        with open(f'./Pmin_Sources/Resources/1.60.1/AssetRefs/Hero/{decompress[:3]}_AssetRef.bytes','rb') as asef:
+                        with open(f'./Pmin_Sources/Resources/1.61.1/AssetRefs/Hero/{decompress[:3]}_AssetRef.bytes','rb') as asef:
                             check_asef=fix_ef(mod_ef_sound2(decompress_(asef.read()),decompress,skinid),skinid).lower()
-                        for filez in listdir(f'./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}'):
+                        for filez in listdir(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}'):
                             if filez=='skill' or filez=='Skill':
-                                for file in listdir('./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill/'.format(decompress)):
+                                for file in listdir('./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill/'.format(decompress)):
                                     if True:
                                         if skinid in accept_ids:
                                             try:
@@ -1153,7 +1153,7 @@ if True:
                                                                 strin=strin.replace(strin[p:p2+1],strin[p:p2]+b'.prefab"',1)
                                                             p=strin.find(b'<String name="resourceName',p2)
                                             except:
-                                                with open(f'./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f:
+                                                with open(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f:
                                                     strin = f.read()
                                                     strin=decompress_(strin,ZSTD_DICT)
                                                     strin=mod_ef_sound(strin,decompress,skinid,file,folder_mod)
@@ -1187,7 +1187,7 @@ if True:
                                                                 strin=strin.replace(strin[p:p2+1],strin[p:p2]+b'.prefab"',1)
                                                             p=strin.find(b'<String name="resourceName',p2)
                                         else:
-                                            with open(f'./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f:
+                                            with open(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f:
                                                 strin = f.read()
                                                 strin=decompress_(strin,ZSTD_DICT)
                                                 strin=mod_ef_sound(strin,decompress,skinid,file,folder_mod)
@@ -1358,7 +1358,7 @@ if True:
                                         #xoa dong thua thai
                                         
                                         #   
-                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
+                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                             f1.write(compress_((strin)))
                                     # if ('e' in file.lower() and len(list_du_kien_mod_born)==0) or (skinid[:3]!=b'524' and file in ['A1E1.xml','A1e1.xml','a1e1.xml']) or (skinid[:3]==b'524' and file in ['A1E6.xml','A1e6.xml','a1e6.xml']):
                                     #     for ef in [b'Prefab_Skill_Effects',b'Prefab_Skill_Effects'.lower()]:
@@ -1464,7 +1464,7 @@ if True:
                                                     p2 = code_goc.find(b'</Event>')
                                                     mod_for_skin = mod_for_skin.replace(b'</Event>\r\n',code_goc[p2:p])
                                                 strin=strin.replace(code_goc, mod_for_skin+code)
-                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
+                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                             if skinid[:3]!=b'530':
                                                 f1.write(compress_(xoa_thua_thai(extract_guid_after_id(strin))))
                                             else:
@@ -1484,7 +1484,7 @@ if True:
                                     if DeAllSkin:
                                         ListRandom=['1','2','3','4','5','6','7','8','9','P','M','I','N','O','D','G','A','0']
                                         import random
-                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f1:
+                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f1:
                                             text=f1.read()
                                             if b'<String name="resourceName" value="' in text:
                                                 p=text.find(b'<String name="resourceName')
@@ -1500,34 +1500,34 @@ if True:
                                                         text=text.replace(code,code_chinh_sua,1)
                                                         text=text.replace(b'  </Action>',getHoliday)
                                                     p=text.find(b'<String name="resourceName',p2)
-                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:f1.write(text)
+                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:f1.write(text)
                                 if check_skill_an:
                                     ten_de_vao_skill_an=ten_de_vao_skill_an+decompress+'\n'
                                     for i in list_skill_an:
                                         ten_de_vao_skill_an=ten_de_vao_skill_an+'\t'+i+'\n'
                             else:
-                                for file in listdir(f'./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/{filez}'):
-                                    with open(f'./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/{filez}/{file}','rb') as f:
+                                for file in listdir(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/{filez}'):
+                                    with open(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/{filez}/{file}','rb') as f:
                                         strin = f.read()
-                                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/{filez}/{file}','wb') as f1:
+                                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/{filez}/{file}','wb') as f1:
                                                 f1.write(strin)
                     else:
-                        for file in listdir('./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill/'.format(decompress)):
+                        for file in listdir('./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill/'.format(decompress)):
                             if '.xml' in file:
-                                with open(f'./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f:
+                                with open(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f:
                                     strin = f.read()
-                                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
+                                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                         f1.write(strin)
                 #--------------Mod Born--------------------
                 if hieu_ung == b'\x8f' and not DeAllSkin and False:
-                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','rb') as f1:
+                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','rb') as f1:
                         strin=f1.read()
                         check=b'    <Track trackName="BORN_ID_SKIN" eventType="CheckHeroIdTick" guid="Mod_by_PminMod_Fix_Lag_ID_SKIN" enabled="true" r="0.000" g="0.000" b="0.000" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" guid="Mod_Vip">\r\n      <TemplateObject name="targetId" id="0" objectName="self"/>\r\n        <int name="heroId" value="ID_SKIN"/>\r\n      </Event>\r\n    </Track>\r\n'
                         strin=strin.replace(b'  </Action>\r\n</Project>',check.replace(b'ID_SKIN',skinid[:3])+b'  </Action>\r\n</Project>',1)
                         ef=b'    <Track trackName="PminMod" eventType="TriggerParticleTick" guid="I LOVE YOU" enabled="true" r="0.000" g="0.000" b="0.000" stopAfterLastEvent="true" SkinAvatarFilterType="9">\r\n      <Condition id="1" guid="Mod_by_PminMod_Fix_Lag_ID_SKIN" status="true" />\r\n      <Event eventName="TriggerParticleTick" time="0.000" length="0.001" guid="866871db-f8fd-4577-8cb7-e0ee803ade3f">\r\n        <TemplateObject name="targetId" id="1" objectName="target"/>\r\n        <String name="resourceName" value="EFFECT"/>\r\n      </Event>\r\n    </Track>\r\n'
                         for du_kien_mod_born in list_du_kien_mod_born:
                             strin=strin.replace(b'  </Action>\r\n</Project>',ef.replace(b'ID_SKIN',skinid[:3]).replace(b'EFFECT', du_kien_mod_born)+b'  </Action>\r\n</Project>')
-                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','wb') as f1:
+                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','wb') as f1:
                         f1.write(strin)
             #-----------------------------------------------Mod heroSkin------------------------------------------------------------#
                 try:
@@ -1535,7 +1535,7 @@ if True:
                         id_0 = dec_to_hex(int(skinid[:3].decode()+'00'))
                         id_mod = dec_to_hex(int(skinid.decode()))
                         hero_actor = dec_to_hex(int(skinid[:3].decode()))
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
                             strin = f.read()
                             pos = strin.find(id_mod+b'\x00\x00'+hero_actor)
                             if pos!=-1:
@@ -1582,7 +1582,7 @@ if True:
                                         actor_mod = actor_mod[:36] + b'\x00' + actor_mod[37:]
                                     actor_mod=dec_to_hex(len(actor_mod)-4)+actor_mod[2:]
                                     strin = strin.replace(actor_0,actor_mod,1)
-                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Actor/heroSkin.bytes','wb') as f1:
+                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Actor/heroSkin.bytes','wb') as f1:
                                 f1.write(strin)
                 except Exception as bug:
                     print(bug)
@@ -1594,7 +1594,7 @@ if True:
                     id_mod=dec_to_hex(int(skinid.decode()))
                     for nnn in range(1,30):
                         #nnn=int(nnn.decode()[3:])-1
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
                             strin = f.read()
                             hero_actor=dec_to_hex(int(skinid[:3].decode()))
                             pos = strin.find(id_mod+b'\x00\x00'+hero_actor)
@@ -1619,11 +1619,11 @@ if True:
                                     re_2 = actor_mod[:4]+id_2+actor_mod[6:][:30]+dec_to_hex(nnn)+actor_mod[37:]
                                     if re_2!=b'' and actor_2!=b'' and nnn!=int(skinid[3:].decode()):
                                         strin=strin.replace(actor_2,re_2)
-                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Actor/heroSkin.bytes','wb') as f1:
+                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Actor/heroSkin.bytes','wb') as f1:
                                             # if str(int(skinid[:3].decode())*100+nnn).encode('utf-8') not in List_ef_mod:
                                                 f1.write(strin)
                         try:
-                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Shop/HeroSkinShop.bytes','rb') as f:
+                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Shop/HeroSkinShop.bytes','rb') as f:
                                 strin = f.read()
                                 hero_actor=dec_to_hex(int(skinid[:3].decode()))
                                 pos = strin.find(id_2+b'\x00\x00'+hero_actor)
@@ -1633,7 +1633,7 @@ if True:
                                     if pos!=-1:
                                         hs_mod = strin[pos-4:pos+hex_to_dec(strin[pos-4:pos-2])]
                                         if skinid==b'13311' or skinid==b'11620':
-                                            with open(f'./Pmin_Sources/Resources/1.60.1/Databin/Client/Shop/HeroSkinShop.bytes','rb') as f:
+                                            with open(f'./Pmin_Sources/Resources/1.61.1/Databin/Client/Shop/HeroSkinShop.bytes','rb') as f:
                                                 strin2 = decompress_(f.read(),ZSTD_DICT)
                                             pos = strin2.find(b'\x43\x41\x00\x00\xA7')
                                             hs_mod = strin2[pos-4:pos+hex_to_dec(strin2[pos-4:pos-2])]
@@ -1652,7 +1652,7 @@ if True:
                                 hs_mod = hs_mod[:4]+hs_2[4:][:2]+hs_mod[6:]
                                 hs_mod = hs_mod[:36]+hs_2[36:][:1]+hs_mod[37:]
                             strin = strin.replace(hs_2,hs_mod)
-                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Shop/HeroSkinShop.bytes','wb') as f1:
+                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Shop/HeroSkinShop.bytes','wb') as f1:
                                 f1.write(strin)
 
                         except Exception as e:
@@ -1666,17 +1666,17 @@ if True:
                     pass
             #-----------------------------------------------Mod Infos Skin Mặc Định------------------------------------------------------------#
                 print('Mod Infos Skin Mặc Định')
-                for file in listdir('./Pmin_Sources/Resources/1.60.1/Prefab_Characters/Prefab_Hero/{}/'.format(decompress)):
-                    with open(f'./Pmin_Sources/Resources/1.60.1/Prefab_Characters/Prefab_Hero/{decompress}/{file}','rb') as f:
+                for file in listdir('./Pmin_Sources/Resources/1.61.1/Prefab_Characters/Prefab_Hero/{}/'.format(decompress)):
+                    with open(f'./Pmin_Sources/Resources/1.61.1/Prefab_Characters/Prefab_Hero/{decompress}/{file}','rb') as f:
                         a=f.read()
                         check_file3=False
                         if len(file) == len(decompress)+len('_actorinfo.bytes'):a=decompress_(a,ZSTD_DICT);file2=file
                         if 'trap' in file or 'Trap' in file:a=decompress_(a,ZSTD_DICT);file3=file;check_file3=True
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero/{decompress}/{file}','wb') as f1:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero/{decompress}/{file}','wb') as f1:
                             f1.write(a)
                 thu=False
                 try:
-                    filexml='./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,file2)
+                    filexml='./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,file2)
                     byt=open(filexml, 'rb')
                     i=0
                     nod={}
@@ -1758,7 +1758,7 @@ if True:
                     if '</Item>' in byt:thu=True
                 if thu:
                     try:
-                        with open(f'./Pmin_Sources/Resources/1.60.1/Prefab_Characters/Prefab_Hero/{decompress}/{file2}','rb') as f:
+                        with open(f'./Pmin_Sources/Resources/1.61.1/Prefab_Characters/Prefab_Hero/{decompress}/{file2}','rb') as f:
                             strin=f.read()
                             strin=decompress_(strin,ZSTD_DICT)
                             skinid_infos=skinid[:3]+bytes(str(int(skinid[3:].decode())+1),'utf-8')
@@ -1809,7 +1809,7 @@ if True:
                                     strin=strin.replace(mac_dinh,mac_dinh.replace(lod_mac_dinh,lod_skin).replace(show_mac_dinh,show_skin))
                             else:
                                 strin=strin.replace(mac_dinh,mac_dinh.replace(lod_mac_dinh,lod_skin).replace(show_mac_dinh,show_skin))
-                            with open('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,file2),'wb') as f1:
+                            with open('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,file2),'wb') as f1:
                                 if skinid==b'54402':
                                     strin=strin.replace(b'useTimeline',b'use0000line')
                                 f1.write(strin)
@@ -1817,7 +1817,7 @@ if True:
                         pass
                 try:
                     if check_file3:
-                        filexml='./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,file3)
+                        filexml='./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,file3)
                         byt=open(filexml, 'rb')
                         i=0
                         nod={}
@@ -1874,40 +1874,40 @@ if True:
                     for nnn in range(1,30):
                         #nnn=int(nnn.decode()[3:])-1
                         id_2 = dec_to_hex(int(skinid[:3].decode())*100+nnn)
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/BattleBank.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/BattleBank.bytes','rb') as f:
                             strin = f.read()
                             pos = strin.find(b'\x01\x00\x00\x00\x00'+id_2+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                             if pos!=-1 and id_2!=id_mod:
                                 strin = strin.replace(b'\x01\x00\x00\x00\x00'+id_2+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x01\x00\x00\x00\x00\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/BattleBank.bytes','wb') as f1:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/BattleBank.bytes','wb') as f1:
                                     f1.write(strin)
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/ChatSound.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/ChatSound.bytes','rb') as f:
                             strin = f.read()
                             pos = strin.find(b'\x00'+id_0+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                             if pos!=-1 and id_2!=id_mod:
                                 strin = strin.replace(b'\x00'+id_2+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x00\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/ChatSound.bytes','wb') as f:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/ChatSound.bytes','wb') as f:
                                     f.write(strin)
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/HeroSound.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/HeroSound.bytes','rb') as f:
                             strin = f.read()
                             pos = strin.find(b'\x00'+id_0+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                             if pos!=-1 and id_2!=id_mod:
                                 strin = strin.replace(b'\x00'+id_2+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x00\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/HeroSound.bytes','wb') as f:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/HeroSound.bytes','wb') as f:
                                     f.write(strin)  
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/LobbyBank.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/LobbyBank.bytes','rb') as f:
                             strin = f.read()
                             pos = strin.find(b'\x00\x00\x00\x00'+id_2+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                             if pos!=-1 and id_2!=id_mod:
                                 strin = strin.replace(b'\x00\x00\x00\x00'+id_2+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x00\x00\x00\x00\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/LobbyBank.bytes','wb') as f1:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/LobbyBank.bytes','wb') as f1:
                                     f1.write(strin)
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/LobbySound.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/LobbySound.bytes','rb') as f:
                             strin = f.read()
                             pos = strin.find(b'\x00'+id_2 + b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
                             if pos!=-1 and id_2!=id_mod:
                                 strin = strin.replace(b'\x00'+id_2+b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00',b'\x00\xff\xff\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Sound/LobbySound.bytes','wb') as f1:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Sound/LobbySound.bytes','wb') as f1:
                                     f1.write(strin)
             #-----------------------------------------------Mod HeroSkinShop------------------------------------------------------------#
                 print('Mod HeroSkinShop')
@@ -1915,7 +1915,7 @@ if True:
                     
                     id_0 = dec_to_hex(int((skinid[:3]+b'00').decode()))
                     id_mod = dec_to_hex(int(skinid.decode()))
-                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Shop/HeroSkinShop.bytes','rb') as f:
+                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Shop/HeroSkinShop.bytes','rb') as f:
                         strin = f.read()
                         hero_actor = hex(int(skinid[:3].decode()))[2:]
                         if len(hero_actor)%2 ==1:
@@ -1932,7 +1932,7 @@ if True:
                                 pos2 = hex_to_dec(strin[pos-4:pos-2])
                                 hs_mod = strin[pos-4:pos+pos2]
                                 if skinid==b'13311' or skinid==b'11620':
-                                    with open(f'./Pmin_Sources/Resources/1.60.1/Databin/Client/Shop/HeroSkinShop.bytes','rb') as f:
+                                    with open(f'./Pmin_Sources/Resources/1.61.1/Databin/Client/Shop/HeroSkinShop.bytes','rb') as f:
                                         strin2 = decompress_(f.read(),ZSTD_DICT)
                                     pos = strin2.find(b'\x43\x41\x00\x00\xA7')
                                     hs_mod = strin2[pos-4:pos+hex_to_dec(strin2[pos-4:pos-2])]
@@ -1944,15 +1944,15 @@ if True:
 
                         hs_mod = hs_mod[:4]+hs_0[4:][:2]+hs_mod[6:]
                         hs_mod = hs_mod[:36]+hs_0[36:][:1]+hs_mod[37:]
-                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Shop/HeroSkinShop.bytes','rb') as f:
+                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Shop/HeroSkinShop.bytes','rb') as f:
                         strin = f.read()
                         strin = strin.replace(hs_0,hs_mod)
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Shop/HeroSkinShop.bytes','wb') as f1:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Shop/HeroSkinShop.bytes','wb') as f1:
                             f1.write(strin)
                 except:
                     
                     print(Fore.RED+Style.BRIGHT+'Không Mod HeroSkinShop'+Style.RESET_ALL)
-                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
+                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
                     a=f.read()
                     if True:
                         if len(skin_phu_bac_a)>0:
@@ -1967,7 +1967,7 @@ if True:
                         skin=skin[:36]+b'\x00'+skin[37:]
                         de=de[:36]+dec_to_hex(int(skinid2[3:].decode()))+de[37:]
                         a=a.replace(skin2,skin).replace(de2,de)
-                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Actor/heroSkin.bytes','wb') as f:f.write(a)
+                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Actor/heroSkin.bytes','wb') as f:f.write(a)
             #-----------------------------------------------Mod Back------------------------------------------------------------#
                 print('mod back')
                 name = b''
@@ -1976,7 +1976,7 @@ if True:
                         List=[]
                         List_ngoai_le=[b'eventType="GetHolidayResourcePathTick']
                         try:
-                            with open(f'./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{skinid.decode()}_back.xml','rb') as f:
+                            with open(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{skinid.decode()}_back.xml','rb') as f:
                                 strin = f.read()
                                 strin=decompress_(strin)
                                 for code in split_code_back(strin):
@@ -2125,7 +2125,7 @@ if True:
 '''
                         if True:
                             if True:
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/back.xml','rb') as f:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/back.xml','rb') as f:
                                     strin = f.read()
                                     if True:
                                         back_id = b'    <Track trackName="ReupCC_'+bytes(str(i),'utf-8')+b'" eventType="CheckHeroIdTick" guid="Mod_by_YOUTUBE_'+hero_name[:3]+b'" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" isDuration="false" guid="Mod_Vip">\r\n      <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n      <int name="heroId" value="'+hero_name[:3]+b'" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'
@@ -2234,7 +2234,7 @@ if True:
                                         back = add_filter_attribute(back, b'9')
                                         back=back.replace(b'</Event>', check_Back)
                                         strin = strin.replace(b'  </Action>',back+b'  </Action>')
-                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Back.xml','wb') as f1:
+                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Back.xml','wb') as f1:
                                             f1.write(strin)
                         zz+=1;i+=1;j+=1
                     except Exception as bug:
@@ -2244,7 +2244,7 @@ if True:
                     try:
                         if True:
                             if True:
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/back.xml','rb') as f:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/back.xml','rb') as f:
                                     strin = f.read()
                                     if True:
                                         back_id = b'    <Track trackName="ReupCC_'+bytes(str(i),'utf-8')+b'" eventType="CheckHeroIdTick" guid="Mod_by_YOUTUBE_'+hero_name[:3]+b'" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" isDuration="false" guid="Mod_Vip">\r\n      <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n      <int name="heroId" value="'+hero_name[:3]+b'" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'
@@ -2331,7 +2331,7 @@ if True:
                                                 back_need_2=back_need_2.replace(b'clipName" value="',b'clipName" value="11620/Awaken/')
                                         else:back_need_2=b''
                                         strin = strin.replace(b'  </Action>',back+name+back_need_2.replace(b'<Event eventName="PlayAnimDuration"',condition_mod+b'\r\n      <Event eventName="PlayAnimDuration"')+b'  </Action>')
-                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Back.xml','wb') as f1:
+                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Back.xml','wb') as f1:
                                             f1.write(strin)
                         zz+=1;i+=1;j+=1
                     except Exception as bug:
@@ -2341,16 +2341,16 @@ if True:
                 print('Mod LiteBullet')
                 if skinid==b'15009':
                     for file in ['BlueBuff.xml','RedBuff_Slow.xml']:
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/PassiveResource/{file}','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/PassiveResource/{file}','rb') as f:
                             a=f.read()
                             a=a.replace(b'CheckSkinIdVirtualTick',b'CheckHeroIdTick').replace(b'skinId" value="15009',b'heroId" value="150')
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/PassiveResource/{file}','wb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/PassiveResource/{file}','wb') as f:
                             f.write(a)
                 print('mod organ')
                 if skinid in [b"50108",b"14111",b"13314",b"11107",b"15009",b"13015"]:
                     def organSkin(IDCHECK,folder_mod=folder_mod):
                         ID = IDCHECK
-                        organSkin_mod=f"File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Actor/organSkin.bytes"
+                        organSkin_mod=f"File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Actor/organSkin.bytes"
                         file = open(organSkin_mod, "rb")
                         IDN = str(hex(int(ID)))
                         IDN = IDN[4:6] + IDN[2:4]
@@ -2423,7 +2423,7 @@ if True:
     #------------------------mod ăn bùa nak----------------------
                 if skinid[:3]==b'150':
                     for file in ['BlueBuff_CD.xml']:
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/PassiveResource/{file}','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/PassiveResource/{file}','rb') as f:
                             a=f.read()
                             a=decompress_(a,ZSTD_DICT)
                             if skinid == b'15013':
@@ -2433,10 +2433,10 @@ if True:
                                 a=fix_ef_pro_vip(a,skinid)
                             else:
                                 a = a.replace(b'f2ab8cf5-e623-4ea8-a978-bc54db67aa83">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="skinId" value="15013', b'f2ab8cf5-e623-4ea8-a978-bc54db67aa83">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="skinId" value="13579')
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/PassiveResource/{file}','wb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/PassiveResource/{file}','wb') as f:
                             f.write(fix_condition(a))
                     for file in ['Dead_Born.xml']:
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','rb') as f:
                             a=f.read()
                             for code in split_code_(a):
                                 if b'skinId" value="15013' in code:
@@ -2444,14 +2444,14 @@ if True:
                                         a=a.replace(code,code.replace(b'CheckSkinIdVirtualTick',b'CheckHeroIdTick').replace(b'skinId" value="15013',b'heroId" value="150'))
                                     else:
                                         a=a.replace(code,code.replace(b'skinId" value="15013',b'skinId" value="13579'))
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
                             f.write(a)
     #------------------------mod ăn bùa nak----------------------
                 print('mod ăn bùa nak')
                 def mod_lite(folder_mod,hero_name,skinid):
                     try:
                         
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Skill/liteBulletCfg.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Skill/liteBulletCfg.bytes','rb') as f:
                             strin = f.read()
                             k=0
                             if skinid==b'13311':strin=strin.replace(b' hero_skill_effects/133_direnjie',b' component_effects/13311/13311_5',7)
@@ -2517,12 +2517,12 @@ if True:
                                                     dau = bytes.fromhex(dau)
                                                     a=a.replace(a,dau+a[1:])
                                                     strin = strin.replace(re_a,a)
-                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Skill/liteBulletCfg.bytes','wb') as f1:
+                                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Skill/liteBulletCfg.bytes','wb') as f1:
                                             f1.write(strin)
                                         k+=1
                     except:
                         print(Fore.RED+Style.BRIGHT+'Không Mod Đánh Thường'+Style.RESET_ALL)
-                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Skill/liteBulletCfg.bytes','rb') as f:a=f.read()
+                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Skill/liteBulletCfg.bytes','rb') as f:a=f.read()
                 
                 t=b'prefab_skill_effects/hero_skill_effects/'+skinid[:3]+b'_'
                 p = a.find(t)
@@ -2535,12 +2535,12 @@ if True:
                         mod_lite(folder_mod,hero_name,skinid)
                     else:
                         a=a.replace(b'hero_skill_effects/133_direnjie/',b'component_effects/13311/13311_5/')
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Skill/liteBulletCfg.bytes','wb') as f:f.write(a)
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Skill/liteBulletCfg.bytes','wb') as f:f.write(a)
 
 
                         #-mod aov-
                 if skinid==b'13311':
-                    inp = f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/'
+                    inp = f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/'
                     for file in listdir(inp+f'Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill'):
                         with open(inp+f'Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f:
                             strin=f.read()
@@ -2564,7 +2564,7 @@ if True:
                             with open(inp+f'Databin/Client/Sound/{file}','wb') as f1:
                                 f1.write(strin)
                 if skinid==b'11620':
-                    inp = f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/'
+                    inp = f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/'
                     for file in listdir(inp+f'Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill'):
                         with open(inp+f'Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f:
                             strin=f.read()
@@ -2585,10 +2585,10 @@ if True:
                             with open(inp+f'Databin/Client/Sound/{file}','wb') as f1:
                                 f1.write(strin)
                 if skinid==b'16707':
-                    inp = f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/'
-                    for file in listdir('./Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill/'.format(decompress)):
+                    inp = f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/'
+                    for file in listdir('./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill/'.format(decompress)):
                         if '.xml' in file:
-                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f:
+                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','rb') as f:
                                 strin = decompress_(f.read())
                                 if 'y' in co_ma_nguon_khong or 'Y' in co_ma_nguon_khong:strin=strin[:-1];strin=decompress_(strin,ZSTD_DICT)
                                 pos = strin.find(b'<Track trackName="PlayHeroSoundTick')
@@ -2603,7 +2603,7 @@ if True:
                                         if b'_Skin7_Aw3' not in sound:
                                             strin = strin.replace(sound,sound+b'_Skin7_Aw3')
                                     pos = strin.find(b'<Track trackName="PlayHeroSoundTick',posid2)
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                     f1.write(compress_(strin))
                     for file in ['BattleBank.bytes','ChatSound.bytes','HeroSound.bytes','LobbyBank.bytes','LobbySound.bytes']:
                         with open(inp+f'Databin/Client/Sound/{file}','rb') as f:
@@ -2613,29 +2613,29 @@ if True:
                                 f1.write(strin)
                 try:
                     if True:
-                        # if not os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}/imprint'.format(folder_mod,decompress)) and  not os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}/imprint'.format(folder_mod,decompress)):
-                        #     DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill'.format(folder_mod,decompress)
-                        #     DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill'.format(folder_mod,decompress)
+                        # if not os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}/imprint'.format(folder_mod,decompress)) and  not os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}/imprint'.format(folder_mod,decompress)):
+                        #     DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill'.format(folder_mod,decompress)
+                        #     DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill'.format(folder_mod,decompress)
                         #     nonee = './{}/skill'.format(decompress)
-                        #     with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/Actor_{}_Actions.pkg.bytes'.format(folder_mod,hero_name[:3].decode()), 'w', zipfile.ZIP_STORED) as zipf:
+                        #     with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/Actor_{}_Actions.pkg.bytes'.format(folder_mod,hero_name[:3].decode()), 'w', zipfile.ZIP_STORED) as zipf:
                         #         zipdir('tmp/', zipf)
                         # else:
                         def zipdir4(path, ziph):
-                            for ii in listdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/'):
+                            for ii in listdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/'):
                                 nonee = f'./{decompress}/{ii}'
-                                DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,ii)
-                                DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,ii)
+                                DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,ii)
+                                DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}/{}'.format(folder_mod,decompress,ii)
                                 for root, dirs, files in os.walk(DIR):
                                     for file in files:
                                         full_path = os.path.join(root, file)
                                         arcname = os.path.relpath(full_path, os.path.join(DIR, '..'))
                                         ziph.write(full_path,arcname)
-                        with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/Actor_{}_Actions.pkg.bytes'.format(folder_mod,hero_name[:3].decode()), 'w', zipfile.ZIP_STORED) as zipf:
+                        with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/Actor_{}_Actions.pkg.bytes'.format(folder_mod,hero_name[:3].decode()), 'w', zipfile.ZIP_STORED) as zipf:
                             zipdir4('tmp/', zipf)
                         if skinid[:3]==b'526' or skinid[:3]==b'137':
-                            os.mkdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/{decompress}')
-                            os.mkdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/{decompress}_pet')
-                            with open(f'./Pmin_Sources/Resources/1.60.1/Prefab_Characters/Prefab_Pet/{decompress}_Pet/{decompress}_Pet_actorinfo.bytes','rb') as f:a=f.read()
+                            os.mkdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/{decompress}')
+                            os.mkdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/{decompress}_pet')
+                            with open(f'./Pmin_Sources/Resources/1.61.1/Prefab_Characters/Prefab_Pet/{decompress}_Pet/{decompress}_Pet_actorinfo.bytes','rb') as f:a=f.read()
                             if skinid[:3]==b'526':
                                 a=decompress_(a,ZSTD_DICT)
                                 t=str(int(skinid[3:].decode())+1).encode('utf-8')
@@ -2643,42 +2643,42 @@ if True:
                                     for i in range(1,10):
                                         if str(i).encode('utf-8')!=t:
                                             a=a.replace(skinid[:3]+str(i).encode('utf-8'),skinid[:3]+t)
-                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/{decompress}_pet/{decompress}_Pet_actorinfo.bytes','wb') as f:f.write(a)
-                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero/{decompress}/{decompress}_actorinfo.bytes','rb') as f:
+                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/{decompress}_pet/{decompress}_Pet_actorinfo.bytes','wb') as f:f.write(a)
+                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero/{decompress}/{decompress}_actorinfo.bytes','rb') as f:
                                 a=f.read()
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/{decompress}/{decompress}_actorinfo.bytes','wb') as f:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/{decompress}/{decompress}_actorinfo.bytes','wb') as f:
                                     f.write(a)
                             def zipdir3(path, ziph):
                                 for ii in [decompress,f'{decompress}_pet']:
                                     nonee = './{}'.format(ii)
-                                    DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/{}'.format(folder_mod,ii)
-                                    DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/{}'.format(folder_mod,ii)
+                                    DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/{}'.format(folder_mod,ii)
+                                    DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/{}'.format(folder_mod,ii)
                                     for root, dirs, files in os.walk(DIR):
                                         for file in files:
                                             full_path = os.path.join(root, file)
                                             arcname = os.path.relpath(full_path, os.path.join(DIR, '..'))
                                             ziph.write(full_path,arcname)
-                            with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Actor_{}_Infos.pkg.bytes'.format(folder_mod,decompress[:3]), 'w', zipfile.ZIP_STORED) as zipf:
+                            with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Actor_{}_Infos.pkg.bytes'.format(folder_mod,decompress[:3]), 'w', zipfile.ZIP_STORED) as zipf:
                                 zipdir3('tmp/', zipf)
-                            for file in listdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/'):
+                            for file in listdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/'):
                                 if 'bytes' not in file:
-                                    shutil.rmtree(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/{file}')
+                                    shutil.rmtree(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/{file}')
                         if skinid[:3]!=b'526' and skinid[:3]!=b'137':
-                            DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress)
-                            DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress)
+                            DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress)
+                            DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress)
                             nonee = './Prefab_Hero/{}'.format(decompress)
-                            with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Actor_{}_Infos.pkg.bytes'.format(folder_mod,hero_name[:3].decode()), 'w', zipfile.ZIP_STORED) as zipf:
+                            with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Actor_{}_Infos.pkg.bytes'.format(folder_mod,hero_name[:3].decode()), 'w', zipfile.ZIP_STORED) as zipf:
                                 zipdir('tmp/', zipf)
-                        if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress))== 1 :
-                            shutil.rmtree('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress))
+                        if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress))== 1 :
+                            shutil.rmtree('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,decompress))
                         if skinid[:3]!=b'526' and skinid[:3]!=b'137':
-                            if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero'.format(folder_mod))== 1 :
-                                shutil.rmtree('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Prefab_Characters/Prefab_Hero'.format(folder_mod))
+                            if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero'.format(folder_mod))== 1 :
+                                shutil.rmtree('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Prefab_Characters/Prefab_Hero'.format(folder_mod))
                 except:pass
             #----------------------------------Mod Motion--------------------------------------------#
                 print('Mod Motion')
                 try:
-                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Motion/ResSkinMotionBaseCfg.bytes','rb') as f:
+                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Motion/ResSkinMotionBaseCfg.bytes','rb') as f:
                         strin=f.read()
                         ID=skinid.decode()
                         List=[]
@@ -2733,29 +2733,29 @@ if True:
                             if len(code_special)+len(code_normal_1)==0:
                                 for id in List:
                                     strin=strin.replace(id+b'\x00\x00',b'00\x00\x00',1)
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Motion/ResSkinMotionBaseCfg.bytes','wb') as f:f.write(strin)
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Motion/ResSkinMotionBaseCfg.bytes','wb') as f:f.write(strin)
                 except:
                     print('\033[1;33mKhong Mod Motion')
                 if skinid in [b'54402']:
-                    if os.path.isdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Gear')== 0 :
-                        shutil.copytree(f'./Pmin_Sources/resources/1.60.1/ages/prefab_gear',f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Gear')
-                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Gear/Defense/1338E1.xml','rb') as f:
+                    if os.path.isdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Gear')== 0 :
+                        shutil.copytree(f'./Pmin_Sources/resources/1.61.1/ages/prefab_gear',f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Gear')
+                    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Gear/Defense/1338E1.xml','rb') as f:
                         strin=f.read()
                         strin=decompress_(strin,ZSTD_DICT)
                         ef=b'   <Track trackName="hihi" eventType="CheckHeroIdTick" guid="Mod_by_PminMod'+hero_name[3:]+b'" enabled="true" refParamName="" useRefParam="false" r="0.667" g="1.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="CheckHeroIdTick" time="0.000" isDuration="false">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" refParamName="" useRefParam="false"/>\r\n        <int name="heroId" value="'+skinid[:3]+b'" refParamName="" useRefParam="false"/>\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="TriggerParticle0" eventType="TriggerParticle" guid="reupCC" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true" lod="0">\r\n      <Condition id="Pmin" guid="Mod_by_PminMod'+hero_name[3:]+b'" status="true" />\r\n      <Event eventName="TriggerParticle" time="0.000" length="2.000" isDuration="true" guid="reupCC">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/'+hero_name+b'/'+skinid+b'/jiasu_tongyong_01" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.700" z="-0.600" refParamName="" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" refParamName="" useRefParam="false" />\r\n        <String name="syncAnimationName" value="" refParamName="" useRefParam="false" />\r\n        <String name="customTagName" value="" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'
                         strin=strin.replace(b' </Action>',ef+b' </Action>')
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Gear/Defense/1338E1.xml','wb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Gear/Defense/1338E1.xml','wb') as f:
                             f.write(fix_condition(strin))
                     def zipdir6(path, ziph):
-                        DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Gear'.format(folder_mod)
+                        DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Gear'.format(folder_mod)
                         for root, dirs, files in os.walk(DIR):
                             for file in files:
                                 full_path = os.path.join(root, file)
                                 arcname = os.path.relpath(full_path, os.path.join(DIR, '..'))
                                 ziph.write(full_path,arcname)
-                    with zipfile.ZipFile(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Gear.pkg.bytes', 'w', zipfile.ZIP_STORED) as zipf:
+                    with zipfile.ZipFile(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Gear.pkg.bytes', 'w', zipfile.ZIP_STORED) as zipf:
                         zipdir6('tmp/', zipf)
-                    shutil.rmtree(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Gear')
+                    shutil.rmtree(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Gear')
                     
                 #----------------------------------Mod Haste--------------------------------------------#
                 try:
@@ -2777,7 +2777,7 @@ if True:
 
                         return new_bytes
                     if True:#find_back>2 and may_yeu_mod and check_bien_ve_ef:
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1.xml','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1.xml','rb') as f:
                             strin = f.read()
                             for code in split_code_back(strin[:strin.find(b'    <Track trackName="CheckHeroId')]):
                                 code_goc=code
@@ -2812,9 +2812,9 @@ if True:
                                 ef = add_filter_attribute(ef, b'9')
                                 ef = ef.replace(b'</Event>', check_Back)
                                 strin = strin.replace(b' </Action>',ef+b'\n  </Action>')
-                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1.xml','wb') as f1:
+                                with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1.xml','wb') as f1:
                                     f1.write(strin)
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1_leave.xml','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1_leave.xml','rb') as f:
                             strin = f.read()
                             for code in split_code_back(strin[:strin.find(b'    <Track trackName="CheckHeroId')]):
                                 code_goc=code
@@ -2845,14 +2845,14 @@ if True:
                             ef = add_filter_attribute(ef, b'9')
                             ef = ef.replace(b'</Event>',check_Back)
                             strin = strin.replace(b' </Action>',ef+b'\n  </Action>')
-                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1_leave.xml','wb') as f1:
+                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1_leave.xml','wb') as f1:
                                 f1.write(strin)
                 except Exception as bg:
                     print(Fore.RED+Style.BRIGHT+f'Không Mod Gia Tốc ERROR: {bg}'+Style.RESET_ALL)
                 #mod thông báo hạ gục
                 try:
                     if skinid[:3] in [b'150']:
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Huanhua/ResKillBillboardCfg.bytes','rb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Huanhua/ResKillBillboardCfg.bytes','rb') as f:
                             killboard=f.read()
                             if skinid in [b'15015']:
                                 killboard=killboard.replace(b'/18/',b'/20/')
@@ -2860,7 +2860,7 @@ if True:
                                 killboard=killboard.replace(b'\x2C\x00\x00\x00\x10\x00\x00\x00\x1E\x00\x00\x00\x55\x49\x33\x44\x2F\x42\x61\x74\x74\x6C\x65\x2F\x42\x72\x6F\x61\x64\x63\x61\x73\x74\x2F\x31\x36\x2F\x7B\x30\x7D\x2F\x00\x01\x00\x00\x00\x00\x01',b'\x2B\x00\x00\x00\x10\x00\x00\x00\x1D\x00\x00\x00\x55\x49\x33\x44\x2F\x42\x61\x74\x74\x6C\x65\x2F\x42\x72\x6F\x61\x64\x63\x61\x73\x74\x2F\x39\x2F\x7B\x30\x7D\x2F\x00\x01\x00\x00\x00\x00\x01')
                             else:
                                 killboard=killboard.replace(b'/18/',b'/16/')
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Huanhua/ResKillBillboardCfg.bytes','wb') as f:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Huanhua/ResKillBillboardCfg.bytes','wb') as f:
                             f.write(killboard)
                 except Exception as bug:
                     print(bug)
@@ -3045,15 +3045,15 @@ if True:
                     if True:   
                         fix_lag=0
                         file=f'{skinid[:3].decode()}_AssetRef.bytes'
-                        with open(f'./Pmin_Sources/Resources/1.60.1/AssetRefs/Hero/{file}','rb') as f:
+                        with open(f'./Pmin_Sources/Resources/1.61.1/AssetRefs/Hero/{file}','rb') as f:
                             strin = f.read()
                             strin=decompress_(strin,ZSTD_DICT)
-                            if os.path.isdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/AssetRefs/') ==0:
-                                os.makedirs(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/AssetRefs/')
-                                os.makedirs(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/AssetRefs/Hero/')
-                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/AssetRefs/Hero/{file}','wb') as f1:
+                            if os.path.isdir(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/AssetRefs/') ==0:
+                                os.makedirs(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/AssetRefs/')
+                                os.makedirs(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/AssetRefs/Hero/')
+                            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/AssetRefs/Hero/{file}','wb') as f1:
                                 f1.write(strin)
-                        filexml=f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/AssetRefs/Hero/{file}'
+                        filexml=f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/AssetRefs/Hero/{file}'
                         byt=open(filexml, 'rb')
                         i=0
                         nod={}
@@ -3178,23 +3178,23 @@ if True:
     print('kết cục')
     def zipdir2(path, ziph):
         for ii in back_folder:
-            DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
-            DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
+            DIR2 = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
+            DIR = './File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
             for root, dirs, files in os.walk(DIR):
                 for file in files:
                     full_path = os.path.join(root, file)
                     arcname = os.path.relpath(full_path, os.path.join(DIR, '..'))
                     ziph.write(full_path,arcname)
-    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Back.xml','rb') as f1:strin=f1.read()
+    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Back.xml','rb') as f1:strin=f1.read()
     strin=fix_condition(strin)
     strin=strin.replace(b'\t',b'    ').replace(b'</Track>  </Action>',b'</Track>\r\n  </Action>')
     #if veres_rt:
     #    strin=strin.replace(b'prefab_skill_effects/hero_skill_effects/520_Veres/52007/',b'prefab_skill_effects/component_effects/52007/'+skinid_veres+b'/')
     strin=strin.replace(b'prefab_skill_effects/hero_skill_effects/527_Sephera/52709/huicheng_tongyong_01',b'Prefab_Skill_Effects/Inner_Game_Effect/returncity/returncity_151_Lan')
-    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Back.xml','wb') as f1:
+    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Back.xml','wb') as f1:
         strin=xoa_thua_thai(strin)
         f1.write(compress_(strin,ZSTD_DICT))
-    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1.xml','rb') as f1:strin=f1.read()
+    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1.xml','rb') as f1:strin=f1.read()
     if raz_15710_back and False:
         strin=strin.replace(b'  </Action>',b'    <Track trackName="TriggerParticle0" eventType="TriggerParticle" guid="412ea073-5944-46e4-ae5e-3037e855fda7" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="Pmin" guid="Mod_by_YOUTUBE_BuZhiHuoWu" status="true" />\r\n      <Event eventName="TriggerParticle" time="0.000" length="5.000" isDuration="true" guid="3f4a326c-6b74-4d7e-b9ac-f36378e06052">\r\n        <TemplateObject name="targetId" objectName="target" id="1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" objectName="target" id="1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <uint name="RefLiteBulletID" value="0" refParamName="" useRefParam="false" />\r\n        <bool name="bChooseResourceNameByCamp" value="false" refParamName="" useRefParam="false" />\r\n        <String name="parentResourceName" value="" refParamName="" useRefParam="false" />\r\n        <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/157_BuZhiHuoWu/15710/jiasu_tongyong_02" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.000" z="0.000" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n'+b'  </Action>')
     def split_code_(a):
@@ -3211,10 +3211,10 @@ if True:
     #    strin=strin.replace(b'<int name="skinId" value="13116" refParamName="" useRefParam="false" />',b'<int name="skinId" value="13116" refParamName="" useRefParam="false" />\r\n        <bool name="useNegateValue" value="true" refParamName="" useRefParam="false" />')
     strin=fix_condition(strin)
     strin=strin.replace(b'14111/jiasu_tongyong_01" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.700" z="-0.600',b'14111/14111_luoer_Sprint" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.000" z="0.000').replace(b'15009/jiasu_tongyong_01" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.700" z="-0.600',b'15009/t2_spint" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.000" z="0.000')
-    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1.xml','wb') as f1:
+    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1.xml','wb') as f1:
         strin=xoa_thua_thai(strin)
         f1.write(compress_(strin,ZSTD_DICT))
-    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1_leave.xml','rb') as f1:strin=f1.read()
+    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1_leave.xml','rb') as f1:strin=f1.read()
     if False:
         strin=strin.replace(b'<Condition id="8" guid="b35fc6fe-6e4b-4c90-aded-6967f9755a4f" status="true" />',b'<Condition id="8" guid="b35fc6fe-6e4b-4c90-aded-6967f9755a4f" status="false" />')
         for a in strin.split(b'<Track trackName'):
@@ -3231,15 +3231,15 @@ if True:
     #    strin=strin.replace(b'hero_skill_effects/131_libai/LiBai',b'hero_skill_effects/131_libai/13116/LiBai')
     #    strin=strin.replace(b'<int name="skinId" value="13116" refParamName="" useRefParam="false" />',b'<int name="skinId" value="13116" refParamName="" useRefParam="false" />\r\n        <bool name="useNegateValue" value="true" refParamName="" useRefParam="false" />')
     strin=fix_condition(strin)
-    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1_leave.xml','wb') as f1:
+    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/HasteE1_leave.xml','wb') as f1:
         strin=xoa_thua_thai(strin)
         f1.write(compress_(strin,ZSTD_DICT))
-    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','rb') as f1:strin=f1.read()
+    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','rb') as f1:strin=f1.read()
     strin=fix_condition(strin)
-    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','wb') as f1:
+    with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Born.xml','wb') as f1:
         strin=xoa_thua_thai(strin)
         f1.write(compress_(strin,ZSTD_DICT))
-    with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes'.format(folder_mod), 'w', zipfile.ZIP_STORED) as zipf:
+    with zipfile.ZipFile('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes'.format(folder_mod), 'w', zipfile.ZIP_STORED) as zipf:
         zipdir2('tmp/', zipf)
     ten_de_vao_ten=ten_de_vao_ten.encode('utf-8')
     with open(f'File_Mod/{folder_mod}/list.txt','wb') as f:f.write(ten_de_vao_ten)
@@ -3247,16 +3247,16 @@ if True:
     ten_de_vao_skill_an=ten_de_vao_skill_an.encode('utf-8')
     with open(f'File_Mod/{folder_mod}/skill_an(checkskinidtick).txt','wb') as f:f.write(ten_de_vao_skill_an)
     for iii in back_folder:
-        if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))== 1 :
-            shutil.rmtree('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))
+        if os.path.isdir('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))== 1 :
+            shutil.rmtree('./File_Mod/{}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))
     #---------mod ResCharacterComponent.bytes-----
     try:
-        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Character/ResCharacterComponent.bytes','rb') as f:
+        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Character/ResCharacterComponent.bytes','rb') as f:
             a=f.read()
             p2=a[:14]
             p3=a[:12]+b'\x00\x00'
             a=a.replace(p2,p3,1)
-            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Databin/Client/Character/ResCharacterComponent.bytes','wb') as f:f.write(compress_(a,ZSTD_DICT))
+            with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Databin/Client/Character/ResCharacterComponent.bytes','wb') as f:f.write(compress_(a,ZSTD_DICT))
     except:
         print('\033[1;33mKhong Mod ResCharacterComponent.bytes')
     try:
@@ -3269,30 +3269,30 @@ if True:
             for file in listdir('NutBam'):
                 if nut_bam in file:
                     with open(f'Nutbam/{file}','rb') as f:
-                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/assetbundle/uisystem/atlas/primary/allshared.assetbundle','wb') as f2:
+                        with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/assetbundle/uisystem/atlas/primary/allshared.assetbundle','wb') as f2:
                             f2.write(f.read())
                     break
     except Exception as bug:
         pass
     #chạy mod new update
     try:
-        with open(f'Pmin_Sources/Resources/1.60.1/assetbundle/resourceverificationinfosetall.assetbundle','rb') as f:
+        with open(f'Pmin_Sources/Resources/1.61.1/assetbundle/resourceverificationinfosetall.assetbundle','rb') as f:
             strin=f.read()
     except:
         strin = b'MODBYPMINMOD'
     strin = b'MOD BY YTB: TKI3T x MODSKINPRO'
-    os.makedirs(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/assetbundle',exist_ok=True)
+    os.makedirs(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/assetbundle',exist_ok=True)
     i=0
-    '''for file in listdir(f'Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero'):
+    '''for file in listdir(f'Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero'):
         if file[:6].lower() == 'actor_' and len(file) == len('Actor_105_Actions.pkg.bytes') and '_Actions.pkg.bytes'.lower() in file.lower():
-            with open(f'Pmin_Sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{file}','rb') as f2:
+            with open(f'Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{file}','rb') as f2:
                 a=f2.read()
                 t=f'{100+i}_YTB_Pmin_Mods.pkg.bytes'
                 strin=re.sub(file.encode('utf-8'),t.encode('utf-8'),strin, flags = re.IGNORECASE)
                 i+=1
-            with open(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{t}','wb') as f2:
+            with open(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{t}','wb') as f2:
                 f2.write(a)'''
-    with open(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.60.1/assetbundle/resourceverificationinfosetall.assetbundle','wb') as f:f.write(strin)
+    with open(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/assetbundle/resourceverificationinfosetall.assetbundle','wb') as f:f.write(strin)
 
     ###
 
@@ -3303,63 +3303,63 @@ if True:
             os.mkdir(f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%')
         shutil.copytree(f'./File_Mod/{folder_mod}/com.garena.game.kgvn',f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn')
         try:
-            giai_nen(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/','Actor_530_Actions.pkg.bytes')
-            os.mkdir(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak')
-            shutil.copytree(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/skill',f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill')
-            shutil.rmtree(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/skill')
+            giai_nen(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/','Actor_530_Actions.pkg.bytes')
+            os.mkdir(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak')
+            shutil.copytree(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/skill',f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill')
+            shutil.rmtree(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/skill')
         except:
-            shutil.copytree(f'./Pmin_Sources/resources/1.60.1/ages/Prefab_Characters/Prefab_Hero/530_Dirak',f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak')
+            shutil.copytree(f'./Pmin_Sources/resources/1.61.1/ages/Prefab_Characters/Prefab_Hero/530_Dirak',f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak')
         hittringer_dirak=b'    <Track trackName="HitTriggerTick0" eventType="HitTriggerTick" guid="CAM_XA_PMIN_MOD" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="HitTriggerTick" time="0.000" isDuration="false" guid="REUP_CC">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="hitTargetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="SelfSkillCombineID_1" value="530510" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="triggerId" id="-1" objectName="None" isTemp="false" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n  </Action>'
         cam_xa=b'    <Track trackName="SetCameraHeightDuration0" eventType="SetCameraHeightDuration" guid="PMIN_MOD" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="SetCameraHeightDuration" time="0.000" length="1.000" isDuration="true" guid="REUP_CC">\r\n        <int name="slerpTick" value="0" refParamName="" useRefParam="false" />\r\n        <float name="heightRate" value="'+str(int(cam_xa_goc)/100).encode('utf-8')+b'" refParamName="" useRefParam="false" />\r\n        <bool name="bOverride" value="true" refParamName="" useRefParam="false" />\r\n        <bool name="leftTimeSlerpBack" value="true" refParamName="" useRefParam="false" />\r\n        <String name="refParamName" value="" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n  </Action>\r\n</Project>'
-        giai_nen(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/','CommonActions.pkg.bytes')
-        with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill/P2E1.xml','rb') as f:
+        giai_nen(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/','CommonActions.pkg.bytes')
+        with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill/P2E1.xml','rb') as f:
             a=f.read()
             a=decompress_(a,ZSTD_DICT)
             p=a.find(b'<Track trackName="')
             a=a[:p]+cam_xa
-            with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill/P2E1.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
-        with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/back.xml','rb') as f:
+            with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill/P2E1.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
+        with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/back.xml','rb') as f:
             a=f.read()
             a=decompress_(a,ZSTD_DICT)
             a=a.replace(b'</Action>',hittringer_dirak)
-            with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/back.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
-        with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/born.xml','rb') as f:
+            with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/back.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
+        with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/born.xml','rb') as f:
             a=f.read()
             a=decompress_(a,ZSTD_DICT)
             a=a.replace(b'</Action>',hittringer_dirak)
-            with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/born.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
-        with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Heal5v5.xml','rb') as f:
+            with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/born.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
+        with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Heal5v5.xml','rb') as f:
             a=f.read()
             a=decompress_(a,ZSTD_DICT)
             a=a.replace(b'</Action>',hittringer_dirak)
-            with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Heal5v5.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
-        with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Heal3v3.xml','rb') as f:
+            with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Heal5v5.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
+        with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Heal3v3.xml','rb') as f:
             a=f.read()
             a=decompress_(a,ZSTD_DICT)
             a=a.replace(b'</Action>',hittringer_dirak)
-            with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Heal3v3.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
-        DIR = f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill'
-        DIR2 = f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill'
+            with open(f'File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/Heal3v3.xml','wb') as f:f.write(compress_(a,ZSTD_DICT))
+        DIR = f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill'
+        DIR2 = f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak/skill'
         nonee = './530_Dirak/skill'
-        with zipfile.ZipFile(f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/Actor_530_Actions.pkg.bytes', 'w', zipfile.ZIP_STORED) as zipf:
+        with zipfile.ZipFile(f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/Actor_530_Actions.pkg.bytes', 'w', zipfile.ZIP_STORED) as zipf:
             zipdir('tmp/', zipf)
         def zipdir_camxa(path, ziph):
             for ii in back_folder:
                 nonee = './{}'.format(ii)
-                DIR2 = f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{ii}'
-                DIR = f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{ii}'
+                DIR2 = f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{ii}'
+                DIR = f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{ii}'
                 for root, dirs, files in os.walk(DIR):
                     for file in files:
                         full_path = os.path.join(root, file)
                         arcname = os.path.relpath(full_path, os.path.join(DIR, '..'))
                         ziph.write(full_path,arcname)
-        with zipfile.ZipFile(f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes', 'w', zipfile.ZIP_STORED) as zipf:
+        with zipfile.ZipFile(f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes', 'w', zipfile.ZIP_STORED) as zipf:
             zipdir_camxa('tmp/', zipf)
-        if os.path.isdir(f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak')== 1 :
-            shutil.rmtree(f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak')
+        if os.path.isdir(f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak')== 1 :
+            shutil.rmtree(f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/530_Dirak')
         for iii in back_folder:
-            if os.path.isdir(f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{iii}')== 1 :
-                shutil.rmtree(f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{iii}')
+            if os.path.isdir(f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{iii}')== 1 :
+                shutil.rmtree(f'./File_Mod/{folder_mod}/CAM XA {cam_xa_goc}%/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{iii}')
     if nut_bam_auto_mod!='':
         nut = ''.join(re.findall(r'\d+', nut_bam_auto_mod))
         try:
@@ -3442,18 +3442,18 @@ if not only_cam_xa:
     shutil.copytree(f'File_Mod/{folder}/com.garena.game.kgvn/files/Resources',f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/Android/Resources')
     #Máy Mạnh
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    #if os.path.isdir(f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources/1.60.1/AssetRefs') == 1 :
-    #    shutil.rmtree(f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources/1.60.1/AssetRefs')
+    #if os.path.isdir(f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources/1.61.1/AssetRefs') == 1 :
+    #    shutil.rmtree(f'./File_Mod/{folder_mod}/Máy Mạnh/Android/Resources/1.61.1/AssetRefs')
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
     shutil.make_archive(f'./File_Mod/{folder_mod}/Máy Mạnh/IOS/Resources','zip',f'./File_Mod/{folder_mod}/Máy Mạnh/Android')
     #Máy Trung Và Yếu
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    giai_nen(f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/','CommonActions.pkg.bytes')
+    giai_nen(f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/','CommonActions.pkg.bytes')
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
     for file in ['Back.xml','HasteE1.xml','HasteE1_leave.xml','born.xml']:
-        with open(f'pmin_sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','rb') as f:
+        with open(f'pmin_sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','rb') as f:
             a=f.read()
-        with open(f'File_Mod/{folder_mod}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
+        with open(f'File_Mod/{folder_mod}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
             f.write(a)
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
@@ -3461,22 +3461,22 @@ if not only_cam_xa:
     def zipdir2(path, ziph):
             for ii in back_folder:
                 nonee = './{}'.format(ii)
-                DIR2 = './File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
-                DIR = './File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
+                DIR2 = './File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
+                DIR = './File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,ii)
                 for root, dirs, files in os.walk(DIR):
                     for file in files:
                         full_path = os.path.join(root, file)
                         arcname = os.path.relpath(full_path, os.path.join(DIR, '..'))
                         ziph.write(full_path,arcname)
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
-    with zipfile.ZipFile('./File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes'.format(folder_mod), 'w', zipfile.ZIP_STORED) as zipf:
+    with zipfile.ZipFile('./File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes'.format(folder_mod), 'w', zipfile.ZIP_STORED) as zipf:
             zipdir2('tmp/', zipf)
             tien_trinh_dem = tien_trinh(tien_trinh_dem)
     for iii in back_folder:
             tien_trinh_dem = tien_trinh(tien_trinh_dem)
-            if os.path.isdir('./File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))== 1 :
+            if os.path.isdir('./File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))== 1 :
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
-                shutil.rmtree('./File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))
+                shutil.rmtree('./File_Mod/{}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,iii))
     shutil.make_archive(f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/IOS/Resources','zip',f'./File_Mod/{folder_mod}/Máy Trung Và Yếu/Android')
     tien_trinh_dem = tien_trinh(tien_trinh_dem)
     checkCamXa='NamNgu'
@@ -3527,23 +3527,23 @@ if not only_cam_xa:
         shutil.copytree(f'File_Mod/{folder}/{checkCamXa}/com.garena.game.kgvn/files/Resources',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources')
         #Máy Mạnh
         tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        if os.path.isdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android/Resources/1.60.1/AssetRefs') == 1 :
+        if os.path.isdir(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android/Resources/1.61.1/AssetRefs') == 1 :
             tien_trinh_dem = tien_trinh(tien_trinh_dem)
             tien_trinh_dem = tien_trinh(tien_trinh_dem)
         shutil.make_archive(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/IOS/Resources','zip',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Mạnh/Android')
         #Máy Trung Và Yếu
         tien_trinh_dem = tien_trinh(tien_trinh_dem)
-        giai_nen(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/','CommonActions.pkg.bytes')
+        giai_nen(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/','CommonActions.pkg.bytes')
         tien_trinh_dem = tien_trinh(tien_trinh_dem)
         for file in ['Back.xml','HasteE1.xml','HasteE1_leave.xml','born.xml']:
-            with open(f'pmin_sources/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','rb') as f:
+            with open(f'pmin_sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','rb') as f:
                 a=f.read()
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
                 a=decompress_(a)
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
                 a=a.replace(b'  </Action>',codeCamXa)
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
-            with open(f'File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
+            with open(f'File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/commonresource/{file}','wb') as f:
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
                 f.write(compress_(a)+ngaunhien())
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
@@ -3551,21 +3551,21 @@ if not only_cam_xa:
         def zipdir2(path, ziph):
                 for ii in back_folder:
                     nonee = './{}'.format(ii)
-                    DIR2 = './File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
-                    DIR = './File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
+                    DIR2 = './File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
+                    DIR = './File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,ii)
                     for root, dirs, files in os.walk(DIR):
                         for file in files:
                             full_path = os.path.join(root, file)
                             arcname = os.path.relpath(full_path, os.path.join(DIR, '..'))
                             ziph.write(full_path,arcname)
-        with zipfile.ZipFile('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes'.format(folder_mod,checkCamXa), 'w', zipfile.ZIP_STORED) as zipf:
+        with zipfile.ZipFile('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/CommonActions.pkg.bytes'.format(folder_mod,checkCamXa), 'w', zipfile.ZIP_STORED) as zipf:
                 zipdir2('tmp/', zipf)
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
         for iii in back_folder:
                 tien_trinh_dem = tien_trinh(tien_trinh_dem)
-                if os.path.isdir('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,iii))== 1 :
+                if os.path.isdir('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,iii))== 1 :
                     tien_trinh_dem = tien_trinh(tien_trinh_dem)
-                    shutil.rmtree('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.60.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,iii))
+                    shutil.rmtree('./File_Mod/{}/{}/Máy Trung Và Yếu/Android/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}'.format(folder_mod,checkCamXa,iii))
                     tien_trinh_dem = tien_trinh(tien_trinh_dem)
         shutil.make_archive(f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/IOS/Resources','zip',f'./File_Mod/{folder_mod}/{checkCamXa}/Máy Trung Và Yếu/Android')
         shutil.rmtree(f'File_Mod/{folder_mod_goc}/{checkCamXa}/com.garena.game.kgvn')
