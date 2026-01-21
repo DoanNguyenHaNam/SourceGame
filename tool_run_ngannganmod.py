@@ -1028,6 +1028,8 @@ if True:
             ten_de_vao_ten_dem+=1
             if skinid[:3] in List_Hero_Da_Mod:# or '[ex]' in tat:
                 ten_de_vao_ten=ten_de_vao_ten+f'\t\tSkin Bị Trùng Hoặc Không Tồn Tại: {tat}\n'
+            elif skinid[:3] == b'132:# or '[ex]' in tat:
+                ten_de_vao_ten=ten_de_vao_ten+f'\t\tSkin Bị Lỗi Hiện tại chưa mod được: {tat}\n'
             else:
                 if only_cam_xa:
                     only_cam_xa = False
