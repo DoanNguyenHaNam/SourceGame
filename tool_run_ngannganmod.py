@@ -3,11 +3,46 @@ if True:
     from zipfile import ZipFile
     # Tải và giải nén từng file
     import os
-    try:import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style;from termcolor import colored
+    try:
+        import pyzstd
+        from colorama import Fore, Style
+        from termcolor import colored
     except:
-        try:os.system('python -m pip install pyzstd==0.15.4');os.system('python -m pip install bs4');os.system('python -m pip install lxml');os.system('python -m pip install termcolor');os.system('python -m pip install colorama');os.system('python -m pip install bs4');import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style
-        except:os.system('pip install pyzstd==0.15.4');os.system('pip install bs4');os.system('pip install lxml');os.system('pip install termcolor');os.system('pip install colorama');os.system('pip install bs4');import pyzstd;from colorama import Fore;from colorama import Fore;from colorama import Style;from colorama import Style
-    from shutil import make_archive;from pyzstd import decompress,compress,ZstdDict;from os import listdir;import sys;import os;from termcolor import colored;import re;import getopt;import pyzstd;import sys;import glob;import colorama;from colorama import Fore;from colorama import Style;from colorama import Fore;from colorama import Style;import shutil;import zipfile;import shutil;from zipfile import* 
+        try:
+            os.system('python -m pip install pyzstd==0.15.4')
+            os.system('python -m pip install bs4')
+            os.system('python -m pip install lxml')
+            os.system('python -m pip install termcolor')
+            os.system('python -m pip install colorama')
+            import pyzstd
+            from colorama import Fore, Style
+            from termcolor import colored
+        except:
+            os.system('pip install pyzstd==0.15.4')
+            os.system('pip install bs4')
+            os.system('pip install lxml')
+            os.system('pip install termcolor')
+            os.system('pip install colorama')
+            import pyzstd
+            from colorama import Fore, Style
+            from termcolor import colored
+    
+    from shutil import make_archive
+    from pyzstd import decompress, compress, ZstdDict
+    from os import listdir
+    import sys
+    import os
+    from termcolor import colored
+    import re
+    import getopt
+    import pyzstd
+    import sys
+    import glob
+    import colorama
+    from colorama import Fore, Style
+    import shutil
+    import zipfile
+    from zipfile import *
     import xml.etree.ElementTree as ET
     import sys
     from xml.dom import minidom
