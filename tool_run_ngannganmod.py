@@ -1028,7 +1028,7 @@ if True:
             ten_de_vao_ten_dem+=1
             if skinid[:3] in List_Hero_Da_Mod:# or '[ex]' in tat:
                 ten_de_vao_ten=ten_de_vao_ten+f'\t\tSkin Bị Trùng Hoặc Không Tồn Tại: {tat}\n'
-            elif skinid[:3] == b'132':# or '[ex]' in tat:
+            elif skinid[:3] == b'312':# or '[ex]' in tat:
                 ten_de_vao_ten=ten_de_vao_ten+f'\t\tSkin Bị Lỗi Hiện tại chưa mod được: {tat}\n'
             else:
                 if only_cam_xa:
@@ -1136,6 +1136,17 @@ if True:
                         for filez in listdir(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}'):
                             if filez=='skill' or filez=='Skill':
                                 for file in listdir('./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{}/skill/'.format(decompress)):
+                                    source_path = f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}'
+                                    dest_path = f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}'
+                                    
+                                    # Nếu là thư mục, copy nguyên thư mục sang đích
+                                    if os.path.isdir(source_path):
+                                        if os.path.exists(dest_path):
+                                            shutil.rmtree(dest_path)
+                                        shutil.copytree(source_path, dest_path)
+                                        continue
+                                    
+                                    # Nếu là file thì xử lý như bình thường
                                     if True:
                                         if skinid in accept_ids:
                                             try:
