@@ -240,55 +240,56 @@ for ten in os.listdir('./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/pr
 	print(ten)
 	if '.bytes' not in ten and (ten[:1] in ['1','2','5']):
 		for file in listdir(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/prefab_hero/{ten}/skill'):
-			with open(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/prefab_hero/{ten}/skill/{file}','rb') as f:
-				strin=f.read()
-				strin=decompress_(strin,ZSTD_DICT)
-				strin2 = strin
-				#strin=skinoravatar_remake(strin)
-				if b'CheckSkin' in strin:
-					file_maybeloi=file_maybeloi+str(dem_file_maybeloi)+". "+ten+" : \n"
-					p=strin.find(b'CheckSkin')
-					ID=b'PMIN1'
-					while p!=-1 and len(ID)==5:
-						p2=strin.find(b'<int name="skinId" value="',p)
-						p3=strin.find(b'"',p2+len('<int name="skinId" value="'))
-						ID=strin[p2+len('<int name="skinId" value="'):p3]
+			if file.endswith('.xml'):
+				with open(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/prefab_hero/{ten}/skill/{file}','rb') as f:
+					strin=f.read()
+					strin=decompress_(strin,ZSTD_DICT)
+					strin2 = strin
+					#strin=skinoravatar_remake(strin)
+					if b'CheckSkin' in strin:
+						file_maybeloi=file_maybeloi+str(dem_file_maybeloi)+". "+ten+" : \n"
+						p=strin.find(b'CheckSkin')
+						ID=b'PMIN1'
+						while p!=-1 and len(ID)==5:
+							p2=strin.find(b'<int name="skinId" value="',p)
+							p3=strin.find(b'"',p2+len('<int name="skinId" value="'))
+							ID=strin[p2+len('<int name="skinId" value="'):p3]
 
-						if True:
-							try:
-								i=int(ID)
-							except Exception as bug:
-								pass
-							ID=ID.decode()
-							if ID[3:] not in ['97','98'] and ten[:3]==ID[:3] :
-								if os.path.isdir(f'./Pmin_Sources/check') == 0 :
-									os.mkdir(f'./Pmin_Sources/check')
-								if b'CreateRandom' in strin or b'CheckRandom' in strin or b'SpawnObject' in strin:
-									if os.path.isdir(f'./Pmin_Sources/check/{ID}') == 0 :
-										os.mkdir(f'./Pmin_Sources/check/{ID}')
-									with open(f'./Pmin_Sources/check/{ID}/{file}','wb') as f:
-										f.write(strin2)
-									file_maybeloi=file_maybeloi+'\t'+file+' '+ID+'\n'
-								else:
-									if os.path.isdir(f'./Pmin_Sources/check/{ID}') == 0 :
-										os.mkdir(f'./Pmin_Sources/check/{ID}')
-									with open(f'./Pmin_Sources/check/{ID}/{file}','wb') as f:
-										f.write(strin2)
-								dem_file_maybeloi+=1
-						p=strin.find(b'CheckSkin',p3)
+							if True:
+								try:
+									i=int(ID)
+								except Exception as bug:
+									pass
+								ID=ID.decode()
+								if ID[3:] not in ['97','98'] and ten[:3]==ID[:3] :
+									if os.path.isdir(f'./Pmin_Sources/check') == 0 :
+										os.mkdir(f'./Pmin_Sources/check')
+									if b'CreateRandom' in strin or b'CheckRandom' in strin or b'SpawnObject' in strin:
+										if os.path.isdir(f'./Pmin_Sources/check/{ID}') == 0 :
+											os.mkdir(f'./Pmin_Sources/check/{ID}')
+										with open(f'./Pmin_Sources/check/{ID}/{file}','wb') as f:
+											f.write(strin2)
+										file_maybeloi=file_maybeloi+'\t'+file+' '+ID+'\n'
+									else:
+										if os.path.isdir(f'./Pmin_Sources/check/{ID}') == 0 :
+											os.mkdir(f'./Pmin_Sources/check/{ID}')
+										with open(f'./Pmin_Sources/check/{ID}/{file}','wb') as f:
+											f.write(strin2)
+									dem_file_maybeloi+=1
+							p=strin.find(b'CheckSkin',p3)
 
-				if b'<SkinOrAvatarList id="' in strin:
-					p=strin.find(b'<SkinOrAvatarList id="')+len(b'<SkinOrAvatarList id="')
-					while p!=-1+len(b'<SkinOrAvatarList id="'):
-						ID=strin[p:p+5].decode()
+					if b'<SkinOrAvatarList id="' in strin:
+						p=strin.find(b'<SkinOrAvatarList id="')+len(b'<SkinOrAvatarList id="')
+						while p!=-1+len(b'<SkinOrAvatarList id="'):
+							ID=strin[p:p+5].decode()
 
-						if os.path.isdir(f'./Pmin_Sources/check') == 0 :
-							os.mkdir(f'./Pmin_Sources/check')
-						if os.path.isdir(f'./Pmin_Sources/check/{ID}') == 0 :
-							os.mkdir(f'./Pmin_Sources/check/{ID}')
-						with open(f'./Pmin_Sources/check/{ID}/{file}','wb') as f:
-							f.write(strin2)
-						p=strin.find(b'<SkinOrAvatarList id="',p+len(b'<SkinOrAvatarList id="')+5)+len(b'<SkinOrAvatarList id="')
+							if os.path.isdir(f'./Pmin_Sources/check') == 0 :
+								os.mkdir(f'./Pmin_Sources/check')
+							if os.path.isdir(f'./Pmin_Sources/check/{ID}') == 0 :
+								os.mkdir(f'./Pmin_Sources/check/{ID}')
+							with open(f'./Pmin_Sources/check/{ID}/{file}','wb') as f:
+								f.write(strin2)
+							p=strin.find(b'<SkinOrAvatarList id="',p+len(b'<SkinOrAvatarList id="')+5)+len(b'<SkinOrAvatarList id="')
 
 with open('CheckCoTheLoi.xml','w') as f:
 	f.write(file_maybeloi)
@@ -446,11 +447,6 @@ for skinid in os.listdir(f'Pmin_Sources/Check'):
 									strin = strin.replace(code, unlock_all(code, skinid.encode('utf-8')))
 						elif file.lower() != 's3.xml':
 							strin = unlock_all(strin, skinid.encode('utf-8'))
-							
-					elif skinid in ['51015'] and file.lower() == 'death.xml':
-						for code in split_code_(strin):
-							if b'SetObjectDirectionTick' not in code:
-								strin = strin.replace(code, unlock_all(code, skinid.encode('utf-8')))
 
 					elif skinid == '59901':
 						if file.lower() in ['s1e60.xml', 's1b0.xml', 's2.xml']:
