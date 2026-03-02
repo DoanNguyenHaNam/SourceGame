@@ -1,3 +1,6 @@
+#from fnmatch import filterfalse
+
+
 if True:
     import os
     from zipfile import ZipFile
@@ -1036,6 +1039,7 @@ if True:
             veres_rt=False
             skinid = bytes(skinid,'utf-8')
             skinid=skinid.replace(b'\n',b'').replace(b' ',b'')
+            skinid_phu_kien=skinid
             if skinid==b'':continue
             if skinid==b'15412':yena_15412_back=True
             if skinid==b'15710':raz_15710_back=True
@@ -1045,9 +1049,7 @@ if True:
                 veres_rt=True
                 skinid=b'52007'
             if b'rt' in skinid or b'RT' in skinid:
-                
                 phu_kien=True
-                skinid_phu_kien=skinid
                 skinid=skinid[:5]
             for hero_name in listdir('./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/'):
                 if '.rar' not in hero_name and '_' in hero_name:
@@ -1204,10 +1206,6 @@ if True:
                                                     strin = f.read()
                                                     strin=decompress_(strin,ZSTD_DICT)
                                                     strin=mod_ef_sound(strin,decompress,skinid,file,folder_mod)
-                                                    if veres_rt:
-                                                        strin=strin.replace(b'prefab_skill_effects/hero_skill_effects/520_Veres/52007/',b'prefab_skill_effects/component_effects/52007/'+skinid_veres+b'/')
-                                                    if phu_kien and skinid==b'54004':
-                                                        strin=strin.replace(b'hero_skill_effects/540_Bright/54004/5401_Bright_God',b'component_effects/54004/540040'+str(int(skinid_phu_kien[9:].decode())-1).encode('utf-8')+b'/5401_Bright_God')
                                                     pos = strin.find(b'<int name="skinId" value="'+skinid)
                                                     if pos!=-1:
                                                         print(Fore.GREEN+Style.BRIGHT+'File Có Skill Ẩn: '+file)
@@ -1238,10 +1236,6 @@ if True:
                                                 strin = f.read()
                                                 strin=decompress_(strin,ZSTD_DICT)
                                                 strin=mod_ef_sound(strin,decompress,skinid,file,folder_mod)
-                                                if veres_rt:
-                                                    strin=strin.replace(b'prefab_skill_effects/hero_skill_effects/520_Veres/52007/',b'prefab_skill_effects/component_effects/52007/'+skinid_veres+b'/')
-                                                if phu_kien and skinid==b'54004':
-                                                    strin=strin.replace(b'hero_skill_effects/540_Bright/54004/5401_Bright_God',b'component_effects/54004/540040'+str(int(skinid_phu_kien[9:].decode())-1).encode('utf-8')+b'/5401_Bright_God')
                                                 pos = strin.find(b'<int name="skinId" value="'+skinid)
                                                 if pos!=-1:
                                                     print(Fore.GREEN+Style.BRIGHT+'File Có Skill Ẩn: '+file)
@@ -1404,7 +1398,15 @@ if True:
                                                 list_mod_back_error.append(file[:5].encode('utf-8'))
                                         #xoa dong thua thai
                                         
-                                        #   
+                                        #   mod phụ kiện
+                                        if veres_rt:
+                                            strin=strin.replace(b'prefab_skill_effects/hero_skill_effects/520_Veres/52007/',b'prefab_skill_effects/component_effects/52007/'+skinid_veres+b'/')
+                                        if phu_kien:
+                                            if skinid==b'54004':
+                                                strin=strin.replace(b'hero_skill_effects/540_Bright/54004/5401_Bright_God',b'component_effects/54004/540040'+str(int(skinid_phu_kien[9:].decode())-1).encode('utf-8')+b'/5401_Bright_God')
+                                            if skinid==b'111620':
+                                                strin=strin.replace(b'/11620/11620_5'b'/11620/116200'+str(int(skinid_phu_kien[9:].decode())-1).encode('utf-8'))
+                                        #
                                         with open(f'./File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero/{decompress}/skill/{file}','wb') as f1:
                                             f1.write(compress_((strin)))
                                     # if ('e' in file.lower() and len(list_du_kien_mod_born)==0) or (skinid[:3]!=b'524' and file in ['A1E1.xml','A1e1.xml','a1e1.xml']) or (skinid[:3]==b'524' and file in ['A1E6.xml','A1e6.xml','a1e6.xml']):
@@ -1696,7 +1698,7 @@ if True:
                     byt.close
                     xmlstr = minidom.parseString(ET.tostring(root)).toprettyxml(indent="   ")
                     xmlstr=mod_infos_mac_dinh(xmlstr,skinid.decode(),List_SkinIfosMod, SoInfos)
-                    if veres_rt:
+                    if veres_rt and False:
                         xmlstr=xmlstr.replace('Prefab_Hero/520_Veres/5208_Veres_LOD','Prefab_Hero/520_Veres/Component/5208_Veres_RT_'+str(int(skinid_veres[6:].decode())+1)+'_LOD')
                         xmlstr=xmlstr.replace('Prefab_Hero/520_Veres/5208_Veres_Show','Prefab_Hero/520_Veres/Component/5208_Veres_RT_'+str(int(skinid_veres[6:].decode())+1)+'_Show')
                         xmlstr=xmlstr.replace('_LOD1','_LOD2').replace('_LOD3','_LOD2')
@@ -1704,7 +1706,7 @@ if True:
                         if HD_e:
                             xmlstr=xmlstr.replace('_LOD2','_LOD1').replace('_LOD3','_LOD1')
                             xmlstr=xmlstr.replace('_Show2','_Show1').replace('_Show3','_Show1')
-                    if phu_kien and not veres_rt:
+                    if phu_kien and not veres_rt and False:
                         p=xmlstr.find('Prefab_Hero')
                         t=xmlstr[p:xmlstr.find('_LOD',p)+4]
                         print(t)
@@ -3206,6 +3208,12 @@ if True:
                         f.close()
                 except Exception as bug:
                     print("Không mod assetref: ",bug)
+
+        #khu mod assetbundle
+        if os.path.isfile("unity.py"):
+            path = f"File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/assetbundle"
+            os.system(f"python unity_pk.py {skinid_phu_kien[:5].decode()} {path}")
+
     print('kết cục')
     def zipdir2(path, ziph):
         for ii in back_folder:
@@ -3312,7 +3320,8 @@ if True:
     except:
         strin = b'MODBYPMINMOD'
     strin = b'MOD BY YTB: TKI3T x MODSKINPRO'
-    os.makedirs(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/assetbundle',exist_ok=True)
+    os.makedirs(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/assetbundle/battle/skin',exist_ok=True)
+    os.makedirs(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.61.1/assetbundle/show/skin',exist_ok=True)
     i=0
     '''for file in listdir(f'Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/Prefab_Hero'):
         if file[:6].lower() == 'actor_' and len(file) == len('Actor_105_Actions.pkg.bytes') and '_Actions.pkg.bytes'.lower() in file.lower():
@@ -3396,18 +3405,10 @@ if True:
         try:
             for inp in listdir('./Pmin_Sources/Resources'):
                 break
-            with open(f'NutBam/{nut}.Assetbundle','rb') as f:
+            with open(f'NutBam/{nut}.zip','rb') as f:
                 if os.path.isdir(f'./File_Mod/{folder_mod}/Nut Bam') == 0 :
-                    os.mkdir(f'./File_Mod/{folder_mod}/Nut Bam')
-                    os.mkdir(f'./File_Mod/{folder_mod}/Nut Bam/com.garena.game.kgvn/')
-                    os.mkdir(f'./File_Mod/{folder_mod}/Nut Bam/com.garena.game.kgvn/files')
-                    os.mkdir(f'./File_Mod/{folder_mod}/Nut Bam/com.garena.game.kgvn/files/Resources/')
-                    os.mkdir(f'./File_Mod/{folder_mod}/Nut Bam/com.garena.game.kgvn/files/Resources/{inp}/')
-                    os.mkdir(f'./File_Mod/{folder_mod}/Nut Bam/com.garena.game.kgvn/files/Resources/{inp}/assetbundle/')
-                    os.mkdir(f'./File_Mod/{folder_mod}/Nut Bam/com.garena.game.kgvn/files/Resources/{inp}/assetbundle/uisystem/')
-                    os.mkdir(f'./File_Mod/{folder_mod}/Nut Bam/com.garena.game.kgvn/files/Resources/{inp}/assetbundle/uisystem/atlas')
-                    os.mkdir(f'./File_Mod/{folder_mod}/Nut Bam/com.garena.game.kgvn/files/Resources/{inp}/assetbundle/uisystem/atlas/primary')
-                with open(f'./File_Mod/{folder_mod}/Nut Bam/com.garena.game.kgvn/files/Resources/{inp}/assetbundle/uisystem/atlas/primary/ALLSHARED.ASSETBUNDLE','wb') as f1:f1.write(f.read())
+                    os.makedirs(f'./File_Mod/{folder_mod}/Nut Bam', exist_ok=True)
+                with open(f'./File_Mod/{folder_mod}/Nut Bam/{nut}.zip','wb') as f1:f1.write(f.read())
         except Exception as Bug:
             print(Bug)
             print('Nút Bấm Không Tồn Tại')
