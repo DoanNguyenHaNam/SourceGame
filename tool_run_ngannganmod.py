@@ -3683,5 +3683,8 @@ except:
 if tu_nen != '0':
     shutil.make_archive(f'File_Mod/{folder_mod}', 'zip', f'File_Mod/{folder_mod}')
     shutil.rmtree(f'File_Mod/{folder_mod}')
-
+try:
+    os.system("python tachfile.py "+folder_mod)
+except:
+    pass
 print('Đã Hoàn Thành !!!!!!!!')
