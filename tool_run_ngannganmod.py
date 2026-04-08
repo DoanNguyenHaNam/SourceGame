@@ -3319,7 +3319,7 @@ if True:
             strin=f.read()
     except:
         strin = b'MODBYPMINMOD'
-    strin = b'MOD BY YTB: TKI3T x MODSKINPRO'
+    #strin = b'MOD BY YTB: TKI3T x MODSKINPRO'
     os.makedirs(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.62.1/assetbundle/battle/skin',exist_ok=True)
     os.makedirs(f'File_Mod/{folder_mod}/com.garena.game.kgvn/files/Resources/1.62.1/assetbundle/show/skin',exist_ok=True)
     i=0
