@@ -46,8 +46,30 @@ def dec_to_hex(a):
 	if len(a)%2==1:
 		a='0'+a
 	return (bytes.fromhex(a))[::-1]
+def hieu_ung(skinid):
+	with open('./Pmin_Sources/Resources/1.62.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
+		a=f.read()
+		a=decompress_(a,ZSTD_DICT)
+		p=a.find(dec_to_hex(skinid)+b'\x00\x00'+dec_to_hex(int(str(skinid)[:3])))
+		bien_ve_ef=False
+		ten=b''
+		skin=b''
+		if p!=-1:
+			ten=a[p+12:p+31]
+			skin=a[p+40:p+59]
+			code=a[p-4:p+hex_to_dec(a[p-4:p-2])]
+			if b"Skin_Icon_Skill" in code or b"Skin_Icon_BackToTown" in code or skinid==b'53702' or skinid==13204 or skinid==53702 or skinid == 15305:
+				h=True
+			else:
+				h=False
+				with open(f'./Pmin_Sources/Resources/1.62.1/Databin/Client/Sound/BattleBank.bytes','rb') as f:
+					a=f.read()
+					a=decompress_(a,ZSTD_DICT)
+					if bytes(str(skinid),'utf-8') in a:
+						h=True
+	return h
 def infoAboutSkin(skinid: bytes):
-	with open('./Pmin_Sources/Resources/1.61.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
+	with open('./Pmin_Sources/Resources/1.62.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
 		a=f.read()
 		a=decompress_(a,ZSTD_DICT)
 		List_IDSkin = []
@@ -59,7 +81,8 @@ def infoAboutSkin(skinid: bytes):
 			if p!=-1:
 				code=a[p-4:p+hex_to_dec(a[p-4:p-2])]
 				if b'Share' in code:
-					List_IDSkin.append(ID)
+					if not hieu_ung(int(ID)):
+						List_IDSkin.append(ID)
 		SoInfos=b''
 		p=a.find(dec_to_hex(int(skinid.decode()))+b'\x00\x00'+dec_to_hex(int(skinid[:3].decode())))
 		if p!=-1:
@@ -78,7 +101,7 @@ def infoAboutSkin(skinid: bytes):
 	
 	return List_IDSkin
 def ten_skin_hieu_ung(skinid):
-	with open('./Pmin_Sources/Resources/1.61.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
+	with open('./Pmin_Sources/Resources/1.62.1/Databin/Client/Actor/heroSkin.bytes','rb') as f:
 		a=f.read()
 		a=decompress_(a,ZSTD_DICT)
 		p=a.find(dec_to_hex(skinid)+b'\x00\x00'+dec_to_hex(int(str(skinid)[:3])))
@@ -93,7 +116,7 @@ def ten_skin_hieu_ung(skinid):
 				h=b'\x8f'
 			else:
 				h=b'PminMod'
-				with open(f'./Pmin_Sources/Resources/1.61.1/Databin/Client/Sound/BattleBank.bytes','rb') as f:
+				with open(f'./Pmin_Sources/Resources/1.62.1/Databin/Client/Sound/BattleBank.bytes','rb') as f:
 					a=f.read()
 					a=decompress_(a,ZSTD_DICT)
 					if bytes(str(skinid),'utf-8') in a:
@@ -104,9 +127,9 @@ def ten_skin_hieu_ung(skinid):
 	a1=''
 	a2=''
 	if ten!=b'' and skin!=b'':
-		for file in os.listdir('./Pmin_Sources/Resources/1.61.1/Languages/VN_Garena_VN'):
+		for file in os.listdir('./Pmin_Sources/Resources/1.62.1/Languages/VN_Garena_VN'):
 
-			txt=open(f'./Pmin_Sources/Resources/1.61.1/Languages/VN_Garena_VN/{file}','rb')
+			txt=open(f'./Pmin_Sources/Resources/1.62.1/Languages/VN_Garena_VN/{file}','rb')
 			a=txt.read()
 			a=decompress_(a,ZSTD_DICT)
 			p=a.find(ten)
@@ -179,12 +202,12 @@ def unlock_all(a,z, ids = ids):
 				code= code.replace(b'</Event>', check)
 
 			a=a.replace(code2, code)
-		for i in range(30):
-			ID = int(z[:3].decode())*100+i
-			ID = str(ID).encode('utf-8')
-			if ID not in ids:
-				# a=a.replace(b'<SkinOrAvatarList id="'+ID+b'"', b'<SkinOrAvatarList id="13579"')
-				a=a.replace(b'skinId" value="'+ID+b'"', b'skinId" value="13579"')
+		#for i in range(30):
+		#	ID = int(z[:3].decode())*100+i
+		#	ID = str(ID).encode('utf-8')
+		#	if ID not in ids:
+		#		# a=a.replace(b'<SkinOrAvatarList id="'+ID+b'"', b'<SkinOrAvatarList id="13579"')
+		#		a=a.replace(b'skinId" value="'+ID+b'"', b'skinId" value="13579"')
 	return a
 
 def fix_condition(a):
@@ -222,12 +245,12 @@ def unlock_not_error(a,z, ids = ids):
 			code=code.replace(t+e_false,t_98+e_true)
 			
 		a=a.replace(code2, code)
-	for i in range(30):
-		ID = int(z[:3].decode())*100+i
-		ID = str(ID).encode('utf-8')
-		if ID not in ids:
-			# a=a.replace(b'<SkinOrAvatarList id="'+ID+b'"', b'<SkinOrAvatarList id="13579"')
-			a=a.replace(b'skinId" value="'+ID+ b'"', b'skinId" value="13579"')
+	#for i in range(30):
+	#	ID = int(z[:3].decode())*100+i
+	#	ID = str(ID).encode('utf-8')
+	#	if ID not in ids:
+	#		# a=a.replace(b'<SkinOrAvatarList id="'+ID+b'"', b'<SkinOrAvatarList id="13579"')
+	#		a=a.replace(b'skinId" value="'+ID+ b'"', b'skinId" value="13579"')
 	return a
 i=0
 track = {}
@@ -236,12 +259,12 @@ file_maybeloi=""
 dem_file_maybeloi=1
 if os.path.isdir('./Pmin_Sources/check') == 0 :
 								os.mkdir('./Pmin_Sources/check')
-for ten in os.listdir('./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/prefab_hero'):
+for ten in os.listdir('./Pmin_Sources/Resources/1.62.1/Ages/Prefab_Characters/prefab_hero'):
 	print(ten)
 	if '.bytes' not in ten and (ten[:1] in ['1','2','5']):
-		for file in listdir(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/prefab_hero/{ten}/skill'):
+		for file in listdir(f'./Pmin_Sources/Resources/1.62.1/Ages/Prefab_Characters/prefab_hero/{ten}/skill'):
 			if file.endswith('.xml'):
-				with open(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/prefab_hero/{ten}/skill/{file}','rb') as f:
+				with open(f'./Pmin_Sources/Resources/1.62.1/Ages/Prefab_Characters/prefab_hero/{ten}/skill/{file}','rb') as f:
 					strin=f.read()
 					strin=decompress_(strin,ZSTD_DICT)
 					strin2 = strin
@@ -524,7 +547,7 @@ for skinid in os.listdir(f'Pmin_Sources/Check'):
 							strin = unlock_all(strin, skinid.encode('utf-8'))
 							if file.lower() == 's1b1.xml' and False:
 								for file2 in ['a1','a2','a3']:
-									with open(f'Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/prefab_hero/132_makeboluo/skill/{file2}.xml','rb') as f:
+									with open(f'Pmin_Sources/Resources/1.62.1/Ages/Prefab_Characters/prefab_hero/132_makeboluo/skill/{file2}.xml','rb') as f:
 										pls = decompress_(f.read())
 										if file2 == 'a1':
 											xml_bytes = b'    <Track trackName="1" eventType="CheckSkillCombineConditionTick" guid="Mod By: LYNA TV + 132111" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="CheckSkillCombineConditionTick" time="0.000" isDuration="false" guid="Mod By: Pmin Mod">\r\n        <TemplateObject name="targetId" id="0" objectName="\xe6\x94\xbb\xe5\x87\xbb\xe8\x80\x85" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="skillCombineId" value="132111" refParamName="" useRefParam="false" />\r\n        <Enum name="checkOPType" value="3" refParamName="" useRefParam="false" />\r\n        <int name="skillCombineLevel" value="1" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="RemoveBuffTick0" eventType="RemoveBuffTick" guid="Mod By: NhuModSkin" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="PMIN" guid="Mod By: LYNA TV + 132111" status="false" />\r\n	  <Event eventName="RemoveBuffTick" time="0.000" isDuration="false" guid="Mod By: NhuModSkin">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="buffId" value="132112" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="RemoveBuffTick0" eventType="RemoveBuffTick" guid="Mod By: NhuModSkin" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="PMIN" guid="Mod By: LYNA TV + 132111" status="false" />\r\n	  <Event eventName="RemoveBuffTick" time="0.000" isDuration="false" guid="Mod By: NhuModSkin">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="buffId" value="132111" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="NhuModSkin" eventType="HitTriggerTick" guid="Mod By: NhuModSkin" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="PMIN" guid="Mod By: LYNA TV + 132111" status="false" />\r\n	  <Event eventName="HitTriggerTick" time="0.000" isDuration="false" guid="Mod By: NhuModSkin">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="SelfSkillCombineID_1" value="132113" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="triggerId" id="-1" objectName="None" isTemp="false" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="RemoveBuffTick0" eventType="RemoveBuffTick" guid="Mod By: NhuModSkin" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="PMIN" guid="Mod By: LYNA TV + 132111" status="true" />\r\n	  <Event eventName="RemoveBuffTick" time="0.000" isDuration="false" guid="Mod By: NhuModSkin">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="buffId" value="132113" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="RemoveBuffTick0" eventType="RemoveBuffTick" guid="Mod By: NhuModSkin" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="PMIN" guid="Mod By: LYNA TV + 132111" status="true" />\r\n	  <Event eventName="RemoveBuffTick" time="0.000" isDuration="false" guid="Mod By: NhuModSkin">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="buffId" value="132111" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="NhuModSkin" eventType="HitTriggerTick" guid="Mod By: NhuModSkin" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="PMIN" guid="Mod By: LYNA TV + 132111" status="true" />\r\n	  <Event eventName="HitTriggerTick" time="0.000" isDuration="false" guid="Mod By: NhuModSkin">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false" />\r\n        <int name="SelfSkillCombineID_1" value="132112" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="triggerId" id="-1" objectName="None" isTemp="false" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n  </Action>'
@@ -579,7 +602,7 @@ for skinid in os.listdir(f'Pmin_Sources/Check'):
 							strin = unlock_all(strin, skinid.encode('utf-8'))
 						else:
 							if file.lower() == 's1.xml':
-								with open(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/prefab_hero/141_diaochan/skill/s1b1.xml','rb') as f:
+								with open(f'./Pmin_Sources/Resources/1.62.1/Ages/Prefab_Characters/prefab_hero/141_diaochan/skill/s1b1.xml','rb') as f:
 									xml_bytes=b'    <Track trackName="NOBUFF" eventType="CheckSkillCombineConditionTick" guid="MOD BY: PMIN MOD" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Event eventName="CheckSkillCombineConditionTick" time="0.000" isDuration="false" guid="f1e30b20-0629-41f7-8e69-6fd22c3700d2">\r\n        <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false"/>\r\n        <int name="skillCombineId" value="141920" refParamName="" useRefParam="false"/>\r\n        <Enum name="checkOPType" value="1" refParamName="" useRefParam="false"/>\r\n        <int name="skillCombineLevel" value="1" refParamName="" useRefParam="false"/>\r\n        <bool name="bCopyActorUseSrcActor" value="true" refParamName="" useRefParam="false"/>\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="TriggerParticle0" eventType="TriggerParticle" guid="f4847356-eaf3-4669-b9ad-ba78401b4c5b" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="PMIN" guid="MOD BY: PMIN MOD" status="true" />\r\n      <Event eventName="TriggerParticle" time="0.000" length="1.600" isDuration="true" guid="554fdc14-4ac7-4685-8160-9950a8be03f1">\r\n        <TemplateObject name="targetId" id="2" objectName="bullet" isTemp="true" refParamName="" useRefParam="false" />\r\n        <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/141_diaochan/14111/diaochan_attack_spell01" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.500" z="1.200" refParamName="" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" refParamName="" useRefParam="false" />\r\n        <String name="syncAnimationName" value="" refParamName="" useRefParam="false" />\r\n        <String name="customTagName" value="" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n    <Track trackName="TriggerParticle0" eventType="TriggerParticle" guid="f4847356-eaf3-4669-b9ad-ba78401b4c5b" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n      <Condition id="PMIN" guid="MOD BY: PMIN MOD" status="false" />\r\n      <Event eventName="TriggerParticle" time="0.000" length="1.600" isDuration="true" guid="554fdc14-4ac7-4685-8160-9950a8be03f1">\r\n        <TemplateObject name="targetId" id="2" objectName="bullet" isTemp="true" refParamName="" useRefParam="false" />\r\n        <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/141_diaochan/14111/diaochan_attack_spell01_s" refParamName="" useRefParam="false" />\r\n        <Vector3 name="bindPosOffset" x="0.000" y="0.500" z="1.200" refParamName="" useRefParam="false" />\r\n        <Vector3i name="scalingInt" x="10000" y="10000" z="10000" refParamName="" useRefParam="false" />\r\n        <String name="syncAnimationName" value="" refParamName="" useRefParam="false" />\r\n        <String name="customTagName" value="" refParamName="" useRefParam="false" />\r\n      </Event>\r\n    </Track>\r\n  </Action>'
 									pls=decompress_(f.read()).replace(
 										b'hero_skill_effects/141_diaochan',b'PMIN'
@@ -589,7 +612,7 @@ for skinid in os.listdir(f'Pmin_Sources/Check'):
 
 								with open(f'./Pmin_Sources/check/14111/s1b1.xml','wb') as f:
 									f.write(fix_condition(pls))
-								with open(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/prefab_hero/141_diaochan/skill/s1b2.xml','rb') as f:
+								with open(f'./Pmin_Sources/Resources/1.62.1/Ages/Prefab_Characters/prefab_hero/141_diaochan/skill/s1b2.xml','rb') as f:
 									xml_bytes=b'    <Track trackName="NOBUFF" eventType="CheckSkillCombineConditionTick" guid="MOD BY: PMIN MOD" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n        <Event eventName="CheckSkillCombineConditionTick" time="0.000" isDuration="false" guid="f1e30b20-0629-41f7-8e69-6fd22c3700d2">\r\n          <TemplateObject name="targetId" id="0" objectName="self" isTemp="false" refParamName="" useRefParam="false"/>\r\n          <int name="skillCombineId" value="141920" refParamName="" useRefParam="false"/>\r\n          <Enum name="checkOPType" value="1" refParamName="" useRefParam="false"/>\r\n          <int name="skillCombineLevel" value="1" refParamName="" useRefParam="false"/>\r\n          <bool name="bCopyActorUseSrcActor" value="true" refParamName="" useRefParam="false"/>\r\n        </Event>\r\n    </Track>\r\n    <Track trackName="YOUTUBE: PMIN MOD - LYNA TV" eventType="TriggerParticleTick" guid="YOUTUBE: PMIN MOD - LYNA TV" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n        <Condition id="PMIN" guid="MOD BY: PMIN MOD" status="true" />\r\n        <Event eventName="TriggerParticleTick" time="0.000" isDuration="false" guid="YOUTUBE: PMIN MOD - LYNA TV">\r\n          <TemplateObject name="targetId" id="2" objectName="bullet" isTemp="true" refParamName="" useRefParam="false" />\r\n          <TemplateObject name="objectSpaceId" id="2" objectName="bullet" isTemp="true" refParamName="" useRefParam="false" />\r\n          <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/141_diaochan/14111/diaochan_attack_spell01_1" refParamName="" useRefParam="false" />\r\n          <float name="lifeTime" value="2.000" refParamName="" useRefParam="false" />\r\n          <Vector3i name="scalingInt" x="10000" y="10000" z="10000" refParamName="" useRefParam="false" />\r\n          <bool name="applyActionSpeedToAnimation" value="true" refParamName="" useRefParam="false" />\r\n        </Event>\r\n    </Track>\r\n    <Track trackName="YOUTUBE: PMIN MOD - LYNA TV" eventType="TriggerParticleTick" guid="YOUTUBE: PMIN MOD - LYNA TV" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" stopAfterLastEvent="true">\r\n        <Condition id="PMIN" guid="MOD BY: PMIN MOD" status="false" />\r\n        <Event eventName="TriggerParticleTick" time="0.000" isDuration="false" guid="YOUTUBE: PMIN MOD - LYNA TV">\r\n          <TemplateObject name="targetId" id="2" objectName="bullet" isTemp="true" refParamName="" useRefParam="false" />\r\n          <TemplateObject name="objectSpaceId" id="2" objectName="bullet" isTemp="true" refParamName="" useRefParam="false" />\r\n          <String name="resourceName" value="prefab_skill_effects/hero_skill_effects/141_diaochan/14111/diaochan_attack_spell01_1_s" refParamName="" useRefParam="false" />\r\n          <float name="lifeTime" value="2.000" refParamName="" useRefParam="false" />\r\n          <Vector3i name="scalingInt" x="10000" y="10000" z="10000" refParamName="" useRefParam="false" />\r\n          <bool name="applyActionSpeedToAnimation" value="true" refParamName="" useRefParam="false" />\r\n        </Event>\r\n    </Track>\r\n  </Action>'
 									pls=decompress_(f.read()).replace(
 									b'hero_skill_effects/141_diaochan',b'PMIN'
@@ -626,7 +649,7 @@ for skinid in os.listdir(f'Pmin_Sources/Check'):
 							strin = unlock_all(strin, skinid.encode('utf-8'))
 						else:
 							if file.lower() == 'u1b0.xml':
-								with open(f'./Pmin_Sources/Resources/1.61.1/Ages/Prefab_Characters/prefab_hero/106_xiaoqiao/skill/u20b1.xml','rb') as f:
+								with open(f'./Pmin_Sources/Resources/1.62.1/Ages/Prefab_Characters/prefab_hero/106_xiaoqiao/skill/u20b1.xml','rb') as f:
 									pls=decompress_(f.read())
 								with open(f'Pmin_sources/check/10620/u20b1.xml','wb') as f2:
 									f2.write(pls)
