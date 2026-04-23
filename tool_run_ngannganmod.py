@@ -64,7 +64,7 @@ if True:
         if posdecompress != -1:
             strin = strin[posdecompress:]
             strin = strin[strin.find(b"\x28\xb5\x2f\xfd"):]
-            strin = pyzstd.decompress(strin, pyzstd.ZstdDict(ZSTD_DICT, True))
+            strin = pyzstd.decompress(strin, pyzstd.ZstdDict(ZSTD_DICT, is_raw=True))
         return strin
     if os.path.isdir('./com.garena.game.kgvn/') == 0 :
         os.mkdir('./com.garena.game.kgvn/')
