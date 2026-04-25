@@ -12,7 +12,7 @@ def decompress_(strin,ZSTD_DICT=ZSTD_DICT):
 	if posdecompress != -1:
 		strin = strin[posdecompress:]
 		strin = strin[strin.find(b"\x28\xb5\x2f\xfd"):]
-		strin = pyzstd.decompress(strin, pyzstd.ZstdDict(ZSTD_DICT, True))
+		strin = pyzstd.decompress(strin, pyzstd.ZstdDict(ZSTD_DICT, is_raw=True))
 	return strin
 def split_code_(a):
 	split_code=[]
@@ -384,10 +384,6 @@ for skinid in os.listdir(f'Pmin_Sources/Check'):
 						else:
 							strin = unlock_not_error(strin, skinid.encode('utf-8'))
 							
-					elif skinid == '13213':
-						if file.lower() == 'death.xml':
-							strin = unlock_all(strin, skinid.encode('utf-8'))
-							
 					elif skinid == '11215':
 						if file.lower() == 'death.xml':
 							strin = unlock_all(strin, skinid.encode('utf-8'))
@@ -439,6 +435,22 @@ for skinid in os.listdir(f'Pmin_Sources/Check'):
 								if any(a in event_type for a in [b'PlayHeroSoundTick', b'TriggerParticle', b'TriggerParticleTick', b'Anim']):
 									strin = strin.replace(code, unlock_all(code, skinid.encode('utf-8')))
 
+					elif skinid == '13213':
+						if file.lower() in ['death.xml', 'p1e51.xml', 'p1e42.xml', 'u1.xml', 'u2.xml', 'u3.xml']:
+							strin = unlock_all(strin, skinid.encode('utf-8'))
+						if file.lower() in ['s1b0.xml', 's11b0.xml', 's12b0.xml', 'a1.xml', 'a2.xml', 'a3.xml', 's2.xml']:
+							if b'<SkinOrAvatarList id="' + skinid.encode('utf-8') in code:
+								event_type, guid, matches = print_event_types_and_guids(code)
+								if any(a in event_type for a in [b'PlayAnimDuration']):
+									strin = strin.replace(code, unlock_all(code, skinid.encode('utf-8')))
+						if file.lower() in ['s1e1.xml', 'passivee3.xml']:
+							if b'<SkinOrAvatarList id="' + skinid.encode('utf-8') in code:
+								event_type, guid, matches = print_event_types_and_guids(code)
+								if any(a in event_type for a in [b'TriggerParticleTick']):
+									strin = strin.replace(code, unlock_all(code, skinid.encode('utf-8')))
+							
+							
+
 					elif skinid == '14120':
 						for code in split_code_(strin):
 							if b'<SkinOrAvatarList id="' + skinid.encode('utf-8') in code:
@@ -486,7 +498,7 @@ for skinid in os.listdir(f'Pmin_Sources/Check'):
 							strin = unlock_all(strin, skinid.encode('utf-8'))
 
 					elif skinid == '59901':
-						if file.lower() in ['s1e60.xml', 's1b0.xml', 's2.xml']:
+						if file.lower() in ['s1e60.xml', 's1b0.xml', 's2.xml', 'a1e1.xml', 'p10e1.xml']:
 							strin = unlock_all(strin, skinid.encode('utf-8'))
 						else:
 							if file.lower() == 's1b1.xml':
@@ -506,11 +518,13 @@ for skinid in os.listdir(f'Pmin_Sources/Check'):
 											if b'SpawnObjectDuration' not in event_type:
 												code = unlock_all(code, skinid.encode('utf-8'))
 											if b'TriggerParticle' in code:
-												code=code.replace(b'<TemplateObject name="targetId" objectName="bullet3" id="5" isTemp="true" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" objectName="bullet3" id="5" isTemp="true" refParamName="" useRefParam="false" />', b'<TemplateObject name="targetId" objectName="None" id="-1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" objectName="self" id="0" isTemp="false" refParamName="" useRefParam="false" />')
+												code=code.replace(b'<TemplateObject name="targetId" objectName="bullet3" id="5" isTemp="true" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" objectName="bullet3" id="5" isTemp="true" refParamName="" useRefParam="false" />', b'<TemplateObject name="targetId" objectName="None" id="-1" isTemp="false" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="objectSpaceId" objectName="self" id="0" isTemp="false" refParamName="" useRefParam="false" />\r\n        <bool name="bMoveCollision" value="true" refParamName="" useRefParam="false" />\r\n        <bool name="bSameVisibleAsAttacker" value="true" refParamName="" useRefParam="false" />\r\n        <TemplateObject name="parentId" objectName="self" id="0" isTemp="false" refParamName="" useRefParam="false" />')
 											strin = strin.replace(code2, code)
 								if file.lower() == 's1.xml':
 									xml_bytes = b'    <Track trackName="SetAnimationParamsTick0" eventType="SetAnimationParamsTick" guid="c2e40485-fa44-4c14-a09b-1d2e010bce50" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" SkinAvatarFilterType="9">\r\n      <Event eventName="SetAnimationParamsTick" time="0.000" isDuration="false" guid="d376c3bc-4c1d-4c28-8198-cfe33a7f29d2">\r\n        <TemplateObject name="targetId" objectName="self" id="0" isTemp="false" refParamName="" useRefParam="false" />\r\n        <Array name="boolNames" refParamName="" useRefParam="false" type="String">\r\n          <String value="Spell1_1_Start" />\r\n        </Array>\r\n        <Array name="boolValues" refParamName="" useRefParam="false" type="bool">\r\n          <bool value="true" />\r\n        </Array>\r\n      </Event>\r\n      <SkinOrAvatarList id="59900" />\r\n    </Track>\r\n    <Track trackName="SetAnimationParamsTick0" eventType="SetAnimationParamsTick" guid="1f2d81a7-47bc-4ba1-8ea4-3f8d6631872c" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" SkinAvatarFilterType="9">\r\n      <Event eventName="SetAnimationParamsTick" time="0.066" isDuration="false" guid="67735e55-debf-43ab-9854-0f65154bf4f8">\r\n        <TemplateObject name="targetId" objectName="self" id="0" isTemp="false" refParamName="" useRefParam="false" />\r\n        <Array name="boolNames" refParamName="" useRefParam="false" type="String">\r\n          <String value="Spell1_1_Start" />\r\n        </Array>\r\n        <Array name="boolValues" refParamName="" useRefParam="false" type="bool">\r\n          <bool value="false" />\r\n        </Array>\r\n      </Event>\r\n      <SkinOrAvatarList id="59900" />\r\n    </Track>\r\n    <Track trackName="PlayAnimDuration0" eventType="PlayAnimDuration" guid="f367f53c-2614-4451-8662-1d6c9abf8d19" enabled="true" useRefParam="false" refParamName="" r="0.000" g="0.000" b="0.000" execOnForceStopped="false" execOnActionCompleted="false" OrConditions="true" SkinAvatarFilterType="9">\r\n      <Event eventName="PlayAnimDuration" time="0.000" length="1.000" isDuration="true" guid="96b1fc43-7446-4e66-ac22-d6617f0c1dde">\r\n        <TemplateObject name="targetId" objectName="self" id="0" isTemp="false" refParamName="" useRefParam="false" />\r\n        <String name="clipName" value="Spell1_11" refParamName="" useRefParam="false" />\r\n        <int name="layer" value="3" refParamName="" useRefParam="false" />\r\n        <float name="endTime" value="999999.000" refParamName="" useRefParam="false" />\r\n      </Event>\r\n      <SkinOrAvatarList id="59900" />\r\n    </Track>\r\n  </Action>'
 									strin=strin.replace(b'  </Action>', xml_bytes)
+								if file.lower() == 's11.xml':
+									strin=strin.replace(b'</Event>\r\n      <SkinOrAvatarList id="59900" />\r\n      <SkinOrAvatarList id="59903" />\r\n      <Event', b'</Event>\r\n      <Event')
 
 					elif skinid == '13609':
 						if file.lower() not in ['u1.xml', 'u1b2.xml']:
